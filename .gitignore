@@ -398,3 +398,14 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+# Docker-filer
+docker-compose.override.yml
+.dockerignore
+
+# Secrets & miljøfiler
+.env
+secrets.json
+
+# ASP.NET Configuration files
+appsettings.Development.json
+appsettings.Local.json
