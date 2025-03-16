@@ -1,0 +1,6 @@
+@BioProjekt.Api_HostAddress = http://localhost:5019
+
+GET {{BioProjekt.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
