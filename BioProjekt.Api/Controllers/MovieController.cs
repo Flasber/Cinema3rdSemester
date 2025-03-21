@@ -11,6 +11,11 @@ namespace BioProjekt.Api.Controllers
         {
             var movies = new List<string> { "Inception", "Interstellar", "The Matrix" };
             return Ok(movies);
+     
+        
         }
+       //noget fra timen gem det gem det ikke IDC
+      //sætte en route op...
+      // [HttpGet]
     }
 }
