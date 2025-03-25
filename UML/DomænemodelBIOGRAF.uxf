@@ -4,7 +4,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>900</x>
+      <x>880</x>
       <y>310</y>
       <w>160</w>
       <h>80</h>
@@ -19,7 +19,7 @@ Number</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>640</x>
+      <x>620</x>
       <y>470</y>
       <w>160</w>
       <h>100</h>
@@ -35,7 +35,7 @@ Playtime</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>870</x>
+      <x>850</x>
       <y>680</y>
       <w>200</w>
       <h>140</h>
@@ -54,7 +54,7 @@ Address
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1180</x>
+      <x>1160</x>
       <y>350</y>
       <w>160</w>
       <h>80</h>
@@ -69,7 +69,7 @@ Auditorium</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1110</x>
+      <x>1090</x>
       <y>620</y>
       <w>160</w>
       <h>80</h>
@@ -84,7 +84,7 @@ Status</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>360</x>
+      <x>340</x>
       <y>200</y>
       <w>160</w>
       <h>80</h>
@@ -99,7 +99,7 @@ Date
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>310</x>
+      <x>290</x>
       <y>30</y>
       <w>270</w>
       <h>140</h>
@@ -117,7 +117,7 @@ Category
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>20</x>
+      <x>0</x>
       <y>60</y>
       <w>230</w>
       <h>80</h>
@@ -134,7 +134,7 @@ priceTotal
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>60</x>
+      <x>40</x>
       <y>0</y>
       <w>160</w>
       <h>80</h>
@@ -152,7 +152,7 @@ SubTotal
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>410</x>
+      <x>390</x>
       <y>670</y>
       <w>220</w>
       <h>180</h>
@@ -172,7 +172,7 @@ ApplicableTo</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>900</x>
+      <x>880</x>
       <y>480</y>
       <w>160</w>
       <h>80</h>
@@ -186,7 +186,7 @@ Status</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1170</x>
+      <x>1150</x>
       <y>490</y>
       <w>160</w>
       <h>80</h>
@@ -200,7 +200,7 @@ Capacity</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>940</x>
+      <x>920</x>
       <y>550</y>
       <w>50</w>
       <h>150</h>
@@ -215,7 +215,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>970</x>
+      <x>950</x>
       <y>380</y>
       <w>50</w>
       <h>120</h>
@@ -230,7 +230,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1050</x>
+      <x>1030</x>
       <y>520</y>
       <w>140</w>
       <h>50</h>
@@ -245,7 +245,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1220</x>
+      <x>1200</x>
       <y>420</y>
       <w>40</w>
       <h>90</h>
@@ -260,7 +260,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>790</x>
+      <x>770</x>
       <y>510</y>
       <w>130</w>
       <h>50</h>
@@ -275,7 +275,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1050</x>
+      <x>1030</x>
       <y>550</y>
       <w>80</w>
       <h>100</h>
@@ -289,7 +289,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>620</x>
+      <x>600</x>
       <y>720</y>
       <w>270</w>
       <h>60</h>
@@ -305,7 +305,7 @@ Larman Strategy Pattern
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1140</x>
+      <x>1120</x>
       <y>760</y>
       <w>200</w>
       <h>140</h>
@@ -321,7 +321,7 @@ Location</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1340</x>
+      <x>1320</x>
       <y>580</y>
       <w>200</w>
       <h>140</h>
@@ -337,7 +337,7 @@ Email
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1380</x>
+      <x>1360</x>
       <y>780</y>
       <w>200</w>
       <h>140</h>
