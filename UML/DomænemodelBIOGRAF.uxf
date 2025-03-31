@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<diagram program="umlet" version="15.0.0">
+<diagram program="umlet" version="15.1">
   <zoom_level>10</zoom_level>
   <element>
     <id>UMLClass</id>
@@ -35,8 +35,8 @@ Playtime</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>850</x>
-      <y>680</y>
+      <x>860</x>
+      <y>820</y>
       <w>200</w>
       <h>140</h>
     </coordinates>
@@ -84,8 +84,8 @@ Status</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>340</x>
-      <y>200</y>
+      <x>880</x>
+      <y>660</y>
       <w>160</w>
       <h>80</h>
     </coordinates>
@@ -152,8 +152,8 @@ SubTotal
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>390</x>
-      <y>670</y>
+      <x>410</x>
+      <y>810</y>
       <w>220</w>
       <h>180</h>
     </coordinates>
@@ -200,17 +200,17 @@ Capacity</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>920</x>
-      <y>550</y>
+      <x>930</x>
+      <y>730</y>
       <w>50</w>
-      <h>150</h>
+      <h>110</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
 m1=1..*
 m2=1
 
 </panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -289,9 +289,9 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>600</x>
-      <y>720</y>
-      <w>270</w>
+      <x>620</x>
+      <y>860</y>
+      <w>260</w>
       <h>60</h>
     </coordinates>
     <panel_attributes>lt=-
@@ -300,7 +300,7 @@ m2=1
 Larman Strategy Pattern
 
 </panel_attributes>
-    <additional_attributes>250.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>240.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -349,5 +349,20 @@ Name
 Description
 Playtime</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>930</x>
+      <y>550</y>
+      <w>50</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
+m1=1..*
+m2=1
+
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
   </element>
 </diagram>
