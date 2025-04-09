@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
-  <zoom_level>9</zoom_level>
+  <zoom_level>7</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>405</x>
-      <y>405</y>
-      <w>144</w>
-      <h>126</h>
+      <x>315</x>
+      <y>315</y>
+      <w>112</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>Seat
 --
-Seat
-Number
+SeatNumber
 SeatType
 IsAvailable
 PriceModfier
@@ -23,10 +22,10 @@ Row
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>864</x>
-      <y>477</y>
-      <w>144</w>
-      <h>153</h>
+      <x>672</x>
+      <y>371</y>
+      <w>112</w>
+      <h>119</h>
     </coordinates>
     <panel_attributes>Movie
 --
@@ -43,10 +42,10 @@ AgeRating
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>369</x>
-      <y>1071</y>
-      <w>180</w>
-      <h>126</h>
+      <x>287</x>
+      <y>833</y>
+      <w>140</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>Customer
 --
@@ -62,16 +61,15 @@ Address
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>657</x>
-      <y>486</y>
-      <w>144</w>
-      <h>162</h>
+      <x>511</x>
+      <y>378</y>
+      <w>112</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes>Screening
 --
 Date
 Time
-Auditorium
 LanguageVersion
 Is3D
 IsSoldOut
@@ -81,10 +79,10 @@ SoundSystem</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>693</x>
-      <y>684</y>
-      <w>144</w>
-      <h>117</h>
+      <x>539</x>
+      <y>532</y>
+      <w>112</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>Payment 
 --
@@ -97,10 +95,10 @@ IsRefounded</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>396</x>
-      <y>846</y>
-      <w>144</w>
-      <h>108</h>
+      <x>308</x>
+      <y>658</y>
+      <w>112</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>Booking 
 --
@@ -117,9 +115,9 @@ BookingStatus
     <id>UMLClass</id>
     <coordinates>
       <x>0</x>
-      <y>1062</y>
-      <w>198</w>
-      <h>162</h>
+      <y>826</y>
+      <w>154</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes>Discount 
 --
@@ -134,10 +132,10 @@ CodeDiscount</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>396</x>
-      <y>666</y>
-      <w>144</w>
-      <h>108</h>
+      <x>308</x>
+      <y>518</y>
+      <w>112</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>Ticket
 --
@@ -151,10 +149,10 @@ IssueDate
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>666</x>
-      <y>333</y>
-      <w>144</w>
-      <h>126</h>
+      <x>518</x>
+      <y>259</y>
+      <w>112</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>Auditorium
 --
@@ -168,10 +166,10 @@ ScreenSize</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>441</x>
-      <y>945</y>
-      <w>45</w>
-      <h>144</h>
+      <x>343</x>
+      <y>735</y>
+      <w>35</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
 m1=1..*
@@ -183,10 +181,10 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>459</x>
-      <y>522</y>
-      <w>45</w>
-      <h>162</h>
+      <x>357</x>
+      <y>406</y>
+      <w>35</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1..*
@@ -198,10 +196,10 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>531</x>
-      <y>567</y>
-      <w>144</w>
-      <h>117</h>
+      <x>413</x>
+      <y>441</y>
+      <w>112</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -213,10 +211,10 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>729</x>
-      <y>450</y>
-      <w>36</w>
-      <h>54</h>
+      <x>567</x>
+      <y>350</y>
+      <w>28</w>
+      <h>42</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -228,14 +226,14 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>792</x>
-      <y>504</y>
-      <w>90</w>
-      <h>45</h>
+      <x>616</x>
+      <y>392</y>
+      <w>70</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
-m2=1
+m2=1..*
 
 </panel_attributes>
     <additional_attributes>80.0;20.0;10.0;20.0</additional_attributes>
@@ -243,10 +241,10 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>531</x>
-      <y>675</y>
-      <w>180</w>
-      <h>45</h>
+      <x>413</x>
+      <y>525</y>
+      <w>140</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
 m1=1..*
@@ -257,10 +255,10 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>189</x>
-      <y>1107</y>
-      <w>198</w>
-      <h>54</h>
+      <x>147</x>
+      <y>861</y>
+      <w>154</w>
+      <h>42</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1..*
@@ -273,10 +271,10 @@ m2=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>864</x>
-      <y>693</y>
-      <w>180</w>
-      <h>144</h>
+      <x>672</x>
+      <y>539</y>
+      <w>140</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>Events
 --
@@ -285,16 +283,16 @@ Name
 Playtime
 Location
 EventType
-IsSpecialEvent</panel_attributes>
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>999</x>
-      <y>279</y>
-      <w>180</w>
-      <h>126</h>
+      <x>777</x>
+      <y>217</y>
+      <w>140</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>Location
 --
@@ -307,10 +305,10 @@ Email
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1071</x>
-      <y>459</y>
-      <w>180</w>
-      <h>126</h>
+      <x>833</x>
+      <y>357</y>
+      <w>140</w>
+      <h>98</h>
     </coordinates>
     <panel_attributes>Upcoming
 --
@@ -323,10 +321,10 @@ Playtime</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>441</x>
-      <y>765</y>
-      <w>45</w>
-      <h>99</h>
+      <x>343</x>
+      <y>595</y>
+      <w>35</w>
+      <h>77</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
 m1=1..*
@@ -338,10 +336,10 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>540</x>
-      <y>387</y>
-      <w>135</w>
-      <h>45</h>
+      <x>420</x>
+      <y>301</y>
+      <w>105</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1..*
@@ -353,10 +351,10 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>999</x>
-      <y>504</y>
-      <w>90</w>
-      <h>45</h>
+      <x>777</x>
+      <y>392</y>
+      <w>70</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -368,10 +366,10 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>945</x>
-      <y>621</y>
-      <w>36</w>
-      <h>90</h>
+      <x>735</x>
+      <y>483</y>
+      <w>28</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -383,10 +381,10 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>810</x>
-      <y>351</y>
-      <w>207</w>
-      <h>45</h>
+      <x>630</x>
+      <y>273</y>
+      <w>161</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -398,10 +396,296 @@ m2=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1791</x>
-      <y>549</y>
-      <w>108</w>
-      <h>27</h>
+      <x>1393</x>
+      <y>427</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Seat</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1393</x>
+      <y>448</y>
+      <w>77</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>_Number_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1470</x>
+      <y>448</y>
+      <w>77</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>_Row_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1547</x>
+      <y>448</y>
+      <w>77</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>SeatType</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1624</x>
+      <y>448</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>IsAvaiable</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1393</x>
+      <y>357</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Auditorium</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1393</x>
+      <y>378</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Name</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1554</x>
+      <y>378</y>
+      <w>77</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Has3D</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1477</x>
+      <y>378</y>
+      <w>77</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Capacity</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1631</x>
+      <y>378</y>
+      <w>77</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>ScreenSize</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1393</x>
+      <y>280</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Location</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1393</x>
+      <y>301</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Address</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1554</x>
+      <y>301</y>
+      <w>77</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Email</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1477</x>
+      <y>301</y>
+      <w>77</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Number</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1393</x>
+      <y>217</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Screening</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1393</x>
+      <y>238</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Date</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1554</x>
+      <y>238</y>
+      <w>91</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>LanguageVersion</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1477</x>
+      <y>238</y>
+      <w>77</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Time</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1645</x>
+      <y>238</y>
+      <w>77</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Is3D</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1722</x>
+      <y>238</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>IsSoldOut</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1393</x>
+      <y>140</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Movie</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1393</x>
+      <y>161</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>_MovieID_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1554</x>
+      <y>161</y>
+      <w>77</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Genre</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1477</x>
+      <y>161</y>
+      <w>77</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Titel</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1631</x>
+      <y>161</y>
+      <w>77</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Date</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1708</x>
+      <y>161</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Description</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1393</x>
+      <y>497</y>
+      <w>84</w>
+      <h>21</h>
     </coordinates>
     <panel_attributes>Ticket</panel_attributes>
     <additional_attributes/>
@@ -409,10 +693,10 @@ m2=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1791</x>
-      <y>576</y>
-      <w>108</w>
-      <h>27</h>
+      <x>1393</x>
+      <y>518</y>
+      <w>84</w>
+      <h>21</h>
     </coordinates>
     <panel_attributes>_TicketID_</panel_attributes>
     <additional_attributes/>
@@ -420,10 +704,10 @@ m2=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1998</x>
-      <y>576</y>
-      <w>99</w>
-      <h>27</h>
+      <x>1554</x>
+      <y>518</y>
+      <w>77</w>
+      <h>21</h>
     </coordinates>
     <panel_attributes>PriceDiscounted</panel_attributes>
     <additional_attributes/>
@@ -431,10 +715,10 @@ m2=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1899</x>
-      <y>576</y>
-      <w>99</w>
-      <h>27</h>
+      <x>1477</x>
+      <y>518</y>
+      <w>77</w>
+      <h>21</h>
     </coordinates>
     <panel_attributes>Price</panel_attributes>
     <additional_attributes/>
@@ -442,10 +726,10 @@ m2=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2097</x>
-      <y>576</y>
-      <w>99</w>
-      <h>27</h>
+      <x>1631</x>
+      <y>518</y>
+      <w>77</w>
+      <h>21</h>
     </coordinates>
     <panel_attributes>IsDiscounted</panel_attributes>
     <additional_attributes/>
@@ -453,10 +737,10 @@ m2=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2196</x>
-      <y>576</y>
-      <w>108</w>
-      <h>27</h>
+      <x>1708</x>
+      <y>518</y>
+      <w>84</w>
+      <h>21</h>
     </coordinates>
     <panel_attributes>IssueDate</panel_attributes>
     <additional_attributes/>
@@ -464,727 +748,430 @@ m2=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1791</x>
-      <y>450</y>
-      <w>108</w>
-      <h>27</h>
+      <x>1393</x>
+      <y>560</y>
+      <w>84</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>Ticket</panel_attributes>
+    <panel_attributes>Payment</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1791</x>
-      <y>477</y>
-      <w>108</w>
-      <h>27</h>
+      <x>1393</x>
+      <y>581</y>
+      <w>84</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>_TicketID_</panel_attributes>
+    <panel_attributes>Amount</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1998</x>
-      <y>477</y>
-      <w>99</w>
-      <h>27</h>
+      <x>1554</x>
+      <y>581</y>
+      <w>77</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>PriceDiscounted</panel_attributes>
+    <panel_attributes>Status</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1899</x>
-      <y>477</y>
-      <w>99</w>
-      <h>27</h>
+      <x>1477</x>
+      <y>581</y>
+      <w>77</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>Price</panel_attributes>
+    <panel_attributes>PaymentMethod</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2097</x>
-      <y>477</y>
-      <w>99</w>
-      <h>27</h>
+      <x>1631</x>
+      <y>581</y>
+      <w>77</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>IsDiscounted</panel_attributes>
+    <panel_attributes>IsRefounded</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2196</x>
-      <y>477</y>
-      <w>108</w>
-      <h>27</h>
+      <x>1393</x>
+      <y>630</y>
+      <w>84</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>IssueDate</panel_attributes>
+    <panel_attributes>Booking </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1791</x>
-      <y>369</y>
-      <w>108</w>
-      <h>27</h>
+      <x>1393</x>
+      <y>651</y>
+      <w>84</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>Ticket</panel_attributes>
+    <panel_attributes>BookingNumber</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1791</x>
-      <y>396</y>
-      <w>108</w>
-      <h>27</h>
+      <x>1554</x>
+      <y>651</y>
+      <w>77</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>_TicketID_</panel_attributes>
+    <panel_attributes>Subtotal</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1998</x>
-      <y>396</y>
-      <w>99</w>
-      <h>27</h>
+      <x>1477</x>
+      <y>651</y>
+      <w>77</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>PriceDiscounted</panel_attributes>
+    <panel_attributes>Date</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1899</x>
-      <y>396</y>
-      <w>99</w>
-      <h>27</h>
+      <x>1631</x>
+      <y>651</y>
+      <w>77</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>Price</panel_attributes>
+    <panel_attributes>BookingStatus</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2097</x>
-      <y>396</y>
-      <w>99</w>
-      <h>27</h>
+      <x>1393</x>
+      <y>700</y>
+      <w>84</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>IsDiscounted</panel_attributes>
+    <panel_attributes>Customer</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2196</x>
-      <y>396</y>
-      <w>108</w>
-      <h>27</h>
+      <x>1393</x>
+      <y>721</y>
+      <w>84</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>IssueDate</panel_attributes>
+    <panel_attributes>_CustomerNumber_</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1791</x>
-      <y>279</y>
-      <w>108</w>
-      <h>27</h>
+      <x>1554</x>
+      <y>721</y>
+      <w>77</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>Ticket</panel_attributes>
+    <panel_attributes>Name</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1791</x>
-      <y>306</y>
-      <w>108</w>
-      <h>27</h>
+      <x>1477</x>
+      <y>721</y>
+      <w>77</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>_TicketID_</panel_attributes>
+    <panel_attributes>CustomerType</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1998</x>
-      <y>306</y>
-      <w>99</w>
-      <h>27</h>
+      <x>1631</x>
+      <y>721</y>
+      <w>77</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>PriceDiscounted</panel_attributes>
+    <panel_attributes>Email</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1899</x>
-      <y>306</y>
-      <w>99</w>
-      <h>27</h>
+      <x>1708</x>
+      <y>721</y>
+      <w>84</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>Price</panel_attributes>
+    <panel_attributes>Address</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2097</x>
-      <y>306</y>
-      <w>99</w>
-      <h>27</h>
+      <x>1393</x>
+      <y>763</y>
+      <w>84</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>IsDiscounted</panel_attributes>
+    <panel_attributes>Discount</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2196</x>
-      <y>306</y>
-      <w>108</w>
-      <h>27</h>
+      <x>1393</x>
+      <y>784</y>
+      <w>84</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>IssueDate</panel_attributes>
+    <panel_attributes>Name</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1791</x>
-      <y>180</y>
-      <w>108</w>
-      <h>27</h>
+      <x>1554</x>
+      <y>784</y>
+      <w>77</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>Ticket</panel_attributes>
+    <panel_attributes>DiscountType</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1791</x>
-      <y>207</y>
-      <w>108</w>
-      <h>27</h>
+      <x>1477</x>
+      <y>784</y>
+      <w>77</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>_TicketID_</panel_attributes>
+    <panel_attributes>Description</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1998</x>
-      <y>207</y>
-      <w>99</w>
-      <h>27</h>
+      <x>1631</x>
+      <y>784</y>
+      <w>77</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>PriceDiscounted</panel_attributes>
+    <panel_attributes>IsActive</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1899</x>
-      <y>207</y>
-      <w>99</w>
-      <h>27</h>
+      <x>1708</x>
+      <y>784</y>
+      <w>112</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>Price</panel_attributes>
+    <panel_attributes>MaxUsagePerCustomer</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2097</x>
-      <y>207</y>
-      <w>99</w>
-      <h>27</h>
+      <x>1393</x>
+      <y>70</y>
+      <w>84</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>IsDiscounted</panel_attributes>
+    <panel_attributes>Upcoming</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2196</x>
-      <y>207</y>
-      <w>108</w>
-      <h>27</h>
+      <x>1393</x>
+      <y>91</y>
+      <w>84</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>IssueDate</panel_attributes>
+    <panel_attributes>Titel</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1791</x>
-      <y>639</y>
-      <w>108</w>
-      <h>27</h>
+      <x>1554</x>
+      <y>91</y>
+      <w>77</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>Ticket</panel_attributes>
+    <panel_attributes>Description</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1791</x>
-      <y>666</y>
-      <w>108</w>
-      <h>27</h>
+      <x>1477</x>
+      <y>91</y>
+      <w>77</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>_TicketID_</panel_attributes>
+    <panel_attributes>Name</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1998</x>
-      <y>666</y>
-      <w>99</w>
-      <h>27</h>
+      <x>1631</x>
+      <y>91</y>
+      <w>77</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>PriceDiscounted</panel_attributes>
+    <panel_attributes>Playtime</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1899</x>
-      <y>666</y>
-      <w>99</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>Price</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2097</x>
-      <y>666</y>
-      <w>99</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>IsDiscounted</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2196</x>
-      <y>666</y>
-      <w>108</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>IssueDate</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1791</x>
-      <y>729</y>
-      <w>108</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>Ticket</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1791</x>
-      <y>756</y>
-      <w>108</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>_TicketID_</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1998</x>
-      <y>756</y>
-      <w>99</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>PriceDiscounted</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1899</x>
-      <y>756</y>
-      <w>99</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>Price</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2097</x>
-      <y>756</y>
-      <w>99</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>IsDiscounted</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2196</x>
-      <y>756</y>
-      <w>108</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>IssueDate</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1791</x>
-      <y>810</y>
-      <w>108</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>Ticket</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1791</x>
-      <y>837</y>
-      <w>108</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>_TicketID_</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1998</x>
-      <y>837</y>
-      <w>99</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>PriceDiscounted</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1899</x>
-      <y>837</y>
-      <w>99</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>Price</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2097</x>
-      <y>837</y>
-      <w>99</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>IsDiscounted</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2196</x>
-      <y>837</y>
-      <w>108</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>IssueDate</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1791</x>
-      <y>909</y>
-      <w>108</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>Ticket</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1791</x>
-      <y>936</y>
-      <w>108</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>_TicketID_</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1998</x>
-      <y>936</y>
-      <w>99</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>PriceDiscounted</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1899</x>
-      <y>936</y>
-      <w>99</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>Price</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2097</x>
-      <y>936</y>
-      <w>99</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>IsDiscounted</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2196</x>
-      <y>936</y>
-      <w>108</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>IssueDate</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1791</x>
-      <y>1008</y>
-      <w>108</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>Ticket</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1791</x>
-      <y>1035</y>
-      <w>108</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>_TicketID_</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1998</x>
-      <y>1035</y>
-      <w>99</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>PriceDiscounted</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1899</x>
-      <y>1035</y>
-      <w>99</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>Price</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2097</x>
-      <y>1035</y>
-      <w>99</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>IsDiscounted</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2196</x>
-      <y>1035</y>
-      <w>108</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>IssueDate</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1791</x>
-      <y>99</y>
-      <w>108</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>Ticket</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1791</x>
-      <y>126</y>
-      <w>108</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>_TicketID_</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1998</x>
-      <y>126</y>
-      <w>99</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>PriceDiscounted</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1899</x>
-      <y>126</y>
-      <w>99</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>Price</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2097</x>
-      <y>126</y>
-      <w>99</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>IsDiscounted</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>2196</x>
-      <y>126</y>
-      <w>108</w>
-      <h>27</h>
-    </coordinates>
-    <panel_attributes>IssueDate</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1791</x>
+      <x>1393</x>
       <y>0</y>
-      <w>108</w>
-      <h>27</h>
+      <w>84</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>Ticket</panel_attributes>
+    <panel_attributes>Events</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1791</x>
-      <y>27</y>
-      <w>108</w>
-      <h>27</h>
+      <x>1393</x>
+      <y>21</y>
+      <w>84</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>_TicketID_</panel_attributes>
+    <panel_attributes>Titel</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1998</x>
-      <y>27</y>
-      <w>99</w>
-      <h>27</h>
+      <x>1554</x>
+      <y>21</y>
+      <w>77</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>PriceDiscounted</panel_attributes>
+    <panel_attributes>Playtime</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1899</x>
-      <y>27</y>
-      <w>99</w>
-      <h>27</h>
+      <x>1477</x>
+      <y>21</y>
+      <w>77</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>Price</panel_attributes>
+    <panel_attributes>Name</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2097</x>
-      <y>27</y>
-      <w>99</w>
-      <h>27</h>
+      <x>1715</x>
+      <y>21</y>
+      <w>77</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>IsDiscounted</panel_attributes>
+    <panel_attributes>LocationID_FK</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2196</x>
-      <y>27</y>
-      <w>108</w>
-      <h>27</h>
+      <x>1631</x>
+      <y>21</y>
+      <w>84</w>
+      <h>21</h>
     </coordinates>
-    <panel_attributes>IssueDate</panel_attributes>
+    <panel_attributes>EventType</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1708</x>
+      <y>448</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>PriceModfier</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1792</x>
+      <y>161</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Playtime</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1876</x>
+      <y>161</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>Language</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1960</x>
+      <y>161</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>AgeRating</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1806</x>
+      <y>238</y>
+      <w>84</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>SoundSystem</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1820</x>
+      <y>784</y>
+      <w>91</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>CodeDiscount</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
