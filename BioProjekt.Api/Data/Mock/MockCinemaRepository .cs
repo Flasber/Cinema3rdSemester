@@ -29,13 +29,13 @@ namespace BioProjekt.Api.Data.Mockdatabase
         public bool IsAvailable { get; set; }
     }
 
-    public class MockCinemaRepository
+    public class MockTicketService
     {
         private readonly List<Movie> _movies;
         private readonly List<Screening> _screenings;
         private readonly List<Seat> _seats;
 
-        public MockCinemaRepository()
+        public MockTicketService()
         {
             _movies = new List<Movie>
             {
