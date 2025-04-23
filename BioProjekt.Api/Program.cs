@@ -1,12 +1,12 @@
 using BioProjekt.Api.BusinessLogic;
-
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services.AddControllers();
-builder.Services.AddSingleton<ITicketService, MockTicketService>();
+builder.Services.AddSingleton<IBookingService, MockBookingService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<IMovieService, MockMovieService>();
+
 
 var app = builder.Build();
 
