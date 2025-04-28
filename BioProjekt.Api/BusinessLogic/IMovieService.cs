@@ -8,7 +8,7 @@ namespace BioProjekt.Api.BusinessLogic
     {
         List<Movie> GetAllMovies();
         Movie GetMovieById(int id);
-        string GetMovieGenre(int id);
+        List<Movie> GetMoviesByGenre(string genre);
         string GetMovieDescription(int id);
         TimeSpan GetMovieDuration(int id);
     }

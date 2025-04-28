@@ -15,6 +15,7 @@ namespace BioProjektModels
         public string Description { get; set; }
         public string Language { get; set; }
         public string AgeRating { get; set; }
+        public string PosterUrl { get; set; }
 
     }
 }

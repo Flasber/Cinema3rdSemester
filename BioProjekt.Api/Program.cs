@@ -1,12 +1,16 @@
 using BioProjekt.Api.BusinessLogic;
+using BioProjekt.Api.Data.Mock;
+using BioProjekt.Api.Data.Mockdatabase;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddSingleton<IBookingService, MockBookingService>();
+builder.Services.AddSingleton<ICinemaRepository, MockCinemaRepository>();
+builder.Services.AddSingleton<IMovieService, MovieService>();
+builder.Services.AddSingleton<IBookingService, BookingService>();
+builder.Services.AddSingleton<IScreeningService, ScreeningService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<IMovieService, MockMovieService>();
-
 
 var app = builder.Build();
 
@@ -18,6 +22,5 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
-
 app.MapControllers();
 app.Run();

@@ -1,0 +1,40 @@
+﻿@model List<BioProjektModels.Movie>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="mb-4">Filmoversigt</h1>
+
+<div class="row row-cols-1 row-cols-md-2 g-4">
+    @foreach (var movie in Model)
+    {
+        <div class="col">
+            <div class="card mb-3" style="max-width: 900px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        @if (!string.IsNullOrEmpty(movie.PosterUrl))
+                        {
+                            <img src="@movie.PosterUrl" class="img-fluid rounded-start" alt="@movie.Title">
+                        }
+                        else
+                        {
+                            <img src="https://via.placeholder.com/300x450?text=No+Image" class="img-fluid rounded-start" alt="No image">
+                        }
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">@movie.Title</h5>
+                            <p class="card-text"><strong>Genre:</strong> @movie.Genre</p>
+                            <p class="card-text"><strong>Varighed:</strong> @movie.Duration</p>
+                            <p class="card-text"><strong>Beskrivelse:</strong> @movie.Description</p>
+                            <p class="card-text"><strong>Sprog:</strong> @movie.Language</p>
+                            <p class="card-text"><strong>Aldersgrænse:</strong> @movie.AgeRating</p>
+                            <a href="#" class="btn btn-primary mt-2">Se tider</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

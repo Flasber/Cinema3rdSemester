@@ -32,31 +32,16 @@ namespace BioProjekt.Api.Controllers
             return Ok(movie);
         }
 
-        [HttpGet("{id}/genre")]
-        public ActionResult<string> GetMovieGenre(int id)
+        [HttpGet("genre/{genreName}")]
+        public ActionResult<List<Movie>> GetMoviesByGenre(string genreName)
         {
-            var genre = _movieService.GetMovieGenre(id);
-            if (genre == null)
+            var movies = _movieService.GetMoviesByGenre(genreName);
+            if (movies == null || movies.Count == 0)
                 return NotFound();
-            return Ok(genre);
+            return Ok(movies);
         }
 
-        [HttpGet("{id}/description")]
-        public ActionResult<string> GetMovieDescription(int id)
-        {
-            var description = _movieService.GetMovieDescription(id);
-            if (description == null)
-                return NotFound();
-            return Ok(description);
-        }
 
-        [HttpGet("{id}/duration")]
-        public ActionResult<TimeSpan> GetMovieDuration(int id)
-        {
-            var duration = _movieService.GetMovieDuration(id);
-            if (duration == TimeSpan.Zero)
-                return NotFound();
-            return Ok(duration);
-        }
+
     }
 }

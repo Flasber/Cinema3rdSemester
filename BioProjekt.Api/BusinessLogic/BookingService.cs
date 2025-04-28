@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace BioProjekt.Api.BusinessLogic
 {
-    public class MockBookingService : IBookingService
+    public class BookingService : IBookingService
     {
         private static readonly List<Booking> Bookings = new();
         private static int _id = 1;
