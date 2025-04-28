@@ -1,40 +1,85 @@
-﻿@model List<BioProjektModels.Movie>
-
-@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@{
+    ViewData["Title"] = "Filmoversigt";
 }
 
-<h1 class="mb-4">Filmoversigt</h1>
-
-<div class="row row-cols-1 row-cols-md-2 g-4">
-    @foreach (var movie in Model)
-    {
-        <div class="col">
-            <div class="card mb-3" style="max-width: 900px;">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        @if (!string.IsNullOrEmpty(movie.PosterUrl))
-                        {
-                            <img src="@movie.PosterUrl" class="img-fluid rounded-start" alt="@movie.Title">
-                        }
-                        else
-                        {
-                            <img src="https://via.placeholder.com/300x450?text=No+Image" class="img-fluid rounded-start" alt="No image">
-                        }
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">@movie.Title</h5>
-                            <p class="card-text"><strong>Genre:</strong> @movie.Genre</p>
-                            <p class="card-text"><strong>Varighed:</strong> @movie.Duration</p>
-                            <p class="card-text"><strong>Beskrivelse:</strong> @movie.Description</p>
-                            <p class="card-text"><strong>Sprog:</strong> @movie.Language</p>
-                            <p class="card-text"><strong>Aldersgrænse:</strong> @movie.AgeRating</p>
-                            <a href="#" class="btn btn-primary mt-2">Se tider</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<style>
+    body {
+        background-color: #0d1117;
+        color: white;
     }
+
+    .movie-card {
+        background-color: #161b22;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        text-align: center;
+        transition: transform 0.3s;
+        max-width: 300px;
+        margin: auto;
+    }
+
+        .movie-card:hover {
+            transform: scale(1.05);
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+    .movie-card-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .buy-button {
+        margin-top: 10px;
+        margin-bottom: 15px;
+        padding: 10px 30px;
+        font-size: 1.1rem;
+        background-color: #0d6efd;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        font-weight: bold;
+        transition: background-color 0.3s;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .buy-button:hover {
+            background-color: #0b5ed7;
+        }
+
+    .movies-grid {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        flex-wrap: wrap;
+    }
+</style>
+
+<h1 class="mb-5 text-center">Filmoversigt</h1>
+
+<div class="movies-grid">
+    <div class="movie-card">
+        <img src="/images/Inception.jpg" alt="Inception">
+        <div class="movie-card-title">Inception</div>
+        <a href="#" class="buy-button">Se tider</a>
+    </div>
+
+    <div class="movie-card">
+        <img src="/images/MacAndDevin.jpg" alt="Mac and Devin Go To High School">
+        <div class="movie-card-title">Mac and Devin Go To High School</div>
+        <a href="#" class="buy-button">Se tider</a>
+    </div>
+
+    <div class="movie-card">
+        <img src="/images/Minecraft.jpg" alt="Minecraft The Movie">
+        <div class="movie-card-title">Minecraft Filmen</div>
+        <a href="#" class="buy-button">Se tider</a>
+    </div>
 </div>

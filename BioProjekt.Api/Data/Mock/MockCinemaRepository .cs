@@ -24,7 +24,7 @@ namespace BioProjekt.Api.Data.Mock
         Description = "A mind-bending thriller about dreams within dreams.",
         Language = "English",
         AgeRating = "PG-13",
-        PosterUrl = "https://m.media-amazon.com/images/I/81p+xe8cbnL._AC_SY679_.jpg"
+        PosterUrl = "/images/Inception.jpg"
     },
     new Movie
     {
@@ -35,36 +35,21 @@ namespace BioProjekt.Api.Data.Mock
         Description = "Two students bond over cannabis and friendship.",
         Language = "English",
         AgeRating = "PG-18",
-        PosterUrl = "https://upload.wikimedia.org/wikipedia/en/6/6e/Mac_and_Devin_Go_to_High_School_Poster.jpg"
-    }
-};
-
-
-            _screenings = new List<Screening>
-{
-    new Screening
-    {
-        Id = 1,
-        MovieId = 1,
-        Date = DateTime.Today,
-        Time = "18:00", 
-        LanguageVersion = "English",
-        Is3D = false,
-        IsSoldOut = false,
-        SoundSystem = "Dolby Atmos"
+        PosterUrl = "/images/MacAndDevin.jpg"
     },
-    new Screening
+    new Movie
     {
-        Id = 2,
-        MovieId = 2,
-        Date = DateTime.Today.AddDays(1),
-        Time = "20:00", 
-        LanguageVersion = "English",
-        Is3D = true,
-        IsSoldOut = false,
-        SoundSystem = "IMAX"
+        Id = 3,
+        Title = "Minecraft Filmen",
+        Genre = "Adventure",
+        Duration = TimeSpan.FromMinutes(100),
+        Description = "Et eventyr i en blokverden, hvor alt er muligt!",
+        Language = "English",
+        AgeRating = "PG",
+        PosterUrl = "/images/Minecraft.jpg"
     }
 };
+
         }
 
         public IEnumerable<Movie> GetAllMovies()
