@@ -1,6 +1,7 @@
-﻿using System;
+﻿using BioProjektModels;
+using System;
 using System.Collections.Generic;
-using BioProjektModels;
+using System.Linq;
 
 namespace BioProjekt.Api.BusinessLogic
 {
@@ -23,7 +24,7 @@ namespace BioProjekt.Api.BusinessLogic
                 Id = 2,
                 Title = "Until Dawn",
                 Genre = "Horror",
-                Duration = TimeSpan.FromHours(143),
+                Duration = TimeSpan.FromMinutes(143),
                 Description = "Can you stay alive.....",
                 Language = "English",
                 AgeRating = "PG-18"
@@ -33,6 +34,29 @@ namespace BioProjekt.Api.BusinessLogic
         public List<Movie> GetAllMovies()
         {
             return Movies;
+        }
+
+        public Movie GetMovieById(int id)
+        {
+            return Movies.FirstOrDefault(m => m.Id == id);
+        }
+
+        public string GetMovieGenre(int id)
+        {
+            var movie = GetMovieById(id);
+            return movie?.Genre;
+        }
+
+        public string GetMovieDescription(int id)
+        {
+            var movie = GetMovieById(id);
+            return movie?.Description;
+        }
+
+        public TimeSpan GetMovieDuration(int id)
+        {
+            var movie = GetMovieById(id);
+            return movie?.Duration ?? TimeSpan.Zero;
         }
     }
 }
