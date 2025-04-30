@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<diagram program="umlet" version="15.1">
-  <zoom_level>10</zoom_level>
+<diagram program="umlet" version="15.0.0">
+  <zoom_level>11</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>830</x>
-      <y>280</y>
-      <w>160</w>
-      <h>140</h>
+
     </coordinates>
     <panel_attributes>Seat
 --
@@ -22,10 +19,7 @@ Row
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1340</x>
-      <y>360</y>
-      <w>160</w>
-      <h>170</h>
+
     </coordinates>
     <panel_attributes>Movie
 --
@@ -43,10 +37,7 @@ AgeRating
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>520</x>
-      <y>610</y>
-      <w>200</w>
-      <h>140</h>
+
     </coordinates>
     <panel_attributes>Customer
 --
@@ -62,10 +53,7 @@ Address
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1110</x>
-      <y>370</y>
-      <w>160</w>
-      <h>180</h>
+
     </coordinates>
     <panel_attributes>Screening
 --
@@ -80,10 +68,7 @@ SoundSystem</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1150</x>
-      <y>590</y>
-      <w>160</w>
-      <h>130</h>
+
     </coordinates>
     <panel_attributes>Payment 
 --
@@ -96,10 +81,7 @@ IsRefounded</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>820</x>
-      <y>580</y>
-      <w>160</w>
-      <h>120</h>
+
     </coordinates>
     <panel_attributes>Booking 
 --
@@ -115,10 +97,7 @@ BookingStatus
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>220</x>
-      <y>600</y>
-      <w>220</w>
-      <h>180</h>
+
     </coordinates>
     <panel_attributes>Discount 
 --
@@ -133,10 +112,7 @@ CodeDiscount</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1120</x>
-      <y>200</y>
-      <w>160</w>
-      <h>140</h>
+
     </coordinates>
     <panel_attributes>Auditorium
 --
@@ -150,10 +126,7 @@ ScreenSize</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>710</x>
-      <y>640</y>
-      <w>130</w>
-      <h>50</h>
+
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
 m1=1..*
@@ -165,10 +138,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>890</x>
-      <y>410</y>
-      <w>50</w>
-      <h>190</h>
+
     </coordinates>
     <panel_attributes>lt=-
 m1=1..*
@@ -180,10 +150,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>970</x>
-      <y>460</y>
-      <w>160</w>
-      <h>140</h>
+
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -195,10 +162,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1190</x>
-      <y>330</y>
-      <w>40</w>
-      <h>60</h>
+
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -210,10 +174,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1260</x>
-      <y>390</y>
-      <w>100</w>
-      <h>50</h>
+
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -225,24 +186,18 @@ m2=1..*
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>970</x>
-      <y>580</y>
-      <w>200</w>
-      <h>50</h>
+
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
 m1=1..*
 m2=1
 </panel_attributes>
-    <additional_attributes>10.0;20.0;180.0;20.0</additional_attributes>
+    <additional_attributes>180.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>430</x>
-      <y>650</y>
-      <w>110</w>
-      <h>60</h>
+
     </coordinates>
     <panel_attributes>lt=-
 m1=1..*
@@ -255,10 +210,7 @@ m2=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1340</x>
-      <y>590</y>
-      <w>200</w>
-      <h>160</h>
+
     </coordinates>
     <panel_attributes>Events
 --
@@ -273,10 +225,7 @@ EventType
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1490</x>
-      <y>140</y>
-      <w>200</w>
-      <h>140</h>
+
     </coordinates>
     <panel_attributes>Location
 --
@@ -289,10 +238,7 @@ Email
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1570</x>
-      <y>340</y>
-      <w>200</w>
-      <h>140</h>
+
     </coordinates>
     <panel_attributes>Upcoming
 --
@@ -305,10 +251,7 @@ Playtime</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>980</x>
-      <y>260</y>
-      <w>150</w>
-      <h>50</h>
+
     </coordinates>
     <panel_attributes>lt=-
 m1=1..*
@@ -320,10 +263,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1490</x>
-      <y>390</y>
-      <w>100</w>
-      <h>50</h>
+
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -335,10 +275,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1430</x>
-      <y>520</y>
-      <w>40</w>
-      <h>90</h>
+
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -350,10 +287,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1280</x>
-      <y>220</y>
-      <w>230</w>
-      <h>50</h>
+
     </coordinates>
     <panel_attributes>lt=-
 m1=1
