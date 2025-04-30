@@ -4,10 +4,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>594</x>
-      <y>154</y>
-      <w>176</w>
-      <h>154</h>
+
     </coordinates>
     <panel_attributes>Seat
 --
@@ -22,16 +19,14 @@ Row
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1155</x>
-      <y>242</y>
-      <w>176</w>
-      <h>187</h>
+
     </coordinates>
     <panel_attributes>Movie
 --
 Titel
 Genre
 Date
+Duration
 Description
 Playtime
 Language
@@ -42,10 +37,7 @@ AgeRating
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>550</x>
-      <y>968</y>
-      <w>220</w>
-      <h>154</h>
+
     </coordinates>
     <panel_attributes>Customer
 --
@@ -61,10 +53,7 @@ Address
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>902</x>
-      <y>253</y>
-      <w>176</w>
-      <h>198</h>
+
     </coordinates>
     <panel_attributes>Screening
 --
@@ -79,10 +68,7 @@ SoundSystem</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>946</x>
-      <y>495</y>
-      <w>176</w>
-      <h>143</h>
+
     </coordinates>
     <panel_attributes>Payment 
 --
@@ -95,10 +81,7 @@ IsRefounded</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>583</x>
-      <y>693</y>
-      <w>176</w>
-      <h>132</h>
+
     </coordinates>
     <panel_attributes>Booking 
 --
@@ -114,10 +97,7 @@ BookingStatus
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>99</x>
-      <y>957</y>
-      <w>242</w>
-      <h>198</h>
+
     </coordinates>
     <panel_attributes>Discount 
 --
@@ -132,27 +112,7 @@ CodeDiscount</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>583</x>
-      <y>473</y>
-      <w>176</w>
-      <h>132</h>
-    </coordinates>
-    <panel_attributes>Ticket
---
-TicketType
-Price
-IsDiscounted
-IssueDate
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>913</x>
-      <y>66</y>
-      <w>176</w>
-      <h>154</h>
+
     </coordinates>
     <panel_attributes>Auditorium
 --
@@ -166,55 +126,43 @@ ScreenSize</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>638</x>
-      <y>814</y>
-      <w>55</w>
-      <h>176</h>
+
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
 m1=1..*
 m2=1
 
 </panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+    <additional_attributes>110.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>660</x>
-      <y>297</y>
-      <w>55</w>
-      <h>198</h>
+
     </coordinates>
     <panel_attributes>lt=-
 m1=1..*
 m2=1
 
 </panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;160.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>748</x>
-      <y>352</y>
-      <w>176</w>
-      <h>143</h>
+
     </coordinates>
     <panel_attributes>lt=-
 m1=1
 m2=1
 
 </panel_attributes>
-    <additional_attributes>140.0;20.0;10.0;20.0;10.0;110.0</additional_attributes>
+    <additional_attributes>140.0;20.0;10.0;20.0;10.0;120.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>990</x>
-      <y>209</y>
-      <w>44</w>
-      <h>66</h>
+
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -226,10 +174,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1067</x>
-      <y>275</y>
-      <w>110</w>
-      <h>55</h>
+
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -241,10 +186,7 @@ m2=1..*
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>748</x>
-      <y>561</y>
-      <w>220</w>
-      <h>55</h>
+
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
 m1=1..*
@@ -255,10 +197,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>330</x>
-      <y>1012</y>
-      <w>242</w>
-      <h>66</h>
+
     </coordinates>
     <panel_attributes>lt=-
 m1=1..*
@@ -266,15 +205,12 @@ m2=1
 
 
 </panel_attributes>
-    <additional_attributes>200.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>90.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1155</x>
-      <y>506</y>
-      <w>220</w>
-      <h>176</h>
+
     </coordinates>
     <panel_attributes>Events
 --
@@ -289,10 +225,7 @@ EventType
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1320</x>
-      <y>0</y>
-      <w>220</w>
-      <h>154</h>
+
     </coordinates>
     <panel_attributes>Location
 --
@@ -305,10 +238,7 @@ Email
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1408</x>
-      <y>220</y>
-      <w>220</w>
-      <h>154</h>
+
     </coordinates>
     <panel_attributes>Upcoming
 --
@@ -321,25 +251,7 @@ Playtime</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>682</x>
-      <y>594</y>
-      <w>55</w>
-      <h>121</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;&gt;&gt;&gt;&gt;
-m1=1..*
-m2=1
 
-</panel_attributes>
-    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>759</x>
-      <y>132</y>
-      <w>165</w>
-      <h>55</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1..*
@@ -351,10 +263,7 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1320</x>
-      <y>275</y>
-      <w>110</w>
-      <h>55</h>
+
     </coordinates>
     <panel_attributes>lt=-
 m1=1
@@ -366,25 +275,19 @@ m2=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1254</x>
-      <y>418</y>
-      <w>44</w>
-      <h>110</h>
+
     </coordinates>
     <panel_attributes>lt=-
 m1=1
 m2=1
 
 </panel_attributes>
-    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1089</x>
-      <y>88</y>
-      <w>253</w>
-      <h>55</h>
+
     </coordinates>
     <panel_attributes>lt=-
 m1=1
