@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using BioProjekt.Api.BusinessLogic;
+using BioProjektModels;
+using System.Collections.Generic;
 
 namespace BioProjekt.Api.Controllers
 {
@@ -6,16 +9,39 @@ namespace BioProjekt.Api.Controllers
     [Route("api/[controller]")]
     public class MovieController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult GetMovies()
+        private readonly IMovieService _movieService;
+
+        public MovieController(IMovieService movieService)
         {
-            var movies = new List<string> { "Inception", "Interstellar", "The Matrix" };
-            return Ok(movies);
-     
-        
+            _movieService = movieService;
         }
-       //noget fra timen gem det gem det ikke IDC
-      //sætte en route op...
-      // [HttpGet]
+
+        [HttpGet]
+        public ActionResult<List<Movie>> GetMovies()
+        {
+            var movies = _movieService.GetAllMovies();
+            return Ok(movies);
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<Movie> GetMovieById(int id)
+        {
+            var movie = _movieService.GetMovieById(id);
+            if (movie == null)
+                return NotFound();
+            return Ok(movie);
+        }
+
+        [HttpGet("genre/{genreName}")]
+        public ActionResult<List<Movie>> GetMoviesByGenre(string genreName)
+        {
+            var movies = _movieService.GetMoviesByGenre(genreName);
+            if (movies == null || movies.Count == 0)
+                return NotFound();
+            return Ok(movies);
+        }
+
+
+
     }
 }
