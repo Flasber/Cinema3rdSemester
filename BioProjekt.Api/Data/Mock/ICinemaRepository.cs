@@ -9,5 +9,7 @@ namespace BioProjekt.Api.Data.Mockdatabase
         Movie GetMovieById(int id);
         IEnumerable<Screening> GetAllScreenings();
         IEnumerable<Screening> GetScreeningsForMovie(int movieId);
+        IEnumerable<Auditorium> GetAllAuditoriums();
+
     }
 }

@@ -9,6 +9,7 @@ builder.Services.AddSingleton<ICinemaRepository, MockCinemaRepository>();
 builder.Services.AddSingleton<IMovieService, MovieService>();
 builder.Services.AddSingleton<IBookingService, BookingService>();
 builder.Services.AddSingleton<IScreeningService, ScreeningService>();
+builder.Services.AddScoped<IAuditoriumService, AuditoriumService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
