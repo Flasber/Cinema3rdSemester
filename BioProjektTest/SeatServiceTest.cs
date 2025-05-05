@@ -9,21 +9,7 @@ namespace BioProjekt.Tests
     {
         private SeatService _seatService;
 
-        [SetUp]
-        public void Setup()
-        {
-            _seatService = new SeatService();
-            _seatService.AddSeat(new Seat
-            {
-                SeatNumber = 1,
-                Row = "A",
-                SeatType = "Standard",
-                IsAvailable = true,
-                PriceModifier = 1.0m,
-                Version = 1,
-                AuditoriumId = 1
-            });
-        }
+      
 
         [Test]
         public void TryReserveSeat_ShouldReserveSeat_WhenAvailableAndVersionMatches()
