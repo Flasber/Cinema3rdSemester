@@ -1,13 +1,18 @@
-﻿using System;
-namespace BioProjektModels
+﻿namespace BioProjektModels
 {
     public class Booking
     {
         public int Id { get; set; }
-        public string BookingType { get; set; }
-        public decimal  Price { get; set; }
-        public bool IsDiscounted { get; set; }
-        public DateTime BookingDate { get; set; }
-        }
-    }
 
+        public int CustomerId { get; set; }
+        public int ScreeningId { get; set; }
+
+        public DateTime BookingDate { get; set; }
+
+        public string BookingStatus { get; set; } 
+
+        public decimal Price { get; set; }
+        public bool IsDiscounted { get; set; }
+
+    }
+}

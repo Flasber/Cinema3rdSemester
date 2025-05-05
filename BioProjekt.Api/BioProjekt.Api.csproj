@@ -10,13 +10,9 @@
 
   <ItemGroup>
     <Compile Remove="BusniessLogic\**" />
-    <Compile Remove="NewFolder\**" />
     <Content Remove="BusniessLogic\**" />
-    <Content Remove="NewFolder\**" />
     <EmbeddedResource Remove="BusniessLogic\**" />
-    <EmbeddedResource Remove="NewFolder\**" />
     <None Remove="BusniessLogic\**" />
-    <None Remove="NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,7 +23,6 @@
   <ItemGroup>
     
     <ProjectReference Include="..\BioProjektModels\BioProjektModels.csproj" />
-    <ProjectReference Include="..\BioProjektTest\BioProjektTest.csproj" />
   </ItemGroup>
 
 </Project>

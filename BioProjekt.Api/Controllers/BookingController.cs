@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BioProjektModels;
 using BioProjekt.Api.BusinessLogic;
+using BioProjekt.Api.Dto.BookingDTO;
 
 namespace BioProjekt.Api.Controllers
 {
@@ -22,8 +23,17 @@ namespace BioProjekt.Api.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Booking> CreateBooking([FromBody] Booking booking)
+        public ActionResult<Booking> CreateBooking([FromBody] BookingCreateDTO dto)
         {
+            var booking = new Booking
+            {
+                CustomerId = dto.CustomerId,
+                ScreeningId = dto.ScreeningId,
+                BookingDate = DateTime.Now,
+                BookingStatus = "Pending",
+               
+            };
+
             var created = _bookingService.CreateBooking(booking);
             return Created("", created);
         }
