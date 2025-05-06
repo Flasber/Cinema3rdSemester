@@ -4,12 +4,12 @@ using BioProjekt.Api.Data.Mockdatabase;
 using BioProjektModels;
 using BioProjekt.Api.Dto.SeatDTO;
 
-
 namespace BioProjekt.Api.BusinessLogic
 {
     public class SeatService : ISeatService
     {
         private readonly ICinemaRepository _repository;
+        private readonly Dictionary<int, List<Seat>> _selectionsByBookingId = new();
 
         public SeatService(ICinemaRepository repository)
         {
@@ -45,7 +45,7 @@ namespace BioProjekt.Api.BusinessLogic
             if (seats == null || !seats.Any())
                 return Enumerable.Empty<SeatAvailability>();
 
-            var availableSeats = seats
+            return seats
                 .Where(seat => seat.IsAvailable)
                 .Select(seat => new SeatAvailability
                 {
@@ -54,9 +54,37 @@ namespace BioProjekt.Api.BusinessLogic
                     IsAvailable = seat.IsAvailable
                 })
                 .ToList();
-
-            return availableSeats;
         }
 
+        public bool SelectSeatForBooking(int bookingId, int seatNumber, string row, int auditoriumId)
+        {
+            var seat = _repository.GetSeat(seatNumber, row, auditoriumId);
+            if (seat == null || !seat.IsAvailable)
+                return false;
+
+            if (_selectionsByBookingId.Values.Any(seats =>
+                seats.Any(s => s.SeatNumber == seatNumber && s.Row == row && s.AuditoriumId == auditoriumId)))
+            {
+                return false;
+            }
+
+            seat.IsAvailable = false;
+            seat.Version++;
+
+            if (!_selectionsByBookingId.ContainsKey(bookingId))
+                _selectionsByBookingId[bookingId] = new List<Seat>();
+
+            _selectionsByBookingId[bookingId].Add(seat);
+            return true;
+        }
+
+
+
+        public IEnumerable<Seat> GetSelectedSeats(int bookingId)
+        {
+            return _selectionsByBookingId.ContainsKey(bookingId)
+                ? _selectionsByBookingId[bookingId]
+                : Enumerable.Empty<Seat>();
+        }
     }
 }

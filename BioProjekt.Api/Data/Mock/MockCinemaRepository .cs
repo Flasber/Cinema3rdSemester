@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BioProjektModels;
 using BioProjekt.Api.Data.Mockdatabase;
+using BioProjekt.Api.Dto.BookingDTO;
 
 namespace BioProjekt.Api.Data.Mock
 {
@@ -12,9 +13,12 @@ namespace BioProjekt.Api.Data.Mock
         private readonly List<Screening> _screenings;
         private readonly List<Auditorium> _auditoriums;
         private readonly List<Seat> _seats;
+        private readonly Dictionary<int, List<Seat>> _selectedSeatsByBookingId;
 
         public MockCinemaRepository()
         {
+         
+
             _movies = new List<Movie>
             {
                 new Movie
@@ -176,6 +180,34 @@ namespace BioProjekt.Api.Data.Mock
                 s.Row == row &&
                 s.AuditoriumId == auditoriumId);
         }
+        public void SelectSeatForBooking(int bookingId, int seatNumber, string row, int auditoriumId)
+        {
+            var seat = GetSeat(seatNumber, row, auditoriumId);
+            if (seat != null)
+            {
+                if (!_selectedSeatsByBookingId.ContainsKey(bookingId))
+                {
+                    _selectedSeatsByBookingId[bookingId] = new List<Seat>();
+                }
+
+                _selectedSeatsByBookingId[bookingId].Add(seat);
+                seat.IsAvailable = false;
+            }
+        }
+
+        public IEnumerable<Seat> GetSelectedSeats(int bookingId)
+        {
+            return _selectedSeatsByBookingId.ContainsKey(bookingId)
+                ? _selectedSeatsByBookingId[bookingId]
+                : Enumerable.Empty<Seat>();
+        }
+
+        public IEnumerable<Seat> GetAvailableSeats(int auditoriumId)
+        {
+            return _seats.Where(s => s.AuditoriumId == auditoriumId && s.IsAvailable);
+        }
+      
+
 
     }
 }
