@@ -11,5 +11,8 @@ namespace BioProjekt.Api.Data.Mockdatabase
         IEnumerable<Screening> GetScreeningsForMovie(int movieId);
         IEnumerable<Auditorium> GetAllAuditoriums();
 
+        IEnumerable<Seat> GetSeatsForAuditorium(int auditoriumId);
+        void AddSeat(Seat seat);
+        Seat GetSeat(int seatNumber, string row, int auditoriumId);
     }
 }

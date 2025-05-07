@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BioProjektModels;
 using BioProjekt.Api.Data.Mockdatabase;
+using BioProjekt.Api.Dto.BookingDTO;
 
 namespace BioProjekt.Api.Data.Mock
 {
@@ -11,9 +12,13 @@ namespace BioProjekt.Api.Data.Mock
         private readonly List<Movie> _movies;
         private readonly List<Screening> _screenings;
         private readonly List<Auditorium> _auditoriums;
+        private readonly List<Seat> _seats;
+        private readonly Dictionary<int, List<Seat>> _selectedSeatsByBookingId;
 
         public MockCinemaRepository()
         {
+         
+
             _movies = new List<Movie>
             {
                 new Movie
@@ -97,6 +102,40 @@ namespace BioProjekt.Api.Data.Mock
                     AuditoriumId = 3
                 }
             };
+
+            _seats = new List<Seat>
+            {
+                new Seat
+                {
+                    SeatNumber = 1,
+                    Row = "A",
+                    SeatType = "Standard",
+                    IsAvailable = true,
+                    PriceModifier = 1.0m,
+                    Version = 1,
+                    AuditoriumId = 1
+                },
+                new Seat
+                {
+                    SeatNumber = 2,
+                    Row = "A",
+                    SeatType = "VIP",
+                    IsAvailable = true,
+                    PriceModifier = 1.5m,
+                    Version = 1,
+                    AuditoriumId = 1
+                },
+                new Seat
+                {
+                    SeatNumber = 1,
+                    Row = "B",
+                    SeatType = "Standard",
+                    IsAvailable = true,
+                    PriceModifier = 1.0m,
+                    Version = 1,
+                    AuditoriumId = 2
+                }
+            };
         }
 
         public IEnumerable<Movie> GetAllMovies()
@@ -123,5 +162,52 @@ namespace BioProjekt.Api.Data.Mock
         {
             return _auditoriums;
         }
+
+        public IEnumerable<Seat> GetSeatsForAuditorium(int auditoriumId)
+        {
+            return _seats.Where(s => s.AuditoriumId == auditoriumId);
+        }
+
+        public void AddSeat(Seat seat)
+        {
+            _seats.Add(seat);
+        }
+
+        public Seat GetSeat(int seatNumber, string row, int auditoriumId)
+        {
+            return _seats.FirstOrDefault(s =>
+                s.SeatNumber == seatNumber &&
+                s.Row == row &&
+                s.AuditoriumId == auditoriumId);
+        }
+        public void SelectSeatForBooking(int bookingId, int seatNumber, string row, int auditoriumId)
+        {
+            var seat = GetSeat(seatNumber, row, auditoriumId);
+            if (seat != null)
+            {
+                if (!_selectedSeatsByBookingId.ContainsKey(bookingId))
+                {
+                    _selectedSeatsByBookingId[bookingId] = new List<Seat>();
+                }
+
+                _selectedSeatsByBookingId[bookingId].Add(seat);
+                seat.IsAvailable = false;
+            }
+        }
+
+        public IEnumerable<Seat> GetSelectedSeats(int bookingId)
+        {
+            return _selectedSeatsByBookingId.ContainsKey(bookingId)
+                ? _selectedSeatsByBookingId[bookingId]
+                : Enumerable.Empty<Seat>();
+        }
+
+        public IEnumerable<Seat> GetAvailableSeats(int auditoriumId)
+        {
+            return _seats.Where(s => s.AuditoriumId == auditoriumId && s.IsAvailable);
+        }
+      
+
+
     }
 }
