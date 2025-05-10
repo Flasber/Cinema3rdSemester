@@ -1,48 +1,27 @@
 ﻿using BioProjektModels;
-using System;
+using BioProjektModels.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
-using BioProjekt.Api.Data.Mock;
-using BioProjekt.Api.Data.Mockdatabase;
+using System.Threading.Tasks;
 
 namespace BioProjekt.Api.BusinessLogic
 {
     public class MovieService : IMovieService
     {
-        private readonly ICinemaRepository _cinemaRepository;
+        private readonly ISqlCinemaRepository _repository;
 
-        public MovieService(ICinemaRepository cinemaRepository)
+        public MovieService(ISqlCinemaRepository repository)
         {
-            _cinemaRepository = cinemaRepository;
+            _repository = repository;
         }
 
-        public List<Movie> GetAllMovies()
+        public async Task<IEnumerable<Movie>> GetAllMoviesAsync()
         {
-            return _cinemaRepository.GetAllMovies().ToList();
+            return await _repository.GetAllMoviesAsync();
         }
 
-        public Movie GetMovieById(int id)
+        public async Task<Movie?> GetMovieByIdAsync(int id)
         {
-            return _cinemaRepository.GetAllMovies().FirstOrDefault(m => m.Id == id);
-        }
-
-        public List<Movie> GetMoviesByGenre(string genre)
-        {
-            return _cinemaRepository.GetAllMovies()
-                .Where(m => m.Genre != null && m.Genre.Equals(genre, StringComparison.OrdinalIgnoreCase))
-                .ToList();
-        }
-
-        public string GetMovieDescription(int id)
-        {
-            var movie = GetMovieById(id);
-            return movie?.Description;
-        }
-
-        public TimeSpan GetMovieDuration(int id)
-        {
-            var movie = GetMovieById(id);
-            return movie?.Duration ?? TimeSpan.Zero;
+            return await _repository.GetMovieByIdAsync(id);
         }
     }
 }

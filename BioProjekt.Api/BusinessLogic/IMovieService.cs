@@ -1,15 +1,13 @@
 ﻿using BioProjektModels;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace BioProjekt.Api.BusinessLogic
+namespace BioProjektModels.Interfaces
 {
     public interface IMovieService
     {
-        List<Movie> GetAllMovies();
-        Movie GetMovieById(int id);
-        List<Movie> GetMoviesByGenre(string genre);
-        string GetMovieDescription(int id);
-        TimeSpan GetMovieDuration(int id);
+        Task<IEnumerable<Movie>> GetAllMoviesAsync();  
+        Task<Movie?> GetMovieByIdAsync(int id);  
     }
 }

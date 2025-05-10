@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BioProjektModels;
 using BioProjekt.Api.BusinessLogic;
-using BioProjektModels;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using BioProjektModels.Interfaces;
 
 namespace BioProjekt.Api.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     public class MovieController : ControllerBase
     {
         private readonly IMovieService _movieService;
@@ -16,32 +17,24 @@ namespace BioProjekt.Api.Controllers
             _movieService = movieService;
         }
 
+        // Hent alle film
         [HttpGet]
-        public ActionResult<List<Movie>> GetMovies()
+        public async Task<IActionResult> GetMovies()
         {
-            var movies = _movieService.GetAllMovies();
+            var movies = await _movieService.GetAllMoviesAsync();
             return Ok(movies);
         }
 
+        // Hent film ved ID
         [HttpGet("{id}")]
-        public ActionResult<Movie> GetMovieById(int id)
+        public async Task<IActionResult> GetMovie(int id)
         {
-            var movie = _movieService.GetMovieById(id);
+            var movie = await _movieService.GetMovieByIdAsync(id);
             if (movie == null)
+            {
                 return NotFound();
+            }
             return Ok(movie);
         }
-
-        [HttpGet("genre/{genreName}")]
-        public ActionResult<List<Movie>> GetMoviesByGenre(string genreName)
-        {
-            var movies = _movieService.GetMoviesByGenre(genreName);
-            if (movies == null || movies.Count == 0)
-                return NotFound();
-            return Ok(movies);
-        }
-
-
-
     }
 }

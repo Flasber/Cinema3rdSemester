@@ -53,7 +53,6 @@ namespace BioProjekt.Api.Controllers
             return Ok("Sædevalg gemt midlertidigt.");
         }
 
-
         [HttpGet("selection")]
         public ActionResult<IEnumerable<Seat>> GetSelectedSeats([FromQuery] int bookingId)
         {
@@ -64,6 +63,5 @@ namespace BioProjekt.Api.Controllers
 
             return Ok(selectedSeats);
         }
-
     }
 }

@@ -1,46 +1,39 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BioProjekt.Api.Data.Mockdatabase;
+﻿using BioProjekt.Api.Dto.SeatDTO;
 using BioProjektModels;
-using BioProjekt.Api.Dto.SeatDTO;
+using BioProjektModels.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BioProjekt.Api.BusinessLogic
 {
     public class SeatService : ISeatService
     {
-        private readonly ICinemaRepository _repository;
+        private readonly ISqlCinemaRepository _repository;
         private readonly Dictionary<int, List<Seat>> _selectionsByBookingId = new();
 
-        public SeatService(ICinemaRepository repository)
+        public SeatService(ISqlCinemaRepository repository)
         {
             _repository = repository;
         }
 
         public IEnumerable<Seat> GetSeatsForAuditorium(int auditoriumId)
         {
-            return _repository.GetSeatsForAuditorium(auditoriumId);
+            return _repository.GetSeatsForAuditorium(auditoriumId).Result;
         }
 
         public void AddSeat(Seat seat)
         {
-            _repository.AddSeat(seat);
+            _repository.AddSeat(seat).Wait();
         }
 
-        public bool TryReserveSeat(int seatNumber, string row, int clientVersion, int auditoriumId)
+        public bool TryReserveSeat(int seatNumber, string row, byte[] clientVersion, int auditoriumId)
         {
-            var seat = _repository.GetSeat(seatNumber, row, auditoriumId);
-
-            if (seat == null || !seat.IsAvailable || seat.Version != clientVersion)
-                return false;
-
-            seat.IsAvailable = false;
-            seat.Version++;
-            return true;
+            return _repository.TryReserveSeat(seatNumber, row, clientVersion, auditoriumId).Result;
         }
 
         public IEnumerable<SeatAvailability> GetAvailableSeats(int auditoriumId)
         {
-            var seats = _repository.GetSeatsForAuditorium(auditoriumId);
+            var seats = _repository.GetSeatsForAuditorium(auditoriumId).Result;
 
             if (seats == null || !seats.Any())
                 return Enumerable.Empty<SeatAvailability>();
@@ -58,7 +51,7 @@ namespace BioProjekt.Api.BusinessLogic
 
         public bool SelectSeatForBooking(int bookingId, int seatNumber, string row, int auditoriumId)
         {
-            var seat = _repository.GetSeat(seatNumber, row, auditoriumId);
+            var seat = _repository.GetSeat(seatNumber, row, auditoriumId).Result;
             if (seat == null || !seat.IsAvailable)
                 return false;
 
@@ -69,7 +62,6 @@ namespace BioProjekt.Api.BusinessLogic
             }
 
             seat.IsAvailable = false;
-            seat.Version++;
 
             if (!_selectionsByBookingId.ContainsKey(bookingId))
                 _selectionsByBookingId[bookingId] = new List<Seat>();
@@ -77,8 +69,6 @@ namespace BioProjekt.Api.BusinessLogic
             _selectionsByBookingId[bookingId].Add(seat);
             return true;
         }
-
-
 
         public IEnumerable<Seat> GetSelectedSeats(int bookingId)
         {

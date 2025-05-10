@@ -7,7 +7,7 @@ namespace BioProjekt.Api.BusinessLogic
     public interface ISeatService
     {
         void AddSeat(Seat seat);
-        bool TryReserveSeat(int seatNumber, string row, int clientVersion, int auditoriumId);
+        bool TryReserveSeat(int seatNumber, string row, byte[] clientVersion, int auditoriumId);  
         IEnumerable<Seat> GetSeatsForAuditorium(int auditoriumId);
         IEnumerable<SeatAvailability> GetAvailableSeats(int auditoriumId);
         bool SelectSeatForBooking(int bookingId, int seatNumber, string row, int auditoriumId);

@@ -1,10 +1,11 @@
 ﻿using BioProjektModels;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace BioProjekt.Api.BusinessLogic
+namespace BioProjektModels.Interfaces
 {
     public interface IAuditoriumService
     {
-        List<Auditorium> GetAllAuditoriums();
+        Task<List<Auditorium>> GetAllAuditoriums();
     }
 }

@@ -1,27 +1,26 @@
 ﻿using BioProjektModels;
+using BioProjektModels.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using BioProjekt.Api.Data.Mockdatabase;
 
 namespace BioProjekt.Api.BusinessLogic
 {
     public class ScreeningService : IScreeningService
     {
-        private readonly ICinemaRepository _cinemaRepository;
+        private readonly ISqlCinemaRepository _cinemaRepository;
         private readonly List<Screening> _extraScreenings = new();
         private int _nextId;
 
-        public ScreeningService(ICinemaRepository cinemaRepository)
+        public ScreeningService(ISqlCinemaRepository cinemaRepository)
         {
             _cinemaRepository = cinemaRepository;
-
-            var existingScreenings = _cinemaRepository.GetAllScreenings();
+            var existingScreenings = _cinemaRepository.GetAllScreenings().Result;
             _nextId = existingScreenings.Any() ? existingScreenings.Max(s => s.Id) + 1 : 1;
         }
 
         public List<Screening> GetAllScreenings()
         {
-            var existingScreenings = _cinemaRepository.GetAllScreenings().ToList();
+            var existingScreenings = _cinemaRepository.GetAllScreenings().Result.ToList();
             return existingScreenings.Concat(_extraScreenings).ToList();
         }
 
