@@ -2,14 +2,14 @@
 using BioProjekt.Api.BusinessLogic;
 using BioProjektModels;
 
-namespace BioProjekt.Tests
+namespace BioProjektTest.Mock
 {
     [TestFixture]
     public class SeatServiceTests
     {
         private SeatService _seatService;
 
-      
+
 
         [Test]
         public void TryReserveSeat_ShouldReserveSeat_WhenAvailableAndVersionMatches()

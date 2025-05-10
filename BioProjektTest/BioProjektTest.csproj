@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -17,6 +17,7 @@
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
 	  <ProjectReference Include="..\BioProjekt.Api\BioProjekt.Api.csproj" />
 	  <ProjectReference Include="..\BioProjektModels\BioProjektModels.csproj" />
+	  <ProjectReference Include="..\ClassLibrary1\DataAccess.csproj" />
   </ItemGroup>
 
   <ItemGroup>

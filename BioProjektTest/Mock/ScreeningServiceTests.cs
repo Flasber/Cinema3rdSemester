@@ -6,7 +6,7 @@ using BioProjektModels;
 using System;
 using System.Linq;
 
-namespace BioProjekt.Tests
+namespace BioProjektTest.Mock
 {
     [TestFixture]
     public class ScreeningServiceTests

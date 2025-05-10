@@ -4,7 +4,7 @@ using BioProjekt.Api.Data.Mock;
 using BioProjekt.Api.Data.Mockdatabase;
 using BioProjektModels;
 
-namespace BioProjekt.Tests
+namespace BioProjektTest.Mock
 {
     [TestFixture]
     public class MovieServiceTests
