@@ -23,6 +23,8 @@
   <ItemGroup>
     
     <ProjectReference Include="..\BioProjektModels\BioProjektModels.csproj" />
+    
+    <ProjectReference Include="..\ClassLibrary1\DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

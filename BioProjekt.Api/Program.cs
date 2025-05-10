@@ -1,11 +1,14 @@
+using BioProjektModels.Interfaces;
+using BioProjekt.DataAccess.Repositories;
 using BioProjekt.Api.BusinessLogic;
-using BioProjekt.Api.Data.Mock;
-using BioProjekt.Api.Data.Mockdatabase;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddSingleton<ICinemaRepository, MockCinemaRepository>();
+
+
+builder.Services.AddSingleton<ISqlCinemaRepository, SqlCinemaRepository>();
+
 builder.Services.AddSingleton<IMovieService, MovieService>();
 builder.Services.AddSingleton<IBookingService, BookingService>();
 builder.Services.AddSingleton<IScreeningService, ScreeningService>();
