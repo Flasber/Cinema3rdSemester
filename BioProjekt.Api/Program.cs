@@ -1,7 +1,9 @@
 using BioProjekt.Api.BusinessLogic;
 using BioProjekt.DataAccess.Repositories;
 using BioProjektModels.Interfaces;
-using DataAccess.Helpers;
+using BioProjekt.DataAccess.Helpers;
+using BioProjekt.DataAccess.Interfaces;
+
 using Microsoft.Extensions.Configuration;
 
 public class Program
@@ -10,28 +12,28 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Tilføj konfigurationen (appsettings.json) til DI-containeren
         builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
-
-        // Tilføj controllers til DI-containeren
         builder.Services.AddControllers();
 
-        // Registrer ISqlCinemaRepository med SqlCinemaRepository som implementering
-        builder.Services.AddScoped<ISqlCinemaRepository, SqlCinemaRepository>();
-
-        // Registrer DbHelper med den nødvendige forbindelsesstreng
         builder.Services.AddScoped<DbHelper>(provider =>
         {
             var configuration = provider.GetRequiredService<IConfiguration>();
             var connectionString = configuration.GetConnectionString("CinemaDb");
-            return new DbHelper(connectionString); // Opretter en ny DbHelper-instans med forbindelsesstrengen
+            return new DbHelper(connectionString);
         });
 
-        // Registrering af øvrige services
+        // Repository-registreringer
+        builder.Services.AddScoped<IMovieRepository, SqlMovieRepository>();
+        builder.Services.AddScoped<IScreeningRepository, SqlScreeningRepository>();
+        builder.Services.AddScoped<IAuditoriumRepository, SqlAuditoriumRepository>();
+        builder.Services.AddScoped<ISeatRepository, SqlSeatRepository>();
+        builder.Services.AddScoped<IBookingRepository, SqlBookingRepository>();
+
+        // Service-registreringer
         builder.Services.AddScoped<IMovieService, MovieService>();
         builder.Services.AddScoped<IScreeningService, ScreeningService>();
-        builder.Services.AddScoped<ISeatService, SeatService>();
         builder.Services.AddScoped<IAuditoriumService, AuditoriumService>();
+        builder.Services.AddScoped<ISeatService, SeatService>();
         builder.Services.AddScoped<IBookingService, BookingService>();
 
         builder.Services.AddEndpointsApiExplorer();

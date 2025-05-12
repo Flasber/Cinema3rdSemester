@@ -1,43 +1,41 @@
-﻿using BioProjekt.Api.Dto.SeatDTO;
-using BioProjektModels;
-using BioProjektModels.Interfaces;
+﻿using BioProjektModels;
+using BioProjekt.DataAccess.Interfaces;
+using BioProjekt.Api.Dto.SeatDTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BioProjekt.Api.BusinessLogic
 {
     public class SeatService : ISeatService
     {
-        private readonly ISqlCinemaRepository _repository;
-        private readonly Dictionary<int, List<Seat>> _selectionsByBookingId = new();
+        private readonly ISeatRepository _seatRepository;
+        private readonly Dictionary<Guid, List<Seat>> _selectionsBySessionId = new();
 
-        public SeatService(ISqlCinemaRepository repository)
+        public SeatService(ISeatRepository seatRepository)
         {
-            _repository = repository;
+            _seatRepository = seatRepository;
         }
 
-        public IEnumerable<Seat> GetSeatsForAuditorium(int auditoriumId)
+        public async Task<IEnumerable<Seat>> GetSeatsForAuditorium(int auditoriumId)
         {
-            return _repository.GetSeatsForAuditorium(auditoriumId).Result;
+            return await _seatRepository.GetSeatsForAuditorium(auditoriumId);
         }
 
-        public void AddSeat(Seat seat)
+        public async Task AddSeat(Seat seat)
         {
-            _repository.AddSeat(seat).Wait();
+            await _seatRepository.AddSeat(seat);
         }
 
-        public bool TryReserveSeat(int seatNumber, string row, byte[] clientVersion, int auditoriumId)
+        public async Task<bool> TryReserveSeat(int seatNumber, string row, byte[] clientVersion, int auditoriumId)
         {
-            return _repository.TryReserveSeat(seatNumber, row, clientVersion, auditoriumId).Result;
+            return await _seatRepository.TryReserveSeat(seatNumber, row, clientVersion, auditoriumId);
         }
 
-        public IEnumerable<SeatAvailability> GetAvailableSeats(int auditoriumId)
+        public async Task<IEnumerable<SeatAvailability>> GetAvailableSeats(int auditoriumId)
         {
-            var seats = _repository.GetSeatsForAuditorium(auditoriumId).Result;
-
-            if (seats == null || !seats.Any())
-                return Enumerable.Empty<SeatAvailability>();
-
+            var seats = await _seatRepository.GetSeatsForAuditorium(auditoriumId);
             return seats
                 .Where(seat => seat.IsAvailable)
                 .Select(seat => new SeatAvailability
@@ -45,36 +43,45 @@ namespace BioProjekt.Api.BusinessLogic
                     SeatNumber = seat.SeatNumber,
                     Row = seat.Row,
                     IsAvailable = seat.IsAvailable
-                })
-                .ToList();
+                });
         }
 
-        public bool SelectSeatForBooking(int bookingId, int seatNumber, string row, int auditoriumId)
+        public bool SelectSeat(Guid sessionId, int seatNumber, string row, int auditoriumId)
         {
-            var seat = _repository.GetSeat(seatNumber, row, auditoriumId).Result;
+            var seat = _seatRepository.GetSeat(seatNumber, row, auditoriumId).Result;
             if (seat == null || !seat.IsAvailable)
                 return false;
 
-            if (_selectionsByBookingId.Values.Any(seats =>
-                seats.Any(s => s.SeatNumber == seatNumber && s.Row == row && s.AuditoriumId == auditoriumId)))
+            if (!_selectionsBySessionId.ContainsKey(sessionId))
+                _selectionsBySessionId[sessionId] = new List<Seat>();
+
+            if (_selectionsBySessionId[sessionId].Any(s =>
+                s.SeatNumber == seatNumber &&
+                s.Row == row &&
+                s.AuditoriumId == auditoriumId))
             {
                 return false;
             }
 
             seat.IsAvailable = false;
-
-            if (!_selectionsByBookingId.ContainsKey(bookingId))
-                _selectionsByBookingId[bookingId] = new List<Seat>();
-
-            _selectionsByBookingId[bookingId].Add(seat);
+            _selectionsBySessionId[sessionId].Add(seat);
             return true;
         }
 
-        public IEnumerable<Seat> GetSelectedSeats(int bookingId)
+        public IEnumerable<Seat> GetSelectedSeats(Guid sessionId)
         {
-            return _selectionsByBookingId.ContainsKey(bookingId)
-                ? _selectionsByBookingId[bookingId]
+            return _selectionsBySessionId.ContainsKey(sessionId)
+                ? _selectionsBySessionId[sessionId]
                 : Enumerable.Empty<Seat>();
+        }
+
+        public async Task AssignSeatsToBooking(Guid sessionId, int bookingId)
+        {
+            if (!_selectionsBySessionId.TryGetValue(sessionId, out var selectedSeats))
+                return;
+
+            await _seatRepository.AssignSeatsToBooking(sessionId, bookingId, selectedSeats);
+            _selectionsBySessionId.Remove(sessionId);
         }
     }
 }

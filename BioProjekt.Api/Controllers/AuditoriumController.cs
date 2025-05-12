@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BioProjektModels;
-using BioProjekt.Api.BusinessLogic;
+using BioProjektModels.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BioProjektModels.Interfaces;
 
 namespace BioProjekt.Api.Controllers
 {

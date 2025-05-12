@@ -1,13 +1,12 @@
-﻿using BioProjektModels;
+﻿using Microsoft.AspNetCore.Mvc;
+using BioProjektModels;
 using BioProjekt.Api.BusinessLogic;
-using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using BioProjektModels.Interfaces;
 
 namespace BioProjekt.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class MovieController : ControllerBase
     {
         private readonly IMovieService _movieService;
@@ -17,7 +16,6 @@ namespace BioProjekt.Api.Controllers
             _movieService = movieService;
         }
 
-        // Hent alle film
         [HttpGet]
         public async Task<IActionResult> GetMovies()
         {
@@ -25,15 +23,13 @@ namespace BioProjekt.Api.Controllers
             return Ok(movies);
         }
 
-        // Hent film ved ID
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMovie(int id)
         {
             var movie = await _movieService.GetMovieByIdAsync(id);
             if (movie == null)
-            {
                 return NotFound();
-            }
+
             return Ok(movie);
         }
     }

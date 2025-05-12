@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BioProjekt.Api.BusinessLogic
+namespace BioProjekt.DataAccess.Interfaces
 {
-    public interface IMovieService
+    public interface IMovieRepository
     {
         Task<IEnumerable<Movie>> GetAllMoviesAsync();
         Task<Movie?> GetMovieByIdAsync(int id);

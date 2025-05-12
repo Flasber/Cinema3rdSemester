@@ -1,5 +1,6 @@
 ﻿using BioProjektModels;
-using BioProjektModels.Interfaces;
+using BioProjekt.DataAccess.Interfaces;
+using BioProjekt.Api.BusinessLogic;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -7,21 +8,21 @@ namespace BioProjekt.Api.BusinessLogic
 {
     public class MovieService : IMovieService
     {
-        private readonly ISqlCinemaRepository _repository;
+        private readonly IMovieRepository _movieRepository;
 
-        public MovieService(ISqlCinemaRepository repository)
+        public MovieService(IMovieRepository movieRepository)
         {
-            _repository = repository;
+            _movieRepository = movieRepository;
         }
 
         public async Task<IEnumerable<Movie>> GetAllMoviesAsync()
         {
-            return await _repository.GetAllMoviesAsync();
+            return await _movieRepository.GetAllMoviesAsync();
         }
 
         public async Task<Movie?> GetMovieByIdAsync(int id)
         {
-            return await _repository.GetMovieByIdAsync(id);
+            return await _movieRepository.GetMovieByIdAsync(id);
         }
     }
 }

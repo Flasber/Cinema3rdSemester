@@ -2,7 +2,7 @@
 {
     public class BookingCreateDTO
     {
-        public int CustomerId { get; set; }
+        public int CustomerNumber { get; set; }
         public int ScreeningId { get; set; }
     }
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BioProjektModels;
 using BioProjekt.Api.BusinessLogic;
+using System.Collections.Generic;
 
 namespace BioProjekt.Api.Controllers
 {
@@ -26,7 +27,6 @@ namespace BioProjekt.Api.Controllers
         {
             _screeningService.AddScreening(screening);
             return CreatedAtAction(nameof(GetAllScreenings), new { id = screening.Id }, screening);
-
         }
     }
 }

@@ -1,18 +1,19 @@
 ﻿using BioProjektModels;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BioProjektModels.Interfaces
+namespace BioProjekt.DataAccess.Interfaces
 {
-    public interface ISqlCinemaRepository
+    public interface ISeatRepository
     {
-        Task<IEnumerable<Movie>> GetAllMoviesAsync();
-        Task<Movie?> GetMovieByIdAsync(int id);
-        Task<IEnumerable<Auditorium>> GetAllAuditoriums();
-        Task<IEnumerable<Screening>> GetAllScreenings();
         Task<IEnumerable<Seat>> GetSeatsForAuditorium(int auditoriumId);
-        Task AddSeat(Seat seat);
         Task<Seat?> GetSeat(int seatNumber, string row, int auditoriumId);
+        Task AddSeat(Seat seat);
         Task<bool> TryReserveSeat(int seatNumber, string row, byte[] clientVersion, int auditoriumId);
+        Task UpdateSeat(Seat seat);
+        Task<IEnumerable<Seat>> GetSeatsForBookingAsync(int bookingId); 
+        Task AssignSeatsToBooking(Guid sessionId, int bookingId, List<Seat> selectedSeats);
     }
+
 }

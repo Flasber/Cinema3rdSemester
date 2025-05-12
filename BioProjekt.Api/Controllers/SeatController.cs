@@ -2,6 +2,10 @@
 using BioProjekt.Api.BusinessLogic;
 using BioProjekt.Api.Dto.SeatDTO;
 using BioProjektModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BioProjekt.Api.Controllers
 {
@@ -17,9 +21,9 @@ namespace BioProjekt.Api.Controllers
         }
 
         [HttpPost("reserve")]
-        public IActionResult ReserveSeat([FromBody] SeatReservationRequestDTO request)
+        public async Task<IActionResult> ReserveSeat([FromBody] SeatReservationRequestDTO request)
         {
-            var success = _seatService.TryReserveSeat(
+            var success = await _seatService.TryReserveSeat(
                 request.SeatNumber,
                 request.Row,
                 request.ClientVersion,
@@ -32,9 +36,9 @@ namespace BioProjekt.Api.Controllers
         }
 
         [HttpGet("available")]
-        public ActionResult<IEnumerable<SeatAvailability>> GetAvailableSeats([FromQuery] int auditoriumId)
+        public async Task<ActionResult<IEnumerable<SeatAvailability>>> GetAvailableSeats([FromQuery] int auditoriumId)
         {
-            var availableSeats = _seatService.GetAvailableSeats(auditoriumId);
+            var availableSeats = await _seatService.GetAvailableSeats(auditoriumId);
 
             if (!availableSeats.Any())
                 return NotFound("Ingen ledige sæder fundet.");
@@ -45,7 +49,7 @@ namespace BioProjekt.Api.Controllers
         [HttpPost("select")]
         public IActionResult SelectSeat([FromBody] SeatSelectionDTO selection)
         {
-            var success = _seatService.SelectSeatForBooking(selection.BookingId, selection.SeatNumber, selection.Row, selection.AuditoriumId);
+            var success = _seatService.SelectSeat(selection.SessionId, selection.SeatNumber, selection.Row, selection.AuditoriumId);
 
             if (!success)
                 return Conflict("Sædet er allerede reserveret.");
@@ -54,12 +58,12 @@ namespace BioProjekt.Api.Controllers
         }
 
         [HttpGet("selection")]
-        public ActionResult<IEnumerable<Seat>> GetSelectedSeats([FromQuery] int bookingId)
+        public ActionResult<IEnumerable<Seat>> GetSelectedSeats([FromQuery] Guid sessionId)
         {
-            var selectedSeats = _seatService.GetSelectedSeats(bookingId);
+            var selectedSeats = _seatService.GetSelectedSeats(sessionId);
 
             if (!selectedSeats.Any())
-                return NotFound("Ingen sæder valgt for denne booking.");
+                return NotFound("Ingen sæder valgt for denne session.");
 
             return Ok(selectedSeats);
         }

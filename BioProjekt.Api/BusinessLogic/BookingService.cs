@@ -1,25 +1,26 @@
 ﻿using BioProjektModels;
+using BioProjekt.DataAccess.Interfaces;
+using BioProjekt.Api.BusinessLogic;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BioProjekt.Api.BusinessLogic
 {
     public class BookingService : IBookingService
     {
-        private static readonly List<Booking> Bookings = new();
-        private static int _id = 1;
+        private readonly IBookingRepository _bookingRepository;
 
-        public Booking CreateBooking(Booking booking)
+        public BookingService(IBookingRepository bookingRepository)
         {
-            booking.Id = _id++;
-            booking.BookingDate = DateTime.Now;
-            Bookings.Add(booking);
-            return booking;
+            _bookingRepository = bookingRepository;
         }
 
-        public List<Booking> GetAllBookings()
+        public async Task<Booking> CreateBookingAsync(Booking booking)
         {
-            return Bookings;
+            booking.BookingDate = DateTime.Now;
+            booking.Id = await _bookingRepository.CreateBookingAsync(booking);
+            return booking;
         }
     }
 }

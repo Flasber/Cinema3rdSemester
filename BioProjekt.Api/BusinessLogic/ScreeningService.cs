@@ -1,33 +1,31 @@
 ﻿using BioProjektModels;
-using BioProjektModels.Interfaces;
+using BioProjekt.DataAccess.Interfaces;
+using BioProjekt.Api.BusinessLogic;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BioProjekt.Api.BusinessLogic
 {
     public class ScreeningService : IScreeningService
     {
-        private readonly ISqlCinemaRepository _cinemaRepository;
-        private readonly List<Screening> _extraScreenings = new();
-        private int _nextId;
+        private readonly IScreeningRepository _screeningRepository;
 
-        public ScreeningService(ISqlCinemaRepository cinemaRepository)
+        public ScreeningService(IScreeningRepository screeningRepository)
         {
-            _cinemaRepository = cinemaRepository;
-            var existingScreenings = _cinemaRepository.GetAllScreenings().Result;
-            _nextId = existingScreenings.Any() ? existingScreenings.Max(s => s.Id) + 1 : 1;
+            _screeningRepository = screeningRepository;
         }
 
-        public List<Screening> GetAllScreenings()
+        public async Task<List<Screening>> GetAllScreeningsAsync()
         {
-            var existingScreenings = _cinemaRepository.GetAllScreenings().Result.ToList();
-            return existingScreenings.Concat(_extraScreenings).ToList();
+            var screenings = await _screeningRepository.GetAllScreeningsAsync();
+            return screenings.ToList();
         }
 
-        public void AddScreening(Screening screening)
+        public async Task AddScreeningAsync(Screening screening)
         {
-            screening.Id = _nextId++;
-            _extraScreenings.Add(screening);
+            await _screeningRepository.AddScreeningAsync(screening);
         }
     }
+
 }
