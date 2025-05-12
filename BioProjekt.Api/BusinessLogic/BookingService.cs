@@ -19,7 +19,7 @@ namespace BioProjekt.Api.BusinessLogic
         public async Task<Booking> CreateBookingAsync(Booking booking)
         {
             booking.BookingDate = DateTime.Now;
-            booking.Id = await _bookingRepository.CreateBookingAsync(booking);
+            booking.BookingId = await _bookingRepository.CreateBookingAsync(booking);
             return booking;
         }
     }

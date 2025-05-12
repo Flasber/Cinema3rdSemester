@@ -22,7 +22,7 @@ namespace BioProjekt.Api.Controllers
         {
             var booking = new Booking
             {
-                CustomerId = dto.CustomerId,
+                CustomerNumber = dto.CustomerNumber,
                 ScreeningId = dto.ScreeningId,
                 BookingStatus = "Pending"
             };
