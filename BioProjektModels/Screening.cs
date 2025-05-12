@@ -11,5 +11,7 @@
         public string SoundSystem { get; set; }
         public int MovieId { get; set; }
         public int AuditoriumId { get; set; }
+        public DateTime StartDateTime => Date.Add(Time);
+
     }
 }

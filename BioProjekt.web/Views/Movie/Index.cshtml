@@ -1,4 +1,7 @@
-﻿@{
+﻿@using BioProjektModels
+@model List<Movie>
+
+@{
     ViewData["Title"] = "Filmoversigt";
 }
 
@@ -65,21 +68,12 @@
 <h1 class="mb-5 text-center">Filmoversigt</h1>
 
 <div class="movies-grid">
-    <div class="movie-card">
-        <img src="/images/Inception.jpg" alt="Inception">
-        <div class="movie-card-title">Inception</div>
-        <a href="#" class="buy-button">Se tider</a>
-    </div>
-
-    <div class="movie-card">
-        <img src="/images/MacAndDevin.jpg" alt="Mac and Devin Go To High School">
-        <div class="movie-card-title">Mac and Devin Go To High School</div>
-        <a href="#" class="buy-button">Se tider</a>
-    </div>
-
-    <div class="movie-card">
-        <img src="/images/Minecraft.jpg" alt="Minecraft The Movie">
-        <div class="movie-card-title">Minecraft Filmen</div>
-        <a href="#" class="buy-button">Se tider</a>
-    </div>
+    @foreach (var movie in Model)
+    {
+        <div class="movie-card">
+            <img src="@movie.PosterUrl" alt="@movie.Title">
+            <div class="movie-card-title">@movie.Title</div>
+            <a href="@Url.Action("ShowTimes", "Movie", new { id = movie.Id })" class="buy-button">Se tider</a>
+        </div>
+    }
 </div>

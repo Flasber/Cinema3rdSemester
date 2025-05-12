@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Threading.Tasks;
 using BioProjekt.DataAccess.Interfaces;
-
-
 
 namespace BioProjekt.Api.Controllers
 {
@@ -24,19 +23,27 @@ namespace BioProjekt.Api.Controllers
             _auditoriumRepository = auditoriumRepository;
         }
 
-        [HttpGet]
-        public IActionResult GetAllShowtimes()
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetShowtimesByMovieId(int id)
         {
-            var movies = _movieRepository.GetAllMoviesAsync().Result.ToList();
-            var screenings = _screeningRepository.GetAllScreeningsAsync().Result.ToList();
-            var auditoriums = _auditoriumRepository.GetAllAuditoriumsAsync().Result.ToList();
+            var movie = (await _movieRepository.GetAllMoviesAsync()).FirstOrDefault(m => m.Id == id);
+            if (movie == null)
+            {
+                return NotFound($"Movie with id {id} not found.");
+            }
+
+            var screenings = (await _screeningRepository.GetAllScreeningsAsync())
+                .Where(s => s.MovieId == id)
+                .ToList();
+
+            var auditoriums = await _auditoriumRepository.GetAllAuditoriumsAsync();
 
             var showtimes = screenings.Select(s => new
             {
                 s.Id,
                 s.Date,
                 s.Time,
-                MovieTitle = movies.FirstOrDefault(m => m.Id == s.MovieId)?.Title,
+                MovieTitle = movie.Title,
                 AuditoriumName = auditoriums.FirstOrDefault(a => a.Id == s.AuditoriumId)?.Name,
                 s.LanguageVersion,
                 s.Is3D,
@@ -46,5 +53,6 @@ namespace BioProjekt.Api.Controllers
 
             return Ok(showtimes);
         }
+
     }
 }
