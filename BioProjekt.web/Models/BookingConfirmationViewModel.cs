@@ -7,7 +7,8 @@
         public string AuditoriumName { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public List<string> SeatLabels { get; set; } // fx "A8", "A9"
+        public List<string> SeatLabels { get; set; } 
         public decimal TotalPrice { get; set; }
+        public int ScreeningId { get; set; }
     }
 }

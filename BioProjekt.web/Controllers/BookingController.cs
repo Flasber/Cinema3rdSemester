@@ -35,11 +35,12 @@ public class BookingController : Controller
         });
 
         ViewBag.SessionId = sessionId;
+        ViewBag.ScreeningId = showtimeId;
 
         return View(seats);
     }
 
-    public async Task<IActionResult> ConfirmBooking(int seatNumber, string row, string version, int auditoriumId, Guid sessionId)
+    public async Task<IActionResult> ConfirmBooking(int seatNumber, string row, string version, int auditoriumId, Guid sessionId, int screeningId)
     {
         var selectDto = new SeatSelectionDTO
         {
@@ -71,8 +72,9 @@ public class BookingController : Controller
             return View("Error", new ErrorViewModel { Message = $"Sædereservation fejlede: {error}" });
         }
 
-        return RedirectToAction("BookingConfirmation", new { screeningId = 1, sessionId = sessionId });
+        return RedirectToAction("BookingConfirmation", new { screeningId = screeningId, sessionId = sessionId });
     }
+
 
     public async Task<IActionResult> BookingConfirmation(int screeningId, Guid? sessionId)
     {
@@ -122,7 +124,8 @@ public class BookingController : Controller
             StartTime = screening.StartDateTime,
             EndTime = screening.StartDateTime.AddMinutes(120),
             SeatLabels = seatLabels,
-            TotalPrice = totalPrice
+            TotalPrice = totalPrice,
+            ScreeningId = screening.Id
         };
 
         return View(viewModel);

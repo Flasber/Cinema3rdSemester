@@ -1,9 +1,9 @@
-using BioProjekt.Api.BusinessLogic;
+﻿using BioProjekt.Api.BusinessLogic;
+using BioProjekt.Api.Storage;
 using BioProjekt.DataAccess.Repositories;
 using BioProjektModels.Interfaces;
 using BioProjekt.DataAccess.Helpers;
 using BioProjekt.DataAccess.Interfaces;
-
 using Microsoft.Extensions.Configuration;
 
 public class Program
@@ -35,6 +35,9 @@ public class Program
         builder.Services.AddScoped<IAuditoriumService, AuditoriumService>();
         builder.Services.AddScoped<ISeatService, SeatService>();
         builder.Services.AddScoped<IBookingService, BookingService>();
+
+        // ✅ Tilføj SeatSelectionStore som Singleton
+        builder.Services.AddSingleton<SeatSelectionStore>();
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();

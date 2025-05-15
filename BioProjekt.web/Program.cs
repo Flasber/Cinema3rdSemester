@@ -1,13 +1,11 @@
-using BioProjekt.Api.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient();
 
-var app = builder.Build();
+var app = builder.Build(); 
 
-builder.Services.AddSingleton<SeatSelectionStore>();
 
 
 if (!app.Environment.IsDevelopment())

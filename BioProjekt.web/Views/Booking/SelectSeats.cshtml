@@ -4,6 +4,7 @@
 
 @{
     var sessionId = ViewBag.SessionId ?? Guid.NewGuid();
+    var screeningId = ViewBag.ScreeningId ?? 0;
     ViewData["Title"] = "Vælg sæder";
 
     var grouped = Model
@@ -34,7 +35,8 @@
                                 row = seat.Row,
                                 version = Convert.ToBase64String(seat.Version),
                                 auditoriumId = seat.AuditoriumId,
-                                sessionId = sessionId
+                                sessionId = sessionId,
+                                screeningId = screeningId
                             })">Vælg</a>
                         }
                         else if (!seat.IsAvailable)
