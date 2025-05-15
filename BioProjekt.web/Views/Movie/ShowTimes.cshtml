@@ -1,9 +1,36 @@
 ﻿@using BioProjektModels
 @model List<Screening>
 
-<h1>@ViewData["MovieTitle"] - Visningstider</h1>
+<div class="dark-theme">
+    <h1>@ViewData["MovieTitle"] - Visningstider</h1>
+
+    <div class="showtimes">
+        @foreach (var screening in Model)
+        {
+            <div class="showtime-card">
+                <p>@screening.Date.ToString("dd/MM/yyyy") @screening.Time.ToString(@"hh\:mm")</p>
+                <button class="btn btn-primary"
+                        onclick="location.href='@Url.Action("SelectSeats", "Booking", new { showtimeId = screening.Id })'">
+                    Vælg sæde
+                </button>
+            </div>
+        }
+    </div>
+</div>
 
 <style>
+    .dark-theme {
+        background-color: #0d1117;
+        color: white;
+        padding: 30px;
+        min-height: 100vh;
+    }
+
+    h1 {
+        text-align: center;
+        color: white;
+    }
+
     .showtimes {
         display: flex;
         flex-wrap: wrap;
@@ -40,16 +67,3 @@
             background-color: #0b5ed7;
         }
 </style>
-
-<div class="showtimes">
-    @foreach (var screening in Model)
-    {
-        <div class="showtime-card">
-            <p>@screening.Date.ToString("dd/MM/yyyy") @screening.Time.ToString(@"hh\:mm")</p>
-            <button class="btn btn-primary"
-                    onclick="location.href='@Url.Action("SelectSeats", "Booking", new { showtimeId = screening.Id })'">
-                Vælg sæde
-            </button>
-        </div>
-    }
-</div>

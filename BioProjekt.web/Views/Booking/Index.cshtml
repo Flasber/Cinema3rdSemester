@@ -1,0 +1,69 @@
+﻿@using BioProjektModels
+@model int
+
+<div class="dark-theme px-5 py-4">
+    <div class="row">
+        <!-- VENSTRE KOLONNE -->
+        <div class="col-md-6 mb-4">
+            <h4 class="fw-bold text-white">Min ordre</h4>
+
+            <div class="bg-dark rounded p-3 mt-3">
+                <div class="d-flex justify-content-between text-white-50">
+                    <span>Billet inkl. gebyr</span>
+                    <span class="fw-bold text-white">140 kr.</span>
+                </div>
+                <hr class="border-secondary" />
+                <div class="d-flex justify-content-between text-white">
+                    <span class="fw-bold">I alt</span>
+                    <span class="fw-bold">140 kr.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- HØJRE KOLONNE -->
+        <div class="col-md-6 mb-4">
+            <h4 class="fw-bold text-white">Log ind eller opret BIOPLUS-profil</h4>
+
+            <div class="bg-dark rounded p-3 mt-3">
+                <p class="text-white-50 mb-2">Fordele ved en profil</p>
+                <ul class="text-white-50 ps-3 small mb-3">
+                    <li>Nyhedsbreve om film og events</li>
+                    <li>Anmeld film</li>
+                    <li>Købshistorik</li>
+                    <li>Nemmere refundering</li>
+                </ul>
+                <button class="btn btn-primary">Log ind</button>
+            </div>
+
+            <form asp-action="CreateWithoutLogin" asp-controller="Booking" method="post" class="bg-dark rounded p-3 mt-4">
+                <input type="hidden" name="screeningId" value="@Model" />
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-white">Fortsæt uden at logge ind</span>
+                    <button type="submit" class="btn btn-outline-primary">Næste</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .dark-theme {
+        background-color: #0d1117;
+        color: white;
+        min-height: 100vh;
+    }
+
+    .btn-outline-primary {
+        border-color: #0d6efd;
+        color: #0d6efd;
+    }
+
+        .btn-outline-primary:hover {
+            background-color: #0d6efd;
+            color: white;
+        }
+
+    .bg-dark {
+        background-color: #161b22 !important;
+    }
+</style>

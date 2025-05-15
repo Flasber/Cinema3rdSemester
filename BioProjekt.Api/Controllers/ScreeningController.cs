@@ -30,5 +30,16 @@ namespace BioProjekt.Api.Controllers
             await _screeningService.AddScreeningAsync(screening);
             return CreatedAtAction(nameof(GetAllScreenings), new { id = screening.Id }, screening);
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetScreeningById(int id)
+        {
+            var screening = await _screeningService.GetScreeningByIdAsync(id);
+
+            if (screening == null)
+                return NotFound($"Screening med id {id} blev ikke fundet.");
+
+            return Ok(screening);
+        }
+
     }
 }

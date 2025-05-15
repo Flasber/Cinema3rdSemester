@@ -22,6 +22,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\BioProjekt.Shared\BioProjekt.Shared.csproj" />
 		<ProjectReference Include="..\BioProjektModels\BioProjektModels.csproj" />
 		<ProjectReference Include="..\ClassLibrary1\DataAccess.csproj" />
 	</ItemGroup>

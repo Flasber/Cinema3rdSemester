@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BioProjekt.Api.BusinessLogic;
-using BioProjekt.Api.Dto.SeatDTO;
 using BioProjektModels;
+using BioProjekt.Shared.WebDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,22 +40,32 @@ namespace BioProjekt.Api.Controllers
         {
             var availableSeats = await _seatService.GetAvailableSeats(auditoriumId);
 
-            if (!availableSeats.Any())
-                return NotFound("Ingen ledige sæder fundet.");
+            foreach (var seat in availableSeats)
+            {
+                Console.WriteLine($"Seat {seat.SeatNumber}: Version = {(seat.Version == null ? "NULL" : BitConverter.ToString(seat.Version))}");
+            }
 
             return Ok(availableSeats);
         }
 
+
         [HttpPost("select")]
         public IActionResult SelectSeat([FromBody] SeatSelectionDTO selection)
         {
+            Console.WriteLine($"==> API: SELECT seat {selection.Row}{selection.SeatNumber} for session {selection.SessionId}");
+
             var success = _seatService.SelectSeat(selection.SessionId, selection.SeatNumber, selection.Row, selection.AuditoriumId);
 
             if (!success)
+            {
+                Console.WriteLine("!! Sædevalg fejlede - sædet er ikke ledigt");
                 return Conflict("Sædet er allerede reserveret.");
+            }
 
+            Console.WriteLine("==> Sædevalg gennemført og gemt");
             return Ok("Sædevalg gemt midlertidigt.");
         }
+
 
         [HttpGet("selection")]
         public ActionResult<IEnumerable<Seat>> GetSelectedSeats([FromQuery] Guid sessionId)

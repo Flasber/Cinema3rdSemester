@@ -7,6 +7,9 @@ namespace BioProjekt.Api.BusinessLogic
     {
         Task<List<Screening>> GetAllScreeningsAsync();
         Task AddScreeningAsync(Screening screening);
+
+        Task<Screening?> GetScreeningByIdAsync(int id);
+
     }
 
 }

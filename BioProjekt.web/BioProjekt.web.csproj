@@ -6,6 +6,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\BioProjekt.Shared\BioProjekt.Shared.csproj" />
 		<ProjectReference Include="..\BioProjektModels\BioProjektModels.csproj" />
 	</ItemGroup>
 </Project>

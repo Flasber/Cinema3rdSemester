@@ -1,6 +1,6 @@
 ﻿using BioProjektModels;
 using BioProjekt.DataAccess.Interfaces;
-using BioProjekt.Api.Dto.SeatDTO;
+using BioProjekt.Shared.WebDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +18,22 @@ namespace BioProjekt.Api.BusinessLogic
             _seatRepository = seatRepository;
         }
 
+        public async Task<IEnumerable<SeatAvailability>> GetAvailableSeats(int auditoriumId)
+        {
+            var seats = await _seatRepository.GetSeatsForAuditorium(auditoriumId);
+
+            return seats
+                .Where(seat => seat.IsAvailable)
+                .Select(seat => new SeatAvailability
+                {
+                    SeatNumber = seat.SeatNumber,
+                    Row = seat.Row,
+                    IsAvailable = seat.IsAvailable,
+                    Version = seat.Version,
+                    AuditoriumId = seat.AuditoriumId
+                });
+        }
+
         public async Task<IEnumerable<Seat>> GetSeatsForAuditorium(int auditoriumId)
         {
             return await _seatRepository.GetSeatsForAuditorium(auditoriumId);
@@ -31,19 +47,6 @@ namespace BioProjekt.Api.BusinessLogic
         public async Task<bool> TryReserveSeat(int seatNumber, string row, byte[] clientVersion, int auditoriumId)
         {
             return await _seatRepository.TryReserveSeat(seatNumber, row, clientVersion, auditoriumId);
-        }
-
-        public async Task<IEnumerable<SeatAvailability>> GetAvailableSeats(int auditoriumId)
-        {
-            var seats = await _seatRepository.GetSeatsForAuditorium(auditoriumId);
-            return seats
-                .Where(seat => seat.IsAvailable)
-                .Select(seat => new SeatAvailability
-                {
-                    SeatNumber = seat.SeatNumber,
-                    Row = seat.Row,
-                    IsAvailable = seat.IsAvailable
-                });
         }
 
         public bool SelectSeat(Guid sessionId, int seatNumber, string row, int auditoriumId)

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BioProjektModels;
 using BioProjekt.Api.BusinessLogic;
-using BioProjekt.Api.Dto.BookingDTO;
+using BioProjekt.Shared.WebDtos;
 using System.Threading.Tasks;
 
 namespace BioProjekt.Api.Controllers
@@ -32,3 +32,4 @@ namespace BioProjekt.Api.Controllers
         }
     }
 }
+ 

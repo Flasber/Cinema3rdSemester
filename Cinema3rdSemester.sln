@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioProjektModels", "BioProj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "ClassLibrary1\DataAccess.csproj", "{A8233C9D-7B4E-4161-8BC2-B34EAC7F5F08}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioProjekt.Shared", "BioProjekt.Shared\BioProjekt.Shared.csproj", "{77AF9393-522C-4941-AAB1-B9CD4965E962}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{A8233C9D-7B4E-4161-8BC2-B34EAC7F5F08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8233C9D-7B4E-4161-8BC2-B34EAC7F5F08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8233C9D-7B4E-4161-8BC2-B34EAC7F5F08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77AF9393-522C-4941-AAB1-B9CD4965E962}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77AF9393-522C-4941-AAB1-B9CD4965E962}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77AF9393-522C-4941-AAB1-B9CD4965E962}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77AF9393-522C-4941-AAB1-B9CD4965E962}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

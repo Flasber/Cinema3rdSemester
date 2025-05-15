@@ -1,4 +1,4 @@
-﻿namespace BioProjekt.Api.Dto.SeatDTO
+﻿namespace BioProjekt.Shared.WebDtos
 {
     public class SeatSelectionDTO
     {

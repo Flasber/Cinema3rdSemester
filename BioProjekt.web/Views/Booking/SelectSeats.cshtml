@@ -1,0 +1,136 @@
+﻿@using System
+@using BioProjekt.Shared.WebDtos
+@model List<SeatAvailability>
+
+@{
+    var sessionId = ViewBag.SessionId ?? Guid.NewGuid();
+    ViewData["Title"] = "Vælg sæder";
+
+    var grouped = Model
+        .GroupBy(s => s.Row)
+        .OrderBy(g => g.Key);
+}
+
+<div class="dark-theme">
+    <h1>Vælg Siddepladser</h1>
+
+    <div class="screen">LÆRRED</div>
+
+    <div class="auditorium">
+        @foreach (var rowGroup in grouped)
+        {
+            <div class="seat-row">
+                <span class="row-label">@rowGroup.Key.ToUpper()</span>
+
+                @foreach (var seat in rowGroup.OrderBy(s => s.SeatNumber))
+                {
+                    <div class="seat @(seat.IsAvailable ? "available" : "reserved")">
+                        <span>@seat.SeatNumber</span>
+
+                        @if (seat.IsAvailable && seat.Version != null)
+                        {
+                            <a class="choose" href="@Url.Action("ConfirmBooking", "Booking", new {
+                                seatNumber = seat.SeatNumber,
+                                row = seat.Row,
+                                version = Convert.ToBase64String(seat.Version),
+                                auditoriumId = seat.AuditoriumId,
+                                sessionId = sessionId
+                            })">Vælg</a>
+                        }
+                        else if (!seat.IsAvailable)
+                        {
+                            <span class="taken">Reserveret</span>
+                        }
+                        else
+                        {
+                            <span class="taken">Ugyldigt sæde</span>
+                        }
+                    </div>
+                }
+
+                <span class="row-label">@rowGroup.Key.ToUpper()</span>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .dark-theme {
+        background-color: #0d1117;
+        color: white;
+        padding: 30px;
+        min-height: 100vh;
+    }
+
+    h1 {
+        text-align: center;
+        color: white;
+    }
+
+    .screen {
+        text-align: center;
+        font-weight: bold;
+        margin: 20px auto;
+        padding: 10px;
+        background-color: gray;
+        color: white;
+        width: 50%;
+    }
+
+    .auditorium {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .seat-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .row-label {
+        width: 30px;
+        text-align: center;
+        font-weight: bold;
+        color: white;
+    }
+
+    .seat {
+        width: 50px;
+        height: 50px;
+        background-color: #222;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+        font-size: 12px;
+    }
+
+        .seat.available {
+            background-color: #0d6efd;
+        }
+
+        .seat.reserved {
+            background-color: #d9534f;
+        }
+
+    .choose {
+        background-color: white;
+        color: #0d6efd;
+        font-weight: bold;
+        font-size: 12px;
+        padding: 2px 6px;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+    .taken {
+        font-size: 10px;
+        color: lightgray;
+    }
+</style>

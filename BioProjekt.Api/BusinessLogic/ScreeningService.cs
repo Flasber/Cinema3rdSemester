@@ -26,6 +26,13 @@ namespace BioProjekt.Api.BusinessLogic
         {
             await _screeningRepository.AddScreeningAsync(screening);
         }
-    }
 
+        public async Task<Screening?> GetScreeningByIdAsync(int id)
+        {
+            var screenings = await _screeningRepository.GetAllScreeningsAsync();
+            return screenings.FirstOrDefault(s => s.Id == id);
+        }
+
+
+    }
 }
