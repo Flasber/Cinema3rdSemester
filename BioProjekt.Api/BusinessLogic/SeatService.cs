@@ -1,49 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using BioProjektModels;
+using BioProjekt.DataAccess.Interfaces;
+using BioProjekt.Api.Storage;
+using BioProjekt.Shared.WebDtos;
+using System;
+using System.Collections.Generic;
 using System.Linq;
-using BioProjekt.Api.Data.Mockdatabase;
-using BioProjektModels;
-using BioProjekt.Api.Dto.SeatDTO;
+using System.Threading.Tasks;
 
 namespace BioProjekt.Api.BusinessLogic
 {
     public class SeatService : ISeatService
     {
-        private readonly ICinemaRepository _repository;
-        private readonly Dictionary<int, List<Seat>> _selectionsByBookingId = new();
+        private readonly ISeatRepository _seatRepository;
+        private readonly SeatSelectionStore _store;
 
-        public SeatService(ICinemaRepository repository)
+        public SeatService(ISeatRepository seatRepository, SeatSelectionStore store)
         {
-            _repository = repository;
+            _seatRepository = seatRepository;
+            _store = store;
         }
 
-        public IEnumerable<Seat> GetSeatsForAuditorium(int auditoriumId)
+        public async Task<IEnumerable<SeatAvailability>> GetAvailableSeats(int auditoriumId)
         {
-            return _repository.GetSeatsForAuditorium(auditoriumId);
-        }
-
-        public void AddSeat(Seat seat)
-        {
-            _repository.AddSeat(seat);
-        }
-
-        public bool TryReserveSeat(int seatNumber, string row, int clientVersion, int auditoriumId)
-        {
-            var seat = _repository.GetSeat(seatNumber, row, auditoriumId);
-
-            if (seat == null || !seat.IsAvailable || seat.Version != clientVersion)
-                return false;
-
-            seat.IsAvailable = false;
-            seat.Version++;
-            return true;
-        }
-
-        public IEnumerable<SeatAvailability> GetAvailableSeats(int auditoriumId)
-        {
-            var seats = _repository.GetSeatsForAuditorium(auditoriumId);
-
-            if (seats == null || !seats.Any())
-                return Enumerable.Empty<SeatAvailability>();
+            var seats = await _seatRepository.GetSeatsForAuditorium(auditoriumId);
 
             return seats
                 .Where(seat => seat.IsAvailable)
@@ -51,40 +30,55 @@ namespace BioProjekt.Api.BusinessLogic
                 {
                     SeatNumber = seat.SeatNumber,
                     Row = seat.Row,
-                    IsAvailable = seat.IsAvailable
-                })
-                .ToList();
+                    IsAvailable = seat.IsAvailable,
+                    Version = seat.Version,
+                    AuditoriumId = seat.AuditoriumId
+                });
         }
 
-        public bool SelectSeatForBooking(int bookingId, int seatNumber, string row, int auditoriumId)
+        public async Task<IEnumerable<Seat>> GetSeatsForAuditorium(int auditoriumId)
         {
-            var seat = _repository.GetSeat(seatNumber, row, auditoriumId);
+            return await _seatRepository.GetSeatsForAuditorium(auditoriumId);
+        }
+
+        public async Task AddSeat(Seat seat)
+        {
+            await _seatRepository.AddSeat(seat);
+        }
+
+        public async Task<bool> TryReserveSeat(int seatNumber, string row, byte[] clientVersion, int auditoriumId)
+        {
+            return await _seatRepository.TryReserveSeat(seatNumber, row, clientVersion, auditoriumId);
+        }
+
+        public bool SelectSeat(Guid sessionId, int seatNumber, string row, int auditoriumId)
+        {
+            var seat = _seatRepository.GetSeat(seatNumber, row, auditoriumId).Result;
             if (seat == null || !seat.IsAvailable)
                 return false;
 
-            if (_selectionsByBookingId.Values.Any(seats =>
-                seats.Any(s => s.SeatNumber == seatNumber && s.Row == row && s.AuditoriumId == auditoriumId)))
-            {
+            var existing = _store.GetSeats(sessionId);
+            if (existing.Any(s => s.SeatNumber == seatNumber && s.Row == row && s.AuditoriumId == auditoriumId))
                 return false;
-            }
 
             seat.IsAvailable = false;
-            seat.Version++;
-
-            if (!_selectionsByBookingId.ContainsKey(bookingId))
-                _selectionsByBookingId[bookingId] = new List<Seat>();
-
-            _selectionsByBookingId[bookingId].Add(seat);
+            _store.AddSeat(sessionId, seat);
             return true;
         }
 
-
-
-        public IEnumerable<Seat> GetSelectedSeats(int bookingId)
+        public IEnumerable<Seat> GetSelectedSeats(Guid sessionId)
         {
-            return _selectionsByBookingId.ContainsKey(bookingId)
-                ? _selectionsByBookingId[bookingId]
-                : Enumerable.Empty<Seat>();
+            return _store.GetSeats(sessionId);
+        }
+
+        public async Task AssignSeatsToBooking(Guid sessionId, int bookingId)
+        {
+            var selectedSeats = _store.GetSeats(sessionId);
+            if (!selectedSeats.Any())
+                return;
+
+            await _seatRepository.AssignSeatsToBooking(sessionId, bookingId, selectedSeats);
+            _store.Clear(sessionId);
         }
     }
 }

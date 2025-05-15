@@ -1,5 +1,7 @@
-﻿using BioProjekt.Api.Data.Mockdatabase;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Threading.Tasks;
+using BioProjekt.DataAccess.Interfaces;
 
 namespace BioProjekt.Api.Controllers
 {
@@ -7,34 +9,50 @@ namespace BioProjekt.Api.Controllers
     [Route("api/showtime")]
     public class ShowtimeController : ControllerBase
     {
-        private readonly ICinemaRepository _repo;
+        private readonly IMovieRepository _movieRepository;
+        private readonly IScreeningRepository _screeningRepository;
+        private readonly IAuditoriumRepository _auditoriumRepository;
 
-        public ShowtimeController(ICinemaRepository repo)
+        public ShowtimeController(
+            IMovieRepository movieRepository,
+            IScreeningRepository screeningRepository,
+            IAuditoriumRepository auditoriumRepository)
         {
-            _repo = repo;
+            _movieRepository = movieRepository;
+            _screeningRepository = screeningRepository;
+            _auditoriumRepository = auditoriumRepository;
         }
 
-        [HttpGet]
-        public IActionResult GetAllShowtimes()
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetShowtimesByMovieId(int id)
         {
-            var movies = _repo.GetAllMovies().ToList();
-            var auditoriums = _repo.GetAllAuditoriums().ToList();
+            var movie = (await _movieRepository.GetAllMoviesAsync()).FirstOrDefault(m => m.Id == id);
+            if (movie == null)
+            {
+                return NotFound($"Movie with id {id} not found.");
+            }
 
-            var showtimes = _repo.GetAllScreenings()
-                .Select(s => new
-                {
-                    s.Id,
-                    s.Time,
-                    s.Date,
-                    MovieTitle = movies.FirstOrDefault(m => m.Id == s.MovieId)?.Title,
-                    AuditoriumName = auditoriums.FirstOrDefault(a => a.Id == s.AuditoriumId)?.Name,
-                    s.LanguageVersion,
-                    s.Is3D,
-                    s.IsSoldOut,
-                    s.SoundSystem
-                });
+            var screenings = (await _screeningRepository.GetAllScreeningsAsync())
+                .Where(s => s.MovieId == id)
+                .ToList();
+
+            var auditoriums = await _auditoriumRepository.GetAllAuditoriumsAsync();
+
+            var showtimes = screenings.Select(s => new
+            {
+                s.Id,
+                s.Date,
+                s.Time,
+                MovieTitle = movie.Title,
+                AuditoriumName = auditoriums.FirstOrDefault(a => a.Id == s.AuditoriumId)?.Name,
+                s.LanguageVersion,
+                s.Is3D,
+                s.IsSoldOut,
+                s.SoundSystem
+            });
 
             return Ok(showtimes);
         }
+
     }
 }

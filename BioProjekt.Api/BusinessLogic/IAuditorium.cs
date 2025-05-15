@@ -1,10 +1,12 @@
 ﻿using BioProjektModels;
+using BioProjekt.DataAccess.Interfaces;
 using System.Collections.Generic;
-
-namespace BioProjekt.Api.BusinessLogic
+using System.Linq;
+using System.Threading.Tasks;
+namespace BioProjektModels.Interfaces
 {
     public interface IAuditoriumService
     {
-        List<Auditorium> GetAllAuditoriums();
+        Task<List<Auditorium>> GetAllAuditoriums();
     }
 }

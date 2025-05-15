@@ -1,11 +1,10 @@
 ﻿using BioProjektModels;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BioProjekt.Api.BusinessLogic
 {
     public interface IBookingService
     {
-        Booking CreateBooking(Booking booking);
-        List<Booking> GetAllBookings();
+        Task<Booking> CreateBookingAsync(Booking booking);
     }
 }

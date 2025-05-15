@@ -1,16 +1,19 @@
-﻿using System.Collections.Generic;
-using BioProjekt.Api.Dto.SeatDTO;
-using BioProjektModels;
+﻿using BioProjektModels;
+using BioProjekt.Shared.WebDtos;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BioProjekt.Api.BusinessLogic
 {
     public interface ISeatService
     {
-        void AddSeat(Seat seat);
-        bool TryReserveSeat(int seatNumber, string row, int clientVersion, int auditoriumId);
-        IEnumerable<Seat> GetSeatsForAuditorium(int auditoriumId);
-        IEnumerable<SeatAvailability> GetAvailableSeats(int auditoriumId);
-        bool SelectSeatForBooking(int bookingId, int seatNumber, string row, int auditoriumId);
-        IEnumerable<Seat> GetSelectedSeats(int bookingId);
+        Task<IEnumerable<Seat>> GetSeatsForAuditorium(int auditoriumId);
+        Task<IEnumerable<SeatAvailability>> GetAvailableSeats(int auditoriumId);
+        Task AddSeat(Seat seat);
+        Task<bool> TryReserveSeat(int seatNumber, string row, byte[] clientVersion, int auditoriumId);
+        bool SelectSeat(Guid sessionId, int seatNumber, string row, int auditoriumId);
+        IEnumerable<Seat> GetSelectedSeats(Guid sessionId);
+        Task AssignSeatsToBooking(Guid sessionId, int bookingId);
     }
 }

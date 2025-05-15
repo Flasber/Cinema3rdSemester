@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BioProjektModels;
-using BioProjekt.Api.BusinessLogic;
+using BioProjektModels.Interfaces;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BioProjekt.Api.Controllers
 {
@@ -17,9 +18,10 @@ namespace BioProjekt.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Auditorium>> GetAllAuditoriums()
+        public async Task<ActionResult<List<Auditorium>>> GetAllAuditoriums()
         {
-            return Ok(_auditoriumService.GetAllAuditoriums());
+            var auditoriums = await _auditoriumService.GetAllAuditoriums();
+            return Ok(auditoriums);
         }
     }
 }

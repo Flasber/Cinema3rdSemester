@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using BioProjekt.Api.BusinessLogic;
 using BioProjektModels;
-using System.Collections.Generic;
+using BioProjekt.Api.BusinessLogic;
+using System.Threading.Tasks;
 
 namespace BioProjekt.Api.Controllers
 {
@@ -17,31 +17,20 @@ namespace BioProjekt.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Movie>> GetMovies()
+        public async Task<IActionResult> GetMovies()
         {
-            var movies = _movieService.GetAllMovies();
+            var movies = await _movieService.GetAllMoviesAsync();
             return Ok(movies);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Movie> GetMovieById(int id)
+        public async Task<IActionResult> GetMovie(int id)
         {
-            var movie = _movieService.GetMovieById(id);
+            var movie = await _movieService.GetMovieByIdAsync(id);
             if (movie == null)
                 return NotFound();
+
             return Ok(movie);
         }
-
-        [HttpGet("genre/{genreName}")]
-        public ActionResult<List<Movie>> GetMoviesByGenre(string genreName)
-        {
-            var movies = _movieService.GetMoviesByGenre(genreName);
-            if (movies == null || movies.Count == 0)
-                return NotFound();
-            return Ok(movies);
-        }
-
-
-
     }
 }

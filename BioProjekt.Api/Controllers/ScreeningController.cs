@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BioProjektModels;
 using BioProjekt.Api.BusinessLogic;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BioProjekt.Api.Controllers
 {
@@ -16,17 +18,28 @@ namespace BioProjekt.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Screening>> GetAllScreenings()
+        public async Task<ActionResult<List<Screening>>> GetAllScreenings()
         {
-            return Ok(_screeningService.GetAllScreenings());
+            var screenings = await _screeningService.GetAllScreeningsAsync();
+            return Ok(screenings);
         }
 
         [HttpPost]
-        public IActionResult AddScreening([FromBody] Screening screening)
+        public async Task<IActionResult> AddScreening([FromBody] Screening screening)
         {
-            _screeningService.AddScreening(screening);
+            await _screeningService.AddScreeningAsync(screening);
             return CreatedAtAction(nameof(GetAllScreenings), new { id = screening.Id }, screening);
-
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetScreeningById(int id)
+        {
+            var screening = await _screeningService.GetScreeningByIdAsync(id);
+
+            if (screening == null)
+                return NotFound($"Screening med id {id} blev ikke fundet.");
+
+            return Ok(screening);
+        }
+
     }
 }

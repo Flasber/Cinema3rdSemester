@@ -1,22 +1,26 @@
 ﻿using BioProjektModels;
-using BioProjekt.Api.Data.Mockdatabase;
+using BioProjekt.DataAccess.Interfaces;
+using BioProjekt.Api.BusinessLogic;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using BioProjektModels.Interfaces;
 
 namespace BioProjekt.Api.BusinessLogic
 {
     public class AuditoriumService : IAuditoriumService
     {
-        private readonly ICinemaRepository _cinemaRepository;
+        private readonly IAuditoriumRepository _auditoriumRepository;
 
-        public AuditoriumService(ICinemaRepository cinemaRepository)
+        public AuditoriumService(IAuditoriumRepository auditoriumRepository)
         {
-            _cinemaRepository = cinemaRepository;
+            _auditoriumRepository = auditoriumRepository;
         }
 
-        public List<Auditorium> GetAllAuditoriums()
+        public async Task<List<Auditorium>> GetAllAuditoriums()
         {
-            return _cinemaRepository.GetAllAuditoriums().ToList();
+            var auditoriums = await _auditoriumRepository.GetAllAuditoriumsAsync();
+            return auditoriums.ToList();
         }
     }
 }

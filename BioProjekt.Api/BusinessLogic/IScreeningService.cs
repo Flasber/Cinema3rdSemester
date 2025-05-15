@@ -5,7 +5,11 @@ namespace BioProjekt.Api.BusinessLogic
 {
     public interface IScreeningService
     {
-        List<Screening> GetAllScreenings();
-        void AddScreening(Screening screening);
+        Task<List<Screening>> GetAllScreeningsAsync();
+        Task AddScreeningAsync(Screening screening);
+
+        Task<Screening?> GetScreeningByIdAsync(int id);
+
     }
+
 }

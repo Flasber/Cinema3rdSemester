@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using BioProjektModels;
 using BioProjekt.Api.BusinessLogic;
-using BioProjekt.Api.Dto.BookingDTO;
+using BioProjekt.Shared.WebDtos;
+using System.Threading.Tasks;
 
 namespace BioProjekt.Api.Controllers
 {
@@ -16,26 +17,19 @@ namespace BioProjekt.Api.Controllers
             _bookingService = bookingService;
         }
 
-        [HttpGet]
-        public ActionResult<List<Booking>> GetAllBookings()
-        {
-            return _bookingService.GetAllBookings();
-        }
-
         [HttpPost]
-        public ActionResult<Booking> CreateBooking([FromBody] BookingCreateDTO dto)
+        public async Task<ActionResult<Booking>> CreateBooking([FromBody] BookingCreateDTO dto)
         {
             var booking = new Booking
             {
-                CustomerId = dto.CustomerId,
+                CustomerNumber = dto.CustomerNumber,
                 ScreeningId = dto.ScreeningId,
-                BookingDate = DateTime.Now,
-                BookingStatus = "Pending",
-               
+                BookingStatus = "Pending"
             };
 
-            var created = _bookingService.CreateBooking(booking);
+            var created = await _bookingService.CreateBookingAsync(booking);
             return Created("", created);
         }
     }
 }
+ 

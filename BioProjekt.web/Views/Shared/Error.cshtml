@@ -1,0 +1,24 @@
+﻿@model BioProjekt.web.Models.ErrorViewModel
+
+@{
+    ViewData["Title"] = "Fejl";
+    Layout = "_Layout";
+}
+
+<div class="container mt-5 text-center text-white">
+    <h1 class="display-4">Noget gik galt</h1>
+    <p class="lead">
+        @Model?.Message ?? "Der opstod en uventet fejl. Prøv igen senere."
+    </p>
+    <a href="/" class="btn btn-primary mt-4">Gå til forsiden</a>
+</div>
+
+<style>
+    body {
+        background-color: #0d1117;
+    }
+
+    h1, p {
+        color: white;
+    }
+</style>
