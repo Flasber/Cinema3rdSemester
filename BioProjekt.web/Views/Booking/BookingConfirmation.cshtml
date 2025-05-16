@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Booking Bekræftelse";
+    var sessionId = Context.Request.Cookies["sessionId"];
 }
 
 <div class="confirmation-container">
@@ -18,7 +19,10 @@
             <p><strong>Sæder:</strong> @string.Join(", ", Model.SeatLabels)</p>
             <p><strong>Total pris:</strong> @Model.TotalPrice kr.</p>
 
-            <button class="confirm-button" onclick="openPopup()">Bekræft og betal</button>
+            <div class="buttons">
+                <button class="login-button">Log ind</button>
+                <button class="confirm-button" onclick="openPopup()">Fortsæt uden login</button>
+            </div>
         </div>
     </div>
 </div>
@@ -29,6 +33,7 @@
         <h2>Indtast dine oplysninger</h2>
         <form method="post" asp-action="CreateWithoutLogin" asp-controller="Booking">
             <input type="hidden" name="screeningId" value="@Model.ScreeningId" />
+            <input type="hidden" name="sessionId" value="@sessionId" />
             <div class="form-group">
                 <label>Fornavn *</label>
                 <input type="text" name="firstName" required />
@@ -48,6 +53,14 @@
             <div class="form-group">
                 <label>Telefon *</label>
                 <input type="tel" name="phone" required />
+            </div>
+            <div class="form-group">
+                <label>Adresse *</label>
+                <input type="text" name="address" required />
+            </div>
+            <div class="form-group">
+                <label>Kundetype *</label>
+                <input type="text" name="customerType" value="Standard" required />
             </div>
             <button type="submit" class="confirm-button">Videre</button>
         </form>
@@ -76,34 +89,51 @@
     }
 
     .poster {
-        max-width: 200px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px #000;
+        max-width: 250px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
     }
 
     .details {
-        max-width: 400px;
+        max-width: 500px;
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 10px;
     }
 
-    .confirm-button {
-        margin-top: 20px;
+    .buttons {
+        display: flex;
+        gap: 15px;
+        margin-top: 25px;
+    }
+
+    .confirm-button, .login-button {
         padding: 12px 24px;
-        background-color: #198754;
-        color: white;
-        font-weight: bold;
         border: none;
         border-radius: 8px;
         cursor: pointer;
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+    .confirm-button {
+        background-color: #198754;
+        color: white;
     }
 
         .confirm-button:hover {
             background-color: #157347;
         }
 
-    /* Pop-up styling */
+    .login-button {
+        background-color: #0d6efd;
+        color: white;
+    }
+
+        .login-button:hover {
+            background-color: #0a58ca;
+        }
+
     .popup-overlay {
         position: fixed;
         top: 0;
@@ -114,7 +144,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        z-index: 999;
+        z-index: 9999;
     }
 
     .popup {
@@ -123,7 +153,7 @@
         border-radius: 12px;
         width: 400px;
         color: white;
-        box-shadow: 0 0 10px #000;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.9);
         position: relative;
     }
 
@@ -153,7 +183,7 @@
         position: absolute;
         top: 10px;
         right: 15px;
-        font-size: 22px;
+        font-size: 24px;
         color: white;
         cursor: pointer;
     }

@@ -1,0 +1,76 @@
+﻿@model BioProjekt.web.Models.BookingConfirmationViewModel
+
+@{
+    ViewData["Title"] = "Booking Gennemført";
+}
+
+<div class="completed-container">
+    <h1>✔️ Tak for din booking!</h1>
+
+    <div class="info-box">
+        <img src="@Model.PosterUrl" alt="Filmplakat" class="poster" />
+
+        <div class="details">
+            <p><strong>Film:</strong> @Model.MovieTitle</p>
+            <p><strong>Sal:</strong> @Model.AuditoriumName</p>
+            <p><strong>Starttid:</strong> @Model.StartTime.ToString("dd-MM-yyyy HH:mm")</p>
+            <p><strong>Sluttid:</strong> @Model.EndTime.ToString("dd-MM-yyyy HH:mm")</p>
+            <p><strong>Sæder:</strong> @string.Join(", ", Model.SeatLabels)</p>
+            <p><strong>Pris i alt:</strong> @Model.TotalPrice kr.</p>
+
+            <a href="/" class="home-button">Til forsiden</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .completed-container {
+        background-color: #0d1117;
+        color: white;
+        padding: 40px;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+    }
+
+    h1 {
+        color: #28a745;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .info-box {
+        display: flex;
+        gap: 40px;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .poster {
+        max-width: 250px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+    }
+
+    .details {
+        max-width: 500px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .home-button {
+        margin-top: 25px;
+        padding: 12px 24px;
+        background-color: #0d6efd;
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+        border-radius: 8px;
+        width: fit-content;
+    }
+
+        .home-button:hover {
+            background-color: #0a58ca;
+        }
+</style>

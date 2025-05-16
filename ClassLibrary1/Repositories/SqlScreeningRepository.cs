@@ -33,6 +33,12 @@ namespace BioProjekt.DataAccess.Repositories
 
             await connection.ExecuteAsync(sql, screening);
         }
+        public async Task<Screening?> GetScreeningByIdAsync(int id)
+        {
+            using var connection = await _dbHelper.CreateAndOpenConnectionAsync();
+            var sql = "SELECT * FROM Screening WHERE Id = @Id";
+            return await connection.QueryFirstOrDefaultAsync<Screening>(sql, new { Id = id });
+        }
 
     }
 }
