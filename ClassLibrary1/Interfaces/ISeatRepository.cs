@@ -7,13 +7,13 @@ namespace BioProjekt.DataAccess.Interfaces
 {
     public interface ISeatRepository
     {
-        Task<IEnumerable<Seat>> GetSeatsForAuditorium(int auditoriumId);
-        Task<Seat?> GetSeat(int seatNumber, string row, int auditoriumId);
-        Task AddSeat(Seat seat);
-        Task<bool> TryReserveSeat(int seatNumber, string row, byte[] clientVersion, int auditoriumId);
-        Task UpdateSeat(Seat seat);
-        Task<IEnumerable<Seat>> GetSeatsForBookingAsync(int bookingId); 
-        Task AssignSeatsToBooking(Guid sessionId, int bookingId, List<Seat> selectedSeats);
+        Task<IEnumerable<ScreeningSeat>> GetAvailableSeatsForScreeningAsync(int screeningId);
+        Task<ScreeningSeat?> GetScreeningSeatByIdAsync(int screeningSeatId);
+        Task<bool> TryReserveScreeningSeatAsync(int screeningSeatId, byte[] clientVersion);
+        Task AssignSeatsToBooking(Guid sessionId, int bookingId, List<ScreeningSeat> selectedSeats);
+        Task CreateScreeningSeatsAsync(int screeningId, int auditoriumId);
+        Task<IEnumerable<ScreeningSeat>> GetSelectedSeatsAsync(Guid sessionId);
+        void StoreSeatSelection(Guid sessionId, ScreeningSeat screeningSeat);
+        void ClearSeatSelection(Guid sessionId);
     }
-
 }
