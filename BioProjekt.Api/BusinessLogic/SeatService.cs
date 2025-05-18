@@ -49,11 +49,19 @@ namespace BioProjekt.Api.BusinessLogic
                     continue;
                 }
 
+                var reserved = await _seatRepository.TryReserveScreeningSeatAsync(seat.Id, seat.Version);
+                if (!reserved)
+                {
+                    allSucceeded = false;
+                    continue;
+                }
+
                 _seatRepository.StoreSeatSelection(sessionId, seat);
             }
 
             return allSucceeded;
         }
+
 
         public IEnumerable<ScreeningSeat> GetSelectedSeats(Guid sessionId)
         {
@@ -69,5 +77,6 @@ namespace BioProjekt.Api.BusinessLogic
             await _seatRepository.AssignSeatsToBooking(sessionId, bookingId, selected);
             _seatRepository.ClearSeatSelection(sessionId);
         }
+
     }
 }

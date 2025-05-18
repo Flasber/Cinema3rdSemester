@@ -42,7 +42,6 @@ public class BookingController : Controller
     }
 
     [HttpPost]
-    [HttpPost]
     public async Task<IActionResult> SelectSeats([FromForm] List<int> selectedSeatIds, [FromForm] Guid sessionId, [FromForm] int screeningId)
     {
         var dto = new SeatSelectionDTO
@@ -95,4 +94,40 @@ public class BookingController : Controller
 
         return View(viewModel);
     }
+    [HttpPost]
+    public async Task<IActionResult> BookingConfirmation(UserBookingInfoModel model)
+    {
+        if (!ModelState.IsValid || model.Email != model.ConfirmEmail)
+        {
+            return View("Error", new ErrorViewModel { Message = "Ugyldige oplysninger eller e-mails matcher ikke." });
+        }
+
+        var dto = new BookingCustomerCreateDTO
+        {
+            ScreeningId = model.ScreeningId,
+            SessionId = model.SessionId,
+            Name = model.FirstName + " " + model.LastName,
+            Email = model.Email,
+            MobileNumber = model.Phone,
+            Address = model.Address,
+            CustomerType = model.CustomerType
+        };
+
+        var response = await _httpClient.PostAsJsonAsync("http://localhost:5019/api/booking/createWithCustomer", dto);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadAsStringAsync();
+            return View("Error", new ErrorViewModel { Message = $"Booking fejlede: {error}" });
+        }
+
+        return RedirectToAction("Completed");
+    }
+
+    [HttpGet]
+    public IActionResult Completed()
+    {
+        return View("BookingCompleted"); 
+    }
+
 }

@@ -6,7 +6,7 @@
 }
 
 <div class="confirmation-container">
-    <h1>Tak for din booking!</h1>
+    <h1>Tak for din booking vi er næsten i mål!</h1>
 
     <div class="info-box">
         <img src="@Model.PosterUrl" alt="Filmplakat" class="poster" />
@@ -20,8 +20,8 @@
             <p><strong>Total pris:</strong> @Model.TotalPrice kr.</p>
 
             <div class="buttons">
-                <button class="login-button">Log ind</button>
-                <button class="confirm-button" onclick="openPopup()">Fortsæt uden login</button>
+                <button type="button" class="login-button">Log ind</button>
+                <button type="button" class="confirm-button" id="popupTrigger">Fortsæt uden login</button>
             </div>
         </div>
     </div>
@@ -29,40 +29,21 @@
 
 <div id="popupForm" class="popup-overlay" style="display:none;">
     <div class="popup">
-        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <span class="close-btn" id="popupClose">&times;</span>
         <h2>Indtast dine oplysninger</h2>
-        <form method="post" asp-action="CreateWithoutLogin" asp-controller="Booking">
-            <input type="hidden" name="screeningId" value="@Model.ScreeningId" />
-            <input type="hidden" name="sessionId" value="@sessionId" />
-            <div class="form-group">
-                <label>Fornavn *</label>
-                <input type="text" name="firstName" required />
-            </div>
-            <div class="form-group">
-                <label>Efternavn *</label>
-                <input type="text" name="lastName" required />
-            </div>
-            <div class="form-group">
-                <label>E-mail *</label>
-                <input type="email" name="email" required />
-            </div>
-            <div class="form-group">
-                <label>Bekræft E-mail *</label>
-                <input type="email" name="confirmEmail" required />
-            </div>
-            <div class="form-group">
-                <label>Telefon *</label>
-                <input type="tel" name="phone" required />
-            </div>
-            <div class="form-group">
-                <label>Adresse *</label>
-                <input type="text" name="address" required />
-            </div>
-            <div class="form-group">
-                <label>Kundetype *</label>
-                <input type="text" name="customerType" value="Standard" required />
-            </div>
-            <button type="submit" class="confirm-button">Videre</button>
+        <form method="post" asp-action="BookingConfirmation" asp-controller="Booking">
+            <input type="hidden" name="ScreeningId" value="@Model.ScreeningId" />
+            <input type="hidden" name="SessionId" value="@sessionId" />
+
+            <div class="form-group"><label>Fornavn *</label><input type="text" name="FirstName" required /></div>
+            <div class="form-group"><label>Efternavn *</label><input type="text" name="LastName" required /></div>
+            <div class="form-group"><label>E-mail *</label><input type="email" name="Email" required /></div>
+            <div class="form-group"><label>Bekræft E-mail *</label><input type="email" name="ConfirmEmail" required /></div>
+            <div class="form-group"><label>Telefon *</label><input type="tel" name="Phone" required /></div>
+            <div class="form-group"><label>Adresse *</label><input type="text" name="Address" required /></div>
+            <div class="form-group"><label>Kundetype *</label><input type="text" name="CustomerType" value="Standard" required /></div>
+
+            <button type="submit" class="confirm-button" onclick="this.disabled=true; this.form.submit();">Videre</button>
         </form>
     </div>
 </div>
@@ -190,11 +171,21 @@
 </style>
 
 <script>
-    function openPopup() {
-        document.getElementById('popupForm').style.display = 'flex';
-    }
+    document.addEventListener("DOMContentLoaded", function () {
+        const popup = document.getElementById("popupForm");
+        const openBtn = document.getElementById("popupTrigger");
+        const closeBtn = document.getElementById("popupClose");
 
-    function closePopup() {
-        document.getElementById('popupForm').style.display = 'none';
-    }
+        if (openBtn && popup && closeBtn) {
+            openBtn.addEventListener("click", function () {
+                popup.style.display = "flex";
+            });
+
+            closeBtn.addEventListener("click", function () {
+                popup.style.display = "none";
+            });
+        } else {
+            console.error("Popup elements not found");
+        }
+    });
 </script>
