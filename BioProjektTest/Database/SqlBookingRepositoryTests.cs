@@ -3,7 +3,8 @@ using BioProjekt.DataAccess.Interfaces;
 using BioProjekt.DataAccess.Repositories;
 using BioProjektModels;
 using Microsoft.Extensions.Configuration;
-
+using NUnit.Framework;
+namespace BioProjektTest.Database;
 [TestFixture]
 public class SqlBookingRepositoryTests
 {
@@ -42,27 +43,4 @@ public class SqlBookingRepositoryTests
         Assert.Greater(bookingId, 0);
     }
 
-    [Test]
-    public async Task AddSeatToBookingAsync_ShouldLinkSeatToBooking()
-    {
-        var booking = new Booking
-        {
-            ScreeningId = 1,
-            BookingDate = DateTime.Now,
-            CustomerNumber = 1,
-            BookingStatus = "Confirmed",
-            Price = 100,
-            IsDiscounted = false
-        };
-
-        var bookingId = await _bookingRepository.CreateBookingAsync(booking);
-
-        var seat = await _seatRepository.GetSeat(1, "A", 1);
-        Assert.IsNotNull(seat);
-
-        await _bookingRepository.AddSeatToBookingAsync(bookingId, seat!.Id);
-
-        var linkedSeats = await _seatRepository.GetSeatsForBookingAsync(bookingId);
-        Assert.IsTrue(linkedSeats.Any(s => s.Id == seat.Id));
-    }
 }

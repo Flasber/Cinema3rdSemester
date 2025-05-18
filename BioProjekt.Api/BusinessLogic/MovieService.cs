@@ -24,5 +24,11 @@ namespace BioProjekt.Api.BusinessLogic
         {
             return await _movieRepository.GetMovieByIdAsync(id);
         }
+        public async Task CreateMovieAsync(Movie movie)
+        {
+            await _movieRepository.CreateMovieAsync(movie);
+        }
+
     }
+
 }

@@ -2,6 +2,7 @@
 using BioProjektModels;
 using BioProjekt.Api.BusinessLogic;
 using System.Threading.Tasks;
+using BioProjekt.Shared.ClientDtos;
 
 namespace BioProjekt.Api.Controllers
 {
@@ -31,6 +32,27 @@ namespace BioProjekt.Api.Controllers
                 return NotFound();
 
             return Ok(movie);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateMovie([FromBody] MovieCreateDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var movie = new Movie
+            {
+                Title = dto.Title,
+                Genre = dto.Genre,
+                Duration = dto.Duration,
+                Description = dto.Description,
+                Language = dto.Language,
+                AgeRating = dto.AgeRating,
+                PosterUrl = dto.PosterUrl
+            };
+
+            await _movieService.CreateMovieAsync(movie);
+            return CreatedAtAction(nameof(GetMovie), new { id = movie.Id }, movie);
         }
     }
 }

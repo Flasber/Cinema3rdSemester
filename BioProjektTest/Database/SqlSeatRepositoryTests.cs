@@ -1,117 +1,117 @@
-﻿using NUnit.Framework;
-using BioProjektModels;
+﻿using BioProjektModels;
 using BioProjekt.DataAccess.Repositories;
 using BioProjekt.DataAccess.Interfaces;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.IO;
-using System.Threading.Tasks;
-using BioProjekt.DataAccess.Repositories;
-using BioProjektModels.Interfaces;
 using BioProjekt.DataAccess.Helpers;
+using Microsoft.Extensions.Configuration;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
-
-[TestFixture]
-public class SqlSeatRepositoryTests
+namespace BioProjektTest.Database
 {
-    private ISeatRepository _repository;
-    private DbCleaner _dbCleaner;
-
-    [SetUp]
-    public void SetUp()
+    [TestFixture]
+    public class SqlSeatRepositoryTests
     {
-        var config = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json")
-            .Build();
+        private ISeatRepository _repository;
+        private DbCleaner _dbCleaner;
 
-        _repository = new SqlSeatRepository(config);
-        _dbCleaner = new DbCleaner(config.GetConnectionString("CinemaDb"));
-        _dbCleaner.CleanAndInsertTestData();
-    }
-
-    [Test]
-    public async Task GetSeatsForAuditorium_ShouldReturnSeats()
-    {
-        var result = await _repository.GetSeatsForAuditorium(1);
-        Assert.IsNotEmpty(result);
-    }
-
-    [Test]
-    public async Task AddSeat_ShouldInsertSeat()
-    {
-        var seat = new Seat
+        [SetUp]
+        public void SetUp()
         {
-            SeatNumber = 5,
-            Row = "B",
-            SeatType = "Standard",
-            AuditoriumId = 1,
-            PriceModifier = 1.0m,
-            IsAvailable = true
-        };
+            var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
 
-        await _repository.AddSeat(seat);
+            _repository = new SqlSeatRepository(config);
+            _dbCleaner = new DbCleaner(config.GetConnectionString("CinemaDb"));
+            _dbCleaner.CleanAndInsertTestData();
+        }
 
-        var result = await _repository.GetSeat(seat.SeatNumber, seat.Row, seat.AuditoriumId);
-        Assert.IsNotNull(result);
-        Assert.AreEqual(seat.SeatNumber, result?.SeatNumber);
-    }
-
-    [Test]
-    public async Task GetSeat_ShouldReturnSeat_WhenFound()
-    {
-        var result = await _repository.GetSeat(1, "A", 1);
-        Assert.IsNotNull(result);
-        Assert.AreEqual(1, result?.SeatNumber);
-    }
-
-    [Test]
-    public async Task TryReserveSeat_ShouldReturnTrue_WhenSeatReserved()
-    {
-        var seat = await _repository.GetSeat(1, "A", 1);
-        var clientVersion = seat?.Version;
-
-        var result = await _repository.TryReserveSeat(1, "A", clientVersion, 1);
-        Assert.IsTrue(result);
-    }
-
-    [Test]
-    public async Task TryReserveSeat_ShouldReturnFalse_WhenSeatNotAvailable()
-    {
-        var seat = await _repository.GetSeat(1, "A", 1);
-        Assert.IsNotNull(seat);
-
-        var clientVersion = seat?.Version;
-        seat.IsAvailable = false;
-
-        await _repository.UpdateSeat(seat);
-
-        var result = await _repository.TryReserveSeat(1, "A", clientVersion, 1);
-        Assert.IsFalse(result);
-    }
-
-    [Test]
-    public async Task TryReserveSeat_ShouldFailWhenVersionMismatch()
-    {
-        var seat = new Seat
+        [Test]
+        public async Task GetAvailableSeatsForScreeningAsync_ShouldReturnSeats()
         {
-            SeatNumber = 2,
-            Row = "B",
-            SeatType = "Standard",
-            AuditoriumId = 1,
-            PriceModifier = 1.0m,
-            IsAvailable = true
-        };
+            var result = await _repository.GetAvailableSeatsForScreeningAsync(1);
+            Assert.IsNotNull(result);
+            Assert.IsNotEmpty(result);
+        }
 
-        await _repository.AddSeat(seat);
+        [Test]
+        public async Task GetScreeningSeatByIdAsync_ShouldReturnCorrectSeat()
+        {
+            var all = await _repository.GetAvailableSeatsForScreeningAsync(1);
+            var one = all.First();
 
-        var seat1 = await _repository.GetSeat(seat.SeatNumber, seat.Row, seat.AuditoriumId);
-        var version1 = seat1?.Version;
+            var seat = await _repository.GetScreeningSeatByIdAsync(one.Id);
+            Assert.IsNotNull(seat);
+            Assert.AreEqual(one.Id, seat.Id);
+        }
 
-        var result1 = await _repository.TryReserveSeat(seat.SeatNumber, seat.Row, version1, seat.AuditoriumId);
-        Assert.IsTrue(result1);
+        [Test]
+        public async Task TryReserveScreeningSeatAsync_ShouldReturnTrue_WhenVersionMatches()
+        {
+            var seats = await _repository.GetAvailableSeatsForScreeningAsync(1);
+            var seat = seats.First();
+            var version = seat.Version;
 
-        var result2 = await _repository.TryReserveSeat(seat.SeatNumber, seat.Row, version1, seat.AuditoriumId);
-        Assert.IsFalse(result2);
+            var success = await _repository.TryReserveScreeningSeatAsync(seat.Id, version);
+            Assert.IsTrue(success);
+        }
+
+        [Test]
+        public async Task TryReserveScreeningSeatAsync_ShouldReturnFalse_WhenAlreadyReserved()
+        {
+            var seats = await _repository.GetAvailableSeatsForScreeningAsync(1);
+            var seat = seats.First();
+            var version = seat.Version;
+
+            var reservedFirst = await _repository.TryReserveScreeningSeatAsync(seat.Id, version);
+            var reservedSecond = await _repository.TryReserveScreeningSeatAsync(seat.Id, version);
+
+            Assert.IsTrue(reservedFirst);
+            Assert.IsFalse(reservedSecond);
+        }
+
+        [Test]
+        public async Task TryReserveScreeningSeatAsync_ShouldReturnFalse_WhenVersionMismatch()
+        {
+            var seats = await _repository.GetAvailableSeatsForScreeningAsync(1);
+            var seat = seats.First();
+            var fakeVersion = new byte[] { 0, 0, 0, 0, 0, 0, 0, 1 }; // Simuleret forkert version
+
+            var result = await _repository.TryReserveScreeningSeatAsync(seat.Id, fakeVersion);
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public async Task StoreAndGetSelectedSeats_ShouldReturnStoredSeats()
+        {
+            var sessionId = Guid.NewGuid();
+            var seats = (await _repository.GetAvailableSeatsForScreeningAsync(1)).Take(2).ToList();
+
+            foreach (var s in seats)
+                _repository.StoreSeatSelection(sessionId, s);
+
+            var selected = await _repository.GetSelectedSeatsAsync(sessionId);
+            Assert.AreEqual(2, selected.Count());
+        }
+
+        [Test]
+        public async Task ClearSeatSelection_ShouldRemoveSeatsFromSession()
+        {
+            var sessionId = Guid.NewGuid();
+            var seats = (await _repository.GetAvailableSeatsForScreeningAsync(1)).Take(2).ToList();
+
+            foreach (var s in seats)
+                _repository.StoreSeatSelection(sessionId, s);
+
+            _repository.ClearSeatSelection(sessionId);
+            var selected = await _repository.GetSelectedSeatsAsync(sessionId);
+            Assert.IsEmpty(selected);
+        }
+
     }
 }
