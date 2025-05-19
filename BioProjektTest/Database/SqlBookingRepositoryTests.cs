@@ -4,43 +4,47 @@ using BioProjekt.DataAccess.Repositories;
 using BioProjektModels;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
-namespace BioProjektTest.Database;
-[TestFixture]
-public class SqlBookingRepositoryTests
+using System;
+using System.IO;
+using System.Threading.Tasks;
+
+namespace BioProjektTest.Database
 {
-    private IBookingRepository _bookingRepository;
-    private ISeatRepository _seatRepository;
-    private DbCleaner _dbCleaner;
-
-    [SetUp]
-    public void SetUp()
+    [TestFixture]
+    public class SqlBookingRepositoryTests
     {
-        var config = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json")
-            .Build();
+        private IBookingRepository _bookingRepository;
+        private DbCleaner _dbCleaner;
+        private DbCleaner.TestIds _testIds;
 
-        _bookingRepository = new SqlBookingRepository(config);
-        _seatRepository = new SqlSeatRepository(config);
-        _dbCleaner = new DbCleaner(config.GetConnectionString("CinemaDb"));
-        _dbCleaner.CleanAndInsertTestData();
-    }
-
-    [Test]
-    public async Task CreateBookingAsync_ShouldInsertBookingAndReturnId()
-    {
-        var booking = new Booking
+        [SetUp]
+        public void SetUp()
         {
-            ScreeningId = 1,
-            BookingDate = DateTime.Now,
-            CustomerNumber = 1,
-            BookingStatus = "Pending",
-            Price = 120,
-            IsDiscounted = false
-        };
+            var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
 
-        var bookingId = await _bookingRepository.CreateBookingAsync(booking);
-        Assert.Greater(bookingId, 0);
+            _bookingRepository = new SqlBookingRepository(config);
+            _dbCleaner = new DbCleaner(config.GetConnectionString("CinemaDb"));
+            _testIds = _dbCleaner.CleanAndInsertTestData();
+        }
+
+        [Test]
+        public async Task CreateBookingAsync_ShouldInsertBookingAndReturnId()
+        {
+            var booking = new Booking
+            {
+                ScreeningId = _testIds.Screening1Id,
+                BookingDate = DateTime.Now,
+                CustomerNumber = _testIds.CustomerNumber,
+                BookingStatus = "Pending",
+                Price = 120,
+                IsDiscounted = false
+            };
+
+            var bookingId = await _bookingRepository.CreateBookingAsync(booking);
+            Assert.Greater(bookingId, 0);
+        }
     }
-
 }

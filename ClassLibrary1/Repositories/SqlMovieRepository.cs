@@ -37,10 +37,13 @@ namespace BioProjekt.DataAccess.Repositories
 
             var sql = @"
         INSERT INTO Movie (Title, Genre, Duration, Description, Language, AgeRating, PosterUrl)
-        VALUES (@Title, @Genre, @Duration, @Description, @Language, @AgeRating, @PosterUrl)";
+        VALUES (@Title, @Genre, @Duration, @Description, @Language, @AgeRating, @PosterUrl);
+        SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
-            await connection.ExecuteAsync(sql, movie);
+            var id = await connection.ExecuteScalarAsync<int>(sql, movie);
+            movie.Id = id;
         }
+
 
     }
 }
