@@ -4,6 +4,7 @@ using BioProjekt.Api.Storage;
 using BioProjekt.Shared.WebDtos;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BioProjekt.Api.BusinessLogic
@@ -61,14 +62,15 @@ namespace BioProjekt.Api.BusinessLogic
 
             var selectedSeats = _seatSelectionStore.GetSeats(dto.SessionId);
 
-            foreach (var seat in selectedSeats)
-            {
-                await _bookingRepository.AddSeatToBookingAsync(booking.BookingId, seat.Id);
-            }
+            if (!selectedSeats.Any())
+                throw new InvalidOperationException("Ingen sæder valgt.");
+
+            await _bookingRepository.AssignSeatsToBooking(dto.SessionId, booking.BookingId, selectedSeats.ToList());
 
             _seatSelectionStore.Clear(dto.SessionId);
 
             return booking;
         }
+
     }
 }

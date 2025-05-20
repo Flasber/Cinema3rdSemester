@@ -55,12 +55,6 @@ namespace BioProjektTest.Database
             Assert.AreEqual(firstMovie.Id, result.Id);
         }
 
-
-
-
-
-
-
         [Test]
         public async Task GetMovieByIdAsync_ShouldReturnNull_WhenNotFound()
         {

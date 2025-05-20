@@ -13,7 +13,6 @@ namespace BioProjektModels
         public int SeatId { get; set; }
         public bool IsAvailable { get; set; }
         public byte[] Version { get; set; }
-
-        public Seat? Seat { get; set; }
+        public Seat Seat { get; set; }
     }
 }

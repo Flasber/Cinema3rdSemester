@@ -63,13 +63,6 @@ namespace BioProjekt.DataAccess.Repositories
             using var connection = await _dbHelper.CreateAndOpenConnectionAsync();
             using var transaction = connection.BeginTransaction();
 
-            var seat = await connection.QueryFirstOrDefaultAsync<ScreeningSeat>(
-                "SELECT * FROM ScreeningSeat WHERE Id = @Id",
-                new { Id = screeningSeatId }, transaction);
-
-            if (seat == null || !seat.IsAvailable || !seat.Version.SequenceEqual(clientVersion))
-                return false;
-
             var rowsAffected = await connection.ExecuteAsync(
                 "UPDATE ScreeningSeat SET IsAvailable = 0 WHERE Id = @Id AND Version = @Version",
                 new { Id = screeningSeatId, Version = clientVersion }, transaction);
@@ -80,6 +73,7 @@ namespace BioProjekt.DataAccess.Repositories
             await transaction.CommitAsync();
             return true;
         }
+
 
         public async Task AssignSeatsToBooking(Guid sessionId, int bookingId, List<ScreeningSeat> selectedSeats)
         {
@@ -93,12 +87,13 @@ namespace BioProjekt.DataAccess.Repositories
                     new { BookingId = bookingId, SeatId = screeningSeat.SeatId }, transaction);
 
                 await connection.ExecuteAsync(
-                    "UPDATE ScreeningSeat SET IsAvailable = 0 WHERE Id = @Id",
-                    new { Id = screeningSeat.Id }, transaction);
+                    "UPDATE ScreeningSeat SET IsAvailable = 0 WHERE SeatId = @SeatId AND ScreeningId = @ScreeningId",
+                    new { SeatId = screeningSeat.Seat.Id, ScreeningId = screeningSeat.ScreeningId }, transaction);
             }
 
             await transaction.CommitAsync();
         }
+
 
         public async Task CreateScreeningSeatsAsync(int screeningId, int auditoriumId)
         {

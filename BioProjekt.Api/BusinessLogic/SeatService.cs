@@ -1,6 +1,7 @@
 ﻿using BioProjektModels;
 using BioProjekt.DataAccess.Interfaces;
 using BioProjekt.Shared.WebDtos;
+using BioProjekt.Api.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,12 @@ namespace BioProjekt.Api.BusinessLogic
     public class SeatService : ISeatService
     {
         private readonly ISeatRepository _seatRepository;
+        private readonly SeatSelectionStore _seatSelectionStore;
 
-        public SeatService(ISeatRepository seatRepository)
+        public SeatService(ISeatRepository seatRepository, SeatSelectionStore seatSelectionStore)
         {
             _seatRepository = seatRepository;
+            _seatSelectionStore = seatSelectionStore;
         }
 
         public async Task<IEnumerable<SeatAvailability>> GetAvailableSeats(int screeningId)
@@ -35,7 +38,6 @@ namespace BioProjekt.Api.BusinessLogic
         {
             return await _seatRepository.TryReserveScreeningSeatAsync(screeningSeatId, clientVersion);
         }
-
         public async Task<bool> SelectSeats(Guid sessionId, List<int> screeningSeatIds)
         {
             var allSucceeded = true;
@@ -49,34 +51,32 @@ namespace BioProjekt.Api.BusinessLogic
                     continue;
                 }
 
-                var reserved = await _seatRepository.TryReserveScreeningSeatAsync(seat.Id, seat.Version);
-                if (!reserved)
-                {
-                    allSucceeded = false;
-                    continue;
-                }
-
-                _seatRepository.StoreSeatSelection(sessionId, seat);
+                _seatSelectionStore.AddSeat(sessionId, seat);
             }
 
             return allSucceeded;
         }
 
 
+
         public IEnumerable<ScreeningSeat> GetSelectedSeats(Guid sessionId)
         {
-            return _seatRepository.GetSelectedSeatsAsync(sessionId).Result;
+            return _seatSelectionStore.GetSeats(sessionId);
         }
+
+
 
         public async Task AssignSeatsToBooking(Guid sessionId, int bookingId)
         {
-            var selected = _seatRepository.GetSelectedSeatsAsync(sessionId).Result.ToList();
-            if (!selected.Any())
+            var selectedSeats = _seatSelectionStore.GetSeats(sessionId);
+
+            if (!selectedSeats.Any())
                 return;
 
-            await _seatRepository.AssignSeatsToBooking(sessionId, bookingId, selected);
-            _seatRepository.ClearSeatSelection(sessionId);
+            await _seatRepository.AssignSeatsToBooking(sessionId, bookingId, selectedSeats);
+            _seatSelectionStore.Clear(sessionId);
         }
+
 
     }
 }

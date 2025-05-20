@@ -94,6 +94,7 @@ public class BookingController : Controller
 
         return View(viewModel);
     }
+
     [HttpPost]
     public async Task<IActionResult> BookingConfirmation(UserBookingInfoModel model)
     {
@@ -118,6 +119,13 @@ public class BookingController : Controller
         if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadAsStringAsync();
+
+            if (error.Contains("allerede taget", StringComparison.OrdinalIgnoreCase))
+            {
+                TempData["BookingError"] = "Et eller flere af de valgte sæder er desværre allerede reserveret. Vælg venligst nye sæder.";
+                return RedirectToAction("SelectSeats", new { showtimeId = model.ScreeningId });
+            }
+
             return View("Error", new ErrorViewModel { Message = $"Booking fejlede: {error}" });
         }
 
@@ -127,7 +135,6 @@ public class BookingController : Controller
     [HttpGet]
     public IActionResult Completed()
     {
-        return View("BookingCompleted"); 
+        return View("BookingCompleted");
     }
-
 }
