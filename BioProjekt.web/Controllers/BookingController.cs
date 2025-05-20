@@ -18,6 +18,7 @@ public class BookingController : Controller
         _httpClient = httpClientFactory.CreateClient();
     }
 
+    [HttpGet]
     public async Task<IActionResult> SelectSeats(int showtimeId)
     {
         var screening = await _httpClient.GetFromJsonAsync<Screening>($"http://localhost:5019/api/screening/{showtimeId}");
@@ -25,7 +26,7 @@ public class BookingController : Controller
             return View("Error", new ErrorViewModel { Message = "Screening ikke fundet" });
 
         var seats = await _httpClient.GetFromJsonAsync<List<SeatAvailability>>(
-            $"http://localhost:5019/api/seats/available?auditoriumId={screening.AuditoriumId}");
+            $"http://localhost:5019/api/seats/available?screeningId={screening.Id}");
 
         var sessionId = Guid.NewGuid();
         Response.Cookies.Append("sessionId", sessionId.ToString(), new CookieOptions
@@ -40,42 +41,27 @@ public class BookingController : Controller
         return View(seats);
     }
 
-    public async Task<IActionResult> ConfirmBooking(int seatNumber, string row, string version, int auditoriumId, Guid sessionId, int screeningId)
+    [HttpPost]
+    public async Task<IActionResult> SelectSeats([FromForm] List<int> selectedSeatIds, [FromForm] Guid sessionId, [FromForm] int screeningId)
     {
-        var selectDto = new SeatSelectionDTO
+        var dto = new SeatSelectionDTO
         {
             SessionId = sessionId,
-            SeatNumber = seatNumber,
-            Row = row,
-            AuditoriumId = auditoriumId
+            ScreeningSeatIds = selectedSeatIds
         };
 
-        var selectResult = await _httpClient.PostAsJsonAsync("http://localhost:5019/api/seats/select", selectDto);
-        if (!selectResult.IsSuccessStatusCode)
+        var response = await _httpClient.PostAsJsonAsync("http://localhost:5019/api/seats/select", dto);
+
+        if (!response.IsSuccessStatusCode)
         {
-            var error = await selectResult.Content.ReadAsStringAsync();
+            var error = await response.Content.ReadAsStringAsync();
             return View("Error", new ErrorViewModel { Message = $"Sædevalg fejlede: {error}" });
         }
 
-        var dto = new SeatReservationRequestDTO
-        {
-            SeatNumber = seatNumber,
-            Row = row,
-            ClientVersion = Convert.FromBase64String(version),
-            AuditoriumId = auditoriumId
-        };
-
-        var reserveResult = await _httpClient.PostAsJsonAsync("http://localhost:5019/api/seats/reserve", dto);
-        if (!reserveResult.IsSuccessStatusCode)
-        {
-            var error = await reserveResult.Content.ReadAsStringAsync();
-            return View("Error", new ErrorViewModel { Message = $"Sædereservation fejlede: {error}" });
-        }
-
-        return RedirectToAction("BookingConfirmation", new { screeningId = screeningId, sessionId = sessionId });
+        return RedirectToAction("BookingConfirmation", new { screeningId, sessionId });
     }
 
-
+    [HttpGet]
     public async Task<IActionResult> BookingConfirmation(int screeningId, Guid? sessionId)
     {
         if (!sessionId.HasValue)
@@ -87,32 +73,10 @@ public class BookingController : Controller
             sessionId = parsedId;
         }
 
-        var screeningResponse = await _httpClient.GetAsync($"http://localhost:5019/api/screening/{screeningId}");
-        if (!screeningResponse.IsSuccessStatusCode)
-        {
-            var error = await screeningResponse.Content.ReadAsStringAsync();
-            return View("Error", new ErrorViewModel { Message = $"Screening ikke fundet. Server sagde: {error}" });
-        }
+        var screening = await _httpClient.GetFromJsonAsync<Screening>($"http://localhost:5019/api/screening/{screeningId}");
+        var movie = await _httpClient.GetFromJsonAsync<Movie>($"http://localhost:5019/api/movie/{screening.MovieId}");
+        var selectedSeats = await _httpClient.GetFromJsonAsync<List<Seat>>($"http://localhost:5019/api/seats/selection?sessionId={sessionId}");
 
-        var screening = await screeningResponse.Content.ReadFromJsonAsync<Screening>();
-
-        var movieResponse = await _httpClient.GetAsync($"http://localhost:5019/api/movie/{screening.MovieId}");
-        if (!movieResponse.IsSuccessStatusCode)
-        {
-            var error = await movieResponse.Content.ReadAsStringAsync();
-            return View("Error", new ErrorViewModel { Message = $"Film ikke fundet. Server sagde: {error}" });
-        }
-
-        var movie = await movieResponse.Content.ReadFromJsonAsync<Movie>();
-
-        var seatResponse = await _httpClient.GetAsync($"http://localhost:5019/api/seats/selection?sessionId={sessionId}");
-        if (!seatResponse.IsSuccessStatusCode)
-        {
-            var error = await seatResponse.Content.ReadAsStringAsync();
-            return View("Error", new ErrorViewModel { Message = $"Valgte sæder ikke fundet. Server sagde: {error}" });
-        }
-
-        var selectedSeats = await seatResponse.Content.ReadFromJsonAsync<List<Seat>>();
         var seatLabels = selectedSeats.Select(s => $"{s.Row}{s.SeatNumber}").ToList();
         var totalPrice = seatLabels.Count * 65;
 
@@ -131,25 +95,46 @@ public class BookingController : Controller
         return View(viewModel);
     }
 
-    public IActionResult BookingForm(int screeningId)
-    {
-        return View(screeningId);
-    }
-
     [HttpPost]
-    public async Task<IActionResult> CreateWithoutLogin(int screeningId)
+    public async Task<IActionResult> BookingConfirmation(UserBookingInfoModel model)
     {
-        var dto = new BookingCreateDTO
+        if (!ModelState.IsValid || model.Email != model.ConfirmEmail)
         {
-            CustomerNumber = 1,
-            ScreeningId = screeningId
+            return View("Error", new ErrorViewModel { Message = "Ugyldige oplysninger eller e-mails matcher ikke." });
+        }
+
+        var dto = new BookingCustomerCreateDTO
+        {
+            ScreeningId = model.ScreeningId,
+            SessionId = model.SessionId,
+            Name = model.FirstName + " " + model.LastName,
+            Email = model.Email,
+            MobileNumber = model.Phone,
+            Address = model.Address,
+            CustomerType = model.CustomerType
         };
 
-        var response = await _httpClient.PostAsJsonAsync("http://localhost:5019/api/booking", dto);
+        var response = await _httpClient.PostAsJsonAsync("http://localhost:5019/api/booking/createWithCustomer", dto);
 
-        if (response.IsSuccessStatusCode)
-            return RedirectToAction("BookingConfirmation", new { screeningId = screeningId });
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadAsStringAsync();
 
-        return View("Error", new ErrorViewModel { Message = "Kunne ikke oprette booking." });
+            if (error.Contains("allerede taget", StringComparison.OrdinalIgnoreCase))
+            {
+                TempData["BookingError"] = "Et eller flere af de valgte sæder er desværre allerede reserveret. Vælg venligst nye sæder.";
+                return RedirectToAction("SelectSeats", new { showtimeId = model.ScreeningId });
+            }
+
+            return View("Error", new ErrorViewModel { Message = $"Booking fejlede: {error}" });
+        }
+
+        return RedirectToAction("Completed");
+    }
+
+    [HttpGet]
+    public IActionResult Completed()
+    {
+        return View("BookingCompleted");
     }
 }

@@ -2,10 +2,11 @@
 
 @{
     ViewData["Title"] = "Booking Bekræftelse";
+    var sessionId = Context.Request.Cookies["sessionId"];
 }
 
 <div class="confirmation-container">
-    <h1>Tak for din booking!</h1>
+    <h1>Tak for din booking vi er næsten i mål!</h1>
 
     <div class="info-box">
         <img src="@Model.PosterUrl" alt="Filmplakat" class="poster" />
@@ -18,38 +19,31 @@
             <p><strong>Sæder:</strong> @string.Join(", ", Model.SeatLabels)</p>
             <p><strong>Total pris:</strong> @Model.TotalPrice kr.</p>
 
-            <button class="confirm-button" onclick="openPopup()">Bekræft og betal</button>
+            <div class="buttons">
+                <button type="button" class="login-button">Log ind</button>
+                <button type="button" class="confirm-button" id="popupTrigger">Fortsæt uden login</button>
+            </div>
         </div>
     </div>
 </div>
 
 <div id="popupForm" class="popup-overlay" style="display:none;">
     <div class="popup">
-        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <span class="close-btn" id="popupClose">&times;</span>
         <h2>Indtast dine oplysninger</h2>
-        <form method="post" asp-action="CreateWithoutLogin" asp-controller="Booking">
-            <input type="hidden" name="screeningId" value="@Model.ScreeningId" />
-            <div class="form-group">
-                <label>Fornavn *</label>
-                <input type="text" name="firstName" required />
-            </div>
-            <div class="form-group">
-                <label>Efternavn *</label>
-                <input type="text" name="lastName" required />
-            </div>
-            <div class="form-group">
-                <label>E-mail *</label>
-                <input type="email" name="email" required />
-            </div>
-            <div class="form-group">
-                <label>Bekræft E-mail *</label>
-                <input type="email" name="confirmEmail" required />
-            </div>
-            <div class="form-group">
-                <label>Telefon *</label>
-                <input type="tel" name="phone" required />
-            </div>
-            <button type="submit" class="confirm-button">Videre</button>
+        <form method="post" asp-action="BookingConfirmation" asp-controller="Booking">
+            <input type="hidden" name="ScreeningId" value="@Model.ScreeningId" />
+            <input type="hidden" name="SessionId" value="@sessionId" />
+
+            <div class="form-group"><label>Fornavn *</label><input type="text" name="FirstName" required /></div>
+            <div class="form-group"><label>Efternavn *</label><input type="text" name="LastName" required /></div>
+            <div class="form-group"><label>E-mail *</label><input type="email" name="Email" required /></div>
+            <div class="form-group"><label>Bekræft E-mail *</label><input type="email" name="ConfirmEmail" required /></div>
+            <div class="form-group"><label>Telefon *</label><input type="tel" name="Phone" required /></div>
+            <div class="form-group"><label>Adresse *</label><input type="text" name="Address" required /></div>
+            <div class="form-group"><label>Kundetype *</label><input type="text" name="CustomerType" value="Standard" required /></div>
+
+            <button type="submit" class="confirm-button" onclick="this.disabled=true; this.form.submit();">Videre</button>
         </form>
     </div>
 </div>
@@ -76,34 +70,51 @@
     }
 
     .poster {
-        max-width: 200px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px #000;
+        max-width: 250px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
     }
 
     .details {
-        max-width: 400px;
+        max-width: 500px;
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 10px;
     }
 
-    .confirm-button {
-        margin-top: 20px;
+    .buttons {
+        display: flex;
+        gap: 15px;
+        margin-top: 25px;
+    }
+
+    .confirm-button, .login-button {
         padding: 12px 24px;
-        background-color: #198754;
-        color: white;
-        font-weight: bold;
         border: none;
         border-radius: 8px;
         cursor: pointer;
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+    .confirm-button {
+        background-color: #198754;
+        color: white;
     }
 
         .confirm-button:hover {
             background-color: #157347;
         }
 
-    /* Pop-up styling */
+    .login-button {
+        background-color: #0d6efd;
+        color: white;
+    }
+
+        .login-button:hover {
+            background-color: #0a58ca;
+        }
+
     .popup-overlay {
         position: fixed;
         top: 0;
@@ -114,7 +125,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        z-index: 999;
+        z-index: 9999;
     }
 
     .popup {
@@ -123,7 +134,7 @@
         border-radius: 12px;
         width: 400px;
         color: white;
-        box-shadow: 0 0 10px #000;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.9);
         position: relative;
     }
 
@@ -153,18 +164,28 @@
         position: absolute;
         top: 10px;
         right: 15px;
-        font-size: 22px;
+        font-size: 24px;
         color: white;
         cursor: pointer;
     }
 </style>
 
 <script>
-    function openPopup() {
-        document.getElementById('popupForm').style.display = 'flex';
-    }
+    document.addEventListener("DOMContentLoaded", function () {
+        const popup = document.getElementById("popupForm");
+        const openBtn = document.getElementById("popupTrigger");
+        const closeBtn = document.getElementById("popupClose");
 
-    function closePopup() {
-        document.getElementById('popupForm').style.display = 'none';
-    }
+        if (openBtn && popup && closeBtn) {
+            openBtn.addEventListener("click", function () {
+                popup.style.display = "flex";
+            });
+
+            closeBtn.addEventListener("click", function () {
+                popup.style.display = "none";
+            });
+        } else {
+            console.error("Popup elements not found");
+        }
+    });
 </script>

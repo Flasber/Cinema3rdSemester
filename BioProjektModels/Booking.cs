@@ -9,5 +9,7 @@
         public string BookingStatus { get; set; }
         public decimal Price { get; set; }
         public bool IsDiscounted { get; set; }
+
+        public Customer Customer { get; set; }
     }
 }

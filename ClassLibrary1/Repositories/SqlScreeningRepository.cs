@@ -23,16 +23,24 @@ namespace BioProjekt.DataAccess.Repositories
             using var connection = await _dbHelper.CreateAndOpenConnectionAsync();
             return await connection.QueryAsync<Screening>("SELECT * FROM Screening");
         }
+
         public async Task AddScreeningAsync(Screening screening)
         {
             using var connection = await _dbHelper.CreateAndOpenConnectionAsync();
 
             var sql = @"
-        INSERT INTO Screening (MovieId, Date, Time, LanguageVersion, Is3D, IsSoldOut, SoundSystem, AuditoriumId)
-        VALUES (@MovieId, @Date, @Time, @LanguageVersion, @Is3D, @IsSoldOut, @SoundSystem, @AuditoriumId)";
+                INSERT INTO Screening (MovieId, Date, Time, LanguageVersion, Is3D, IsSoldOut, SoundSystem, AuditoriumId)
+                OUTPUT INSERTED.Id
+                VALUES (@MovieId, @Date, @Time, @LanguageVersion, @Is3D, @IsSoldOut, @SoundSystem, @AuditoriumId)";
 
-            await connection.ExecuteAsync(sql, screening);
+            screening.Id = await connection.ExecuteScalarAsync<int>(sql, screening);
         }
 
+        public async Task<Screening?> GetScreeningByIdAsync(int id)
+        {
+            using var connection = await _dbHelper.CreateAndOpenConnectionAsync();
+            var sql = "SELECT * FROM Screening WHERE Id = @Id";
+            return await connection.QueryFirstOrDefaultAsync<Screening>(sql, new { Id = id });
+        }
     }
 }

@@ -1,81 +1,58 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using BioProjekt.Api.BusinessLogic;
-using BioProjektModels;
+﻿using BioProjekt.Api.BusinessLogic;
 using BioProjekt.Shared.WebDtos;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BioProjekt.Api.Controllers
 {
     [ApiController]
-    [Route("api/seats")]
-    public class SeatController : ControllerBase
+    [Route("api/[controller]")]
+    public class SeatsController : ControllerBase
     {
         private readonly ISeatService _seatService;
 
-        public SeatController(ISeatService seatService)
+        public SeatsController(ISeatService seatService)
         {
             _seatService = seatService;
         }
 
-        [HttpPost("reserve")]
-        public async Task<IActionResult> ReserveSeat([FromBody] SeatReservationRequestDTO request)
-        {
-            var success = await _seatService.TryReserveSeat(
-                request.SeatNumber,
-                request.Row,
-                request.ClientVersion,
-                request.AuditoriumId);
-
-            if (!success)
-                return Conflict("Sædet er allerede reserveret eller versionen er forkert.");
-
-            return Ok("Reservation gennemført.");
-        }
-
         [HttpGet("available")]
-        public async Task<ActionResult<IEnumerable<SeatAvailability>>> GetAvailableSeats([FromQuery] int auditoriumId)
+        public async Task<IActionResult> GetAvailableSeats([FromQuery] int screeningId)
         {
-            var availableSeats = await _seatService.GetAvailableSeats(auditoriumId);
-
-            foreach (var seat in availableSeats)
-            {
-                Console.WriteLine($"Seat {seat.SeatNumber}: Version = {(seat.Version == null ? "NULL" : BitConverter.ToString(seat.Version))}");
-            }
-
-            return Ok(availableSeats);
+            var seats = await _seatService.GetAvailableSeats(screeningId);
+            return Ok(seats);
         }
-
 
         [HttpPost("select")]
-        public IActionResult SelectSeat([FromBody] SeatSelectionDTO selection)
+        public async Task<IActionResult> SelectSeats([FromBody] SeatSelectionDTO dto)
         {
-            Console.WriteLine($"==> API: SELECT seat {selection.Row}{selection.SeatNumber} for session {selection.SessionId}");
-
-            var success = _seatService.SelectSeat(selection.SessionId, selection.SeatNumber, selection.Row, selection.AuditoriumId);
+            var success = await _seatService.SelectSeats(dto.SessionId, dto.ScreeningSeatIds);
 
             if (!success)
-            {
-                Console.WriteLine("!! Sædevalg fejlede - sædet er ikke ledigt");
-                return Conflict("Sædet er allerede reserveret.");
-            }
+                return BadRequest("En eller flere sæder kunne ikke vælges.");
 
-            Console.WriteLine("==> Sædevalg gennemført og gemt");
-            return Ok("Sædevalg gemt midlertidigt.");
+            return Ok();
         }
 
 
-        [HttpGet("selection")]
-        public ActionResult<IEnumerable<Seat>> GetSelectedSeats([FromQuery] Guid sessionId)
+        [HttpPost("reserve")]
+        public async Task<IActionResult> ReserveSeat([FromBody] SeatReservationRequestDTO dto)
         {
-            var selectedSeats = _seatService.GetSelectedSeats(sessionId);
+            var result = await _seatService.TryReserveScreeningSeat(dto.ScreeningSeatId, dto.ClientVersion);
 
-            if (!selectedSeats.Any())
-                return NotFound("Ingen sæder valgt for denne session.");
+            if (!result)
+                return BadRequest("Sædet kunne ikke reserveres. Det er muligvis optaget.");
 
-            return Ok(selectedSeats);
+            return Ok();
+        }
+
+        [HttpGet("selection")]
+        public async Task<IActionResult> GetSelectedSeats([FromQuery] Guid sessionId)
+        {
+            var selected = _seatService.GetSelectedSeats(sessionId);
+            var output = selected.Select(ss => ss.Seat).ToList();
+            return Ok(output);
         }
     }
 }

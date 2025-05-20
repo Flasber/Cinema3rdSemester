@@ -8,5 +8,7 @@ namespace BioProjekt.DataAccess.Interfaces
     {
         Task<IEnumerable<Movie>> GetAllMoviesAsync();
         Task<Movie?> GetMovieByIdAsync(int id);
+        Task CreateMovieAsync(Movie movie);
+
     }
 }

@@ -8,5 +8,7 @@ namespace BioProjekt.Api.BusinessLogic
     {
         Task<IEnumerable<Movie>> GetAllMoviesAsync();
         Task<Movie?> GetMovieByIdAsync(int id);
+        Task CreateMovieAsync(Movie movie);
+
     }
 }

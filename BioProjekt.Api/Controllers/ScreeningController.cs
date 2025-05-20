@@ -28,8 +28,10 @@ namespace BioProjekt.Api.Controllers
         public async Task<IActionResult> AddScreening([FromBody] Screening screening)
         {
             await _screeningService.AddScreeningAsync(screening);
-            return CreatedAtAction(nameof(GetAllScreenings), new { id = screening.Id }, screening);
+            var createdScreening = await _screeningService.GetScreeningByIdAsync(screening.Id);
+            return CreatedAtAction(nameof(GetScreeningById), new { id = screening.Id }, createdScreening);
         }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetScreeningById(int id)
         {

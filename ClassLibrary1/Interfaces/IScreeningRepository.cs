@@ -8,6 +8,7 @@ namespace BioProjekt.DataAccess.Interfaces
     {
         Task<IEnumerable<Screening>> GetAllScreeningsAsync();
         Task AddScreeningAsync(Screening screening);
+        Task<Screening?> GetScreeningByIdAsync(int id);
 
     }
 }

@@ -36,9 +36,15 @@ namespace BioProjektTest.Database
         [Test]
         public async Task GetMovieByIdAsync_ShouldReturnMovie_WhenFound()
         {
-            var result = await _repository.GetMovieByIdAsync(1);
+            var allMovies = await _repository.GetAllMoviesAsync();
+            var firstMovie = allMovies.FirstOrDefault();
+
+            Assert.IsNotNull(firstMovie, "Der er ingen film i databasen at teste med.");
+
+            var result = await _repository.GetMovieByIdAsync(firstMovie.Id);
+
             Assert.IsNotNull(result);
-            Assert.AreEqual(1, result?.Id);
+            Assert.AreEqual(firstMovie.Id, result?.Id);
         }
 
         [Test]

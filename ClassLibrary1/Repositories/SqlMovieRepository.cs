@@ -31,5 +31,19 @@ namespace BioProjekt.DataAccess.Repositories
             var sql = "SELECT * FROM Movie WHERE Id = @Id";
             return await connection.QueryFirstOrDefaultAsync<Movie>(sql, new { Id = id });
         }
+        public async Task CreateMovieAsync(Movie movie)
+        {
+            using var connection = await _dbHelper.CreateAndOpenConnectionAsync();
+
+            var sql = @"
+        INSERT INTO Movie (Title, Genre, Duration, Description, Language, AgeRating, PosterUrl)
+        VALUES (@Title, @Genre, @Duration, @Description, @Language, @AgeRating, @PosterUrl);
+        SELECT CAST(SCOPE_IDENTITY() AS INT);";
+
+            var id = await connection.ExecuteScalarAsync<int>(sql, movie);
+            movie.Id = id;
+        }
+
+
     }
 }

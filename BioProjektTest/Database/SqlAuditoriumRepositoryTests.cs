@@ -2,7 +2,8 @@
 using BioProjekt.DataAccess.Interfaces;
 using Microsoft.Extensions.Configuration;
 using BioProjekt.DataAccess.Helpers;
-
+using NUnit.Framework;
+namespace BioProjektTest.Database;
 [TestFixture]
 public class SqlAuditoriumRepositoryTests
 {
