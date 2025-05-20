@@ -12,21 +12,23 @@ using System;
 public class BookingController : Controller
 {
     private readonly HttpClient _httpClient;
+    private readonly string _apiBaseUrl;
 
-    public BookingController(IHttpClientFactory httpClientFactory)
+    public BookingController(IHttpClientFactory httpClientFactory, IConfiguration config)
     {
         _httpClient = httpClientFactory.CreateClient();
+        _apiBaseUrl = config["ApiBaseUrl"];
     }
 
     [HttpGet]
     public async Task<IActionResult> SelectSeats(int showtimeId)
     {
-        var screening = await _httpClient.GetFromJsonAsync<Screening>($"http://localhost:5019/api/screening/{showtimeId}");
+        var screening = await _httpClient.GetFromJsonAsync<Screening>($"{_apiBaseUrl}/api/screening/{showtimeId}");
         if (screening == null)
             return View("Error", new ErrorViewModel { Message = "Screening ikke fundet" });
 
         var seats = await _httpClient.GetFromJsonAsync<List<SeatAvailability>>(
-            $"http://localhost:5019/api/seats/available?screeningId={screening.Id}");
+            $"{_apiBaseUrl}/api/seats/available?screeningId={screening.Id}");
 
         var sessionId = Guid.NewGuid();
         Response.Cookies.Append("sessionId", sessionId.ToString(), new CookieOptions
@@ -50,7 +52,7 @@ public class BookingController : Controller
             ScreeningSeatIds = selectedSeatIds
         };
 
-        var response = await _httpClient.PostAsJsonAsync("http://localhost:5019/api/seats/select", dto);
+        var response = await _httpClient.PostAsJsonAsync($"{_apiBaseUrl}/api/seats/select", dto);
 
         if (!response.IsSuccessStatusCode)
         {
@@ -73,9 +75,9 @@ public class BookingController : Controller
             sessionId = parsedId;
         }
 
-        var screening = await _httpClient.GetFromJsonAsync<Screening>($"http://localhost:5019/api/screening/{screeningId}");
-        var movie = await _httpClient.GetFromJsonAsync<Movie>($"http://localhost:5019/api/movie/{screening.MovieId}");
-        var selectedSeats = await _httpClient.GetFromJsonAsync<List<Seat>>($"http://localhost:5019/api/seats/selection?sessionId={sessionId}");
+        var screening = await _httpClient.GetFromJsonAsync<Screening>($"{_apiBaseUrl}/api/screening/{screeningId}");
+        var movie = await _httpClient.GetFromJsonAsync<Movie>($"{_apiBaseUrl}/api/movie/{screening.MovieId}");
+        var selectedSeats = await _httpClient.GetFromJsonAsync<List<Seat>>($"{_apiBaseUrl}/api/seats/selection?sessionId={sessionId}");
 
         var seatLabels = selectedSeats.Select(s => $"{s.Row}{s.SeatNumber}").ToList();
         var totalPrice = seatLabels.Count * 65;
@@ -114,7 +116,7 @@ public class BookingController : Controller
             CustomerType = model.CustomerType
         };
 
-        var response = await _httpClient.PostAsJsonAsync("http://localhost:5019/api/booking/createWithCustomer", dto);
+        var response = await _httpClient.PostAsJsonAsync($"{_apiBaseUrl}/api/booking/createWithCustomer", dto);
 
         if (!response.IsSuccessStatusCode)
         {
