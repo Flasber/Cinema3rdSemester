@@ -1,4 +1,4 @@
-@BioProjekt.Api_HostAddress = http://localhost:5019
+@BioProjekt.Api_HostAddress = http://localhost:7203
 
 GET {{BioProjekt.Api_HostAddress}}/weatherforecast/
 Accept: application/json

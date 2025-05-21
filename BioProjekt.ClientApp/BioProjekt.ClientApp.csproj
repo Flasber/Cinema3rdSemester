@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BioProjekt.Api\BioProjekt.Api.csproj" />
     <ProjectReference Include="..\BioProjekt.Shared\BioProjekt.Shared.csproj" />
   </ItemGroup>
 
