@@ -23,7 +23,7 @@ public class BookingController : Controller
     [HttpGet]
     public async Task<IActionResult> SelectSeats(int showtimeId)
     {
-        var screening = await _httpClient.GetFromJsonAsync<Screening>($"{_apiBaseUrl}/api/screening/{showtimeId}");
+        var screening = await _httpClient.GetFromJsonAsync<ScreeningWebDto>($"{_apiBaseUrl}/api/screening/{showtimeId}");
         if (screening == null)
             return View("Error", new ErrorViewModel { Message = "Screening ikke fundet" });
 
@@ -75,9 +75,10 @@ public class BookingController : Controller
             sessionId = parsedId;
         }
 
-        var screening = await _httpClient.GetFromJsonAsync<Screening>($"{_apiBaseUrl}/api/screening/{screeningId}");
+        var screening = await _httpClient.GetFromJsonAsync<ScreeningWebDto>($"{_apiBaseUrl}/api/screening/{screeningId}");
         var movie = await _httpClient.GetFromJsonAsync<Movie>($"{_apiBaseUrl}/api/movie/{screening.MovieId}");
-        var selectedSeats = await _httpClient.GetFromJsonAsync<List<Seat>>($"{_apiBaseUrl}/api/seats/selection?sessionId={sessionId}");
+        var selectedSeats = await _httpClient.GetFromJsonAsync<List<SeatAvailability>>(
+            $"{_apiBaseUrl}/api/seats/selection?sessionId={sessionId}");
 
         var seatLabels = selectedSeats.Select(s => $"{s.Row}{s.SeatNumber}").ToList();
         var totalPrice = seatLabels.Count * 65;
@@ -88,7 +89,7 @@ public class BookingController : Controller
             PosterUrl = movie.PosterUrl ?? "/images/posters/default.jpg",
             AuditoriumName = $"Sal {screening.AuditoriumId}",
             StartTime = screening.StartDateTime,
-            EndTime = screening.StartDateTime.AddMinutes(120),
+            EndTime = screening.EndDateTime,
             SeatLabels = seatLabels,
             TotalPrice = totalPrice,
             ScreeningId = screening.Id
@@ -105,6 +106,17 @@ public class BookingController : Controller
             return View("Error", new ErrorViewModel { Message = "Ugyldige oplysninger eller e-mails matcher ikke." });
         }
 
+        var selectedSeats = await _httpClient.GetFromJsonAsync<List<SeatAvailability>>(
+            $"{_apiBaseUrl}/api/seats/selection?sessionId={model.SessionId}");
+
+        if (selectedSeats == null || selectedSeats.Count == 0)
+        {
+            return View("Error", new ErrorViewModel { Message = "Ingen sæder valgt for denne session." });
+        }
+
+        var screening = await _httpClient.GetFromJsonAsync<ScreeningWebDto>(
+            $"{_apiBaseUrl}/api/screening/{model.ScreeningId}");
+
         var dto = new BookingCustomerCreateDTO
         {
             ScreeningId = model.ScreeningId,
@@ -113,7 +125,10 @@ public class BookingController : Controller
             Email = model.Email,
             MobileNumber = model.Phone,
             Address = model.Address,
-            CustomerType = model.CustomerType
+            CustomerType = model.CustomerType,
+            ScreeningSeatIds = selectedSeats.Select(s => s.ScreeningSeatId).ToList(),
+            StartTime = screening.StartDateTime,
+            EndTime = screening.EndDateTime
         };
 
         var response = await _httpClient.PostAsJsonAsync($"{_apiBaseUrl}/api/booking/createWithCustomer", dto);

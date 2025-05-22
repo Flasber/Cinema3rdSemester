@@ -28,12 +28,22 @@ namespace BioProjekt.Api.BusinessLogic
             _seatSelectionStore = seatSelectionStore;
         }
 
-        public async Task<Booking> CreateBookingAsync(Booking booking)
+        public async Task<int> CreateBookingWithSeatsAsync(Guid sessionId, Booking booking)
         {
-            booking.BookingDate = DateTime.Now;
-            booking.BookingId = await _bookingRepository.CreateBookingAsync(booking);
-            return booking;
+            var selectedSeats = _seatSelectionStore.GetSeats(sessionId);
+
+            if (selectedSeats == null || selectedSeats.Count == 0)
+                throw new InvalidOperationException("Ingen valgte sæder.");
+
+            var bookingId = await _bookingRepository.CreateBookingAsync(booking);
+            await _bookingRepository.AssignSeatsToBooking(sessionId, bookingId, selectedSeats);
+
+            _seatSelectionStore.Clear(sessionId); 
+
+            return bookingId;
         }
+
+
 
         public async Task<Booking> CreateBookingWithCustomerAsync(BookingCustomerCreateDTO dto)
         {

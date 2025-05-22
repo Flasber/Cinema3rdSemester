@@ -34,30 +34,7 @@ namespace BioProjekt.Api.BusinessLogic
             });
         }
 
-        public async Task<bool> TryReserveScreeningSeat(int screeningSeatId, byte[] clientVersion)
-        {
-            return await _seatRepository.TryReserveScreeningSeatAsync(screeningSeatId, clientVersion);
-        }
-        public async Task<bool> SelectSeats(Guid sessionId, List<int> screeningSeatIds)
-        {
-            var allSucceeded = true;
-
-            foreach (var id in screeningSeatIds)
-            {
-                var seat = await _seatRepository.GetScreeningSeatByIdAsync(id);
-                if (seat == null || !seat.IsAvailable)
-                {
-                    allSucceeded = false;
-                    continue;
-                }
-
-                _seatSelectionStore.AddSeat(sessionId, seat);
-            }
-
-            return allSucceeded;
-        }
-
-
+     
 
         public IEnumerable<ScreeningSeat> GetSelectedSeats(Guid sessionId)
         {
@@ -66,17 +43,7 @@ namespace BioProjekt.Api.BusinessLogic
 
 
 
-        public async Task AssignSeatsToBooking(Guid sessionId, int bookingId)
-        {
-            var selectedSeats = _seatSelectionStore.GetSeats(sessionId);
-
-            if (!selectedSeats.Any())
-                return;
-
-            await _seatRepository.AssignSeatsToBooking(sessionId, bookingId, selectedSeats);
-            _seatSelectionStore.Clear(sessionId);
-        }
-
+      
 
     }
 }

@@ -33,32 +33,35 @@ namespace BioProjekt.DataAccess.Repositories
             using var connection = await _dbHelper.CreateAndOpenConnectionAsync();
             using var transaction = connection.BeginTransaction();
 
-            foreach (var screeningSeat in selectedSeats)
+            try
             {
-                var seatId = screeningSeat.SeatId;
+                foreach (var screeningSeat in selectedSeats)
+                {
+                    var seatId = screeningSeat.SeatId;
+                    var rowsAffected = await connection.ExecuteAsync(
+                        @"UPDATE ScreeningSeat 
+                        SET IsAvailable = 0 
+                        WHERE Id = @Id AND Version = @Version",
+                        new { Id = screeningSeat.Id, Version = screeningSeat.Version },
+                        transaction);
 
-                var seatExists = await connection.ExecuteScalarAsync<bool>(
-                    "SELECT COUNT(1) FROM Seat WHERE Id = @SeatId", new { SeatId = seatId }, transaction);
+                    if (rowsAffected == 0)
+                        throw new InvalidOperationException($"Sædet {screeningSeat.Id} er allerede blevet reserveret af en anden.");
 
-                if (!seatExists)
-                    throw new InvalidOperationException($"SeatId {seatId} findes ikke i Seat-tabellen.");
+                    await connection.ExecuteAsync(
+                        "INSERT INTO BookingSeat (BookingId, SeatId) VALUES (@BookingId, @SeatId)",
+                        new { BookingId = bookingId, SeatId = seatId },
+                        transaction);
+                }
 
-                var rowsAffected = await connection.ExecuteAsync(
-                    "UPDATE ScreeningSeat SET IsAvailable = 0 WHERE Id = @Id AND Version = @Version",
-                    new { Id = screeningSeat.Id, Version = screeningSeat.Version }, transaction);
-
-                if (rowsAffected == 0)
-                    throw new InvalidOperationException($"Sædet {screeningSeat.Id} er allerede taget.");
-
-                await connection.ExecuteAsync(
-                    "INSERT INTO BookingSeat (BookingId, SeatId) VALUES (@BookingId, @SeatId)",
-                    new { BookingId = bookingId, SeatId = seatId }, transaction);
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync(); 
+                throw;
             }
 
-            await transaction.CommitAsync();
         }
-
-
-
     }
 }

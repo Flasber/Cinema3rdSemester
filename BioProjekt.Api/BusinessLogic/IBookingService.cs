@@ -6,7 +6,7 @@ namespace BioProjekt.Api.BusinessLogic
 {
     public interface IBookingService
     {
-        Task<Booking> CreateBookingAsync(Booking booking);
         Task<Booking> CreateBookingWithCustomerAsync(BookingCustomerCreateDTO dto);
+        Task<int> CreateBookingWithSeatsAsync(Guid sessionId, Booking booking);
     }
 }

@@ -17,19 +17,6 @@ namespace BioProjekt.Api.Controllers
             _bookingService = bookingService;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Booking>> CreateBooking([FromBody] BookingCreateDTO dto)
-        {
-            var booking = new Booking
-            {
-                CustomerNumber = dto.CustomerNumber,
-                ScreeningId = dto.ScreeningId,
-                BookingStatus = "Pending"
-            };
-
-            var created = await _bookingService.CreateBookingAsync(booking);
-            return Created("", created);
-        }
         [HttpPost("createWithCustomer")]
         public async Task<ActionResult<Booking>> CreateBookingWithCustomer([FromBody] BookingCustomerCreateDTO dto)
         {

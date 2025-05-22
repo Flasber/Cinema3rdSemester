@@ -75,25 +75,7 @@ namespace BioProjekt.DataAccess.Repositories
         }
 
 
-        public async Task AssignSeatsToBooking(Guid sessionId, int bookingId, List<ScreeningSeat> selectedSeats)
-        {
-            using var connection = await _dbHelper.CreateAndOpenConnectionAsync();
-            using var transaction = connection.BeginTransaction();
-
-            foreach (var screeningSeat in selectedSeats)
-            {
-                await connection.ExecuteAsync(
-                    "INSERT INTO BookingSeat (BookingId, SeatId) VALUES (@BookingId, @SeatId)",
-                    new { BookingId = bookingId, SeatId = screeningSeat.SeatId }, transaction);
-
-                await connection.ExecuteAsync(
-                    "UPDATE ScreeningSeat SET IsAvailable = 0 WHERE SeatId = @SeatId AND ScreeningId = @ScreeningId",
-                    new { SeatId = screeningSeat.Seat.Id, ScreeningId = screeningSeat.ScreeningId }, transaction);
-            }
-
-            await transaction.CommitAsync();
-        }
-
+     
 
         public async Task CreateScreeningSeatsAsync(int screeningId, int auditoriumId)
         {
@@ -125,7 +107,6 @@ namespace BioProjekt.DataAccess.Repositories
             if (!_sessionSeats[sessionId].Any(s => s.Id == screeningSeat.Id))
                 _sessionSeats[sessionId].Add(screeningSeat);
         }
-
         public void ClearSeatSelection(Guid sessionId)
         {
             _sessionSeats.Remove(sessionId);

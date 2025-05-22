@@ -36,16 +36,7 @@ namespace BioProjekt.Api.Controllers
         }
 
 
-        [HttpPost("reserve")]
-        public async Task<IActionResult> ReserveSeat([FromBody] SeatReservationRequestDTO dto)
-        {
-            var result = await _seatService.TryReserveScreeningSeat(dto.ScreeningSeatId, dto.ClientVersion);
-
-            if (!result)
-                return BadRequest("Sædet kunne ikke reserveres. Det er muligvis optaget.");
-
-            return Ok();
-        }
+       
 
         [HttpGet("selection")]
         public async Task<IActionResult> GetSelectedSeats([FromQuery] Guid sessionId)

@@ -3,6 +3,7 @@ using BioProjektModels;
 using BioProjekt.Api.BusinessLogic;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BioProjekt.Shared.WebDtos;
 
 namespace BioProjekt.Api.Controllers
 {
@@ -11,10 +12,12 @@ namespace BioProjekt.Api.Controllers
     public class ScreeningController : ControllerBase
     {
         private readonly IScreeningService _screeningService;
+        private readonly IMovieService _movieService;
 
-        public ScreeningController(IScreeningService screeningService)
+        public ScreeningController(IScreeningService screeningService, IMovieService movieService)
         {
             _screeningService = screeningService;
+            _movieService = movieService;
         }
 
         [HttpGet]
@@ -29,19 +32,28 @@ namespace BioProjekt.Api.Controllers
         {
             await _screeningService.AddScreeningAsync(screening);
             var createdScreening = await _screeningService.GetScreeningByIdAsync(screening.Id);
-            return CreatedAtAction(nameof(GetScreeningById), new { id = screening.Id }, createdScreening);
+            return CreatedAtAction(nameof(GetScreening), new { id = screening.Id }, createdScreening);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetScreeningById(int id)
+        public async Task<ActionResult<ScreeningWebDto>> GetScreening(int id)
         {
             var screening = await _screeningService.GetScreeningByIdAsync(id);
+            if (screening == null) return NotFound();
 
-            if (screening == null)
-                return NotFound($"Screening med id {id} blev ikke fundet.");
+            var movie = await _movieService.GetMovieByIdAsync(screening.MovieId);
+            if (movie == null) return NotFound("Filmen blev ikke fundet");
 
-            return Ok(screening);
+            var dto = new ScreeningWebDto
+            {
+                Id = screening.Id,
+                StartDateTime = screening.StartDateTime,
+                EndDateTime = screening.StartDateTime.AddMinutes(movie.Duration),
+                MovieId = screening.MovieId,
+                AuditoriumId = screening.AuditoriumId
+            };
+
+            return Ok(dto);
         }
-
     }
 }
