@@ -75,5 +75,25 @@ namespace BioProjekt.Api.Controllers
 
             return CreatedAtAction(nameof(GetMovie), new { id = movie.Id }, movie);
         }
+        [HttpPost("upload-poster")]
+        public async Task<ActionResult<string>> UploadPoster(IFormFile poster, [FromServices] IWebHostEnvironment env)
+        {
+            if (poster == null || poster.Length == 0)
+                return BadRequest("Ingen fil modtaget.");
+
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(poster.FileName)}";
+            var savePath = Path.Combine(env.WebRootPath, "images", fileName);
+
+            Directory.CreateDirectory(Path.GetDirectoryName(savePath));
+
+            using (var stream = new FileStream(savePath, FileMode.Create))
+            {
+                await poster.CopyToAsync(stream);
+            }
+
+            var relativeUrl = $"/images/{fileName}";
+            return Ok(relativeUrl);
+        }
+
     }
 }

@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using BioProjekt.ClientApp.BusinessLogic;
+using BioProjekt.ClientApp.Forms.Services;
 using BioProjekt.Shared.ClientDtos;
 
 namespace BioProjekt.ClientApp.Forms
 {
     public partial class MovieForm : Form
     {
-        private readonly MovieManager _movieManager;
+        private readonly MovieApiClient _apiClient;
 
         private Dictionary<int, (string SoundSystem, bool Has3D)> _auditoriumDefaults = new()
         {
@@ -20,7 +20,7 @@ namespace BioProjekt.ClientApp.Forms
         public MovieForm()
         {
             InitializeComponent();
-            _movieManager = new MovieManager();
+            _apiClient = new MovieApiClient();
 
             cmbAuditorium.Items.Add("1 - Auditorium 1");
             cmbAuditorium.Items.Add("2 - Auditorium 2");
@@ -72,7 +72,16 @@ namespace BioProjekt.ClientApp.Forms
 
             movie.Screenings.Add(screening);
 
-            var success = await _movieManager.CreateMovieWithPosterAsync(movie, txtPosterUrl.Text);
+            var posterUrl = await _apiClient.UploadPosterAsync(txtPosterUrl.Text);
+            if (posterUrl == null)
+            {
+                MessageBox.Show("Fejl ved upload af plakat.", "Fejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            movie.PosterUrl = posterUrl;
+
+            var success = await _apiClient.CreateMovieAsync(movie);
 
             if (success)
             {
@@ -81,7 +90,7 @@ namespace BioProjekt.ClientApp.Forms
             }
             else
             {
-                MessageBox.Show("Noget gik galt ved oprettelsen eller billedkopiering.", "Fejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Noget gik galt ved oprettelsen.", "Fejl", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

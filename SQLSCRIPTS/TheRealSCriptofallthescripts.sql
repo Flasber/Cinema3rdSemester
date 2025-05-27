@@ -1,22 +1,19 @@
 USE CinemaDB;
 GO
 
--- Ryd eksisterende data i den rigtige rækkefølge
 DELETE FROM BookingSeat;
 DELETE FROM Booking;
 DELETE FROM ScreeningSeat;
-DELETE FROM Screening;     
+DELETE FROM Screening;
 DELETE FROM Seat;
 DELETE FROM Auditorium;
 DELETE FROM Movie;
 GO
 
--- Tilføj en testkunde
 INSERT INTO Customer (Name, Email, MobileNumber, Address, CustomerType)
 VALUES ('Test Bruger', 'test@example.com', '12345678', 'Testvej 1', 'Standard');
 GO
 
--- Brug IDENTITY_INSERT for Movie
 SET IDENTITY_INSERT Movie ON;
 INSERT INTO Movie (Id, Title, Genre, Duration, Description, Language, AgeRating, PosterUrl)
 VALUES
@@ -26,18 +23,15 @@ VALUES
 SET IDENTITY_INSERT Movie OFF;
 GO
 
--- Resæt Movie IDENTITY
 DBCC CHECKIDENT ('Movie', RESEED, 3);
 GO
 
--- Tilføj auditorier
 INSERT INTO Auditorium (Id, Name, Capacity, Has3D, SoundSystem, ScreenSize)
 VALUES
 (1, 'Auditorium 1', 200, 1, 'Dolby Atmos', 'Large'),
 (2, 'Auditorium 2', 150, 0, 'Stereo', 'Medium');
 GO
 
--- Tilføj forestillinger (uden Id - IDENTITY klarer det selv)
 INSERT INTO Screening (MovieId, Date, Time, LanguageVersion, Is3D, IsSoldOut, SoundSystem, AuditoriumId)
 VALUES
 (2, CAST(GETDATE() AS DATE), '16:00:00', 'English', 0, 0, 'Stereo', 2),
@@ -48,7 +42,6 @@ VALUES
 (3, CAST(DATEADD(day, 2, GETDATE()) AS DATE), '18:30:00', 'Danish', 0, 0, 'Stereo', 1);
 GO
 
--- Tilføj sæder til begge auditorier
 DECLARE @audId INT = 1;
 WHILE @audId <= 2
 BEGIN
@@ -75,9 +68,8 @@ BEGIN
 END
 GO
 
--- Opret ScreeningSeat records for alle screenings og sæder i tilhørende auditorium
 INSERT INTO ScreeningSeat (ScreeningId, SeatId, IsAvailable)
-SELECT s.Id AS ScreeningId, st.Id AS SeatId, 1 AS IsAvailable
+SELECT s.Id, st.Id, 1
 FROM Screening s
 JOIN Seat st ON s.AuditoriumId = st.AuditoriumId;
 GO

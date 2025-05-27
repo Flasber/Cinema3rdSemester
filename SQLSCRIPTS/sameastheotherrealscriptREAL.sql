@@ -1,14 +1,18 @@
+USE master;
+GO
 
-use master;
-
+IF EXISTS (SELECT name FROM sys.databases WHERE name = N'CinemaDB')
+BEGIN
+    ALTER DATABASE CinemaDB SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE CinemaDB;
+END
+GO
 
 CREATE DATABASE CinemaDB;
 GO
 
 USE CinemaDB;
 GO
-
-
 
 CREATE TABLE Customer (
     CustomerNumber INT IDENTITY(1,1) PRIMARY KEY,
@@ -20,7 +24,7 @@ CREATE TABLE Customer (
 );
 
 CREATE TABLE Movie (
-	Id INT IDENTITY(1,1) PRIMARY KEY,
+    Id INT IDENTITY(1,1) PRIMARY KEY,
     Title NVARCHAR(100) NOT NULL,
     Genre NVARCHAR(50),
     Duration INT,
@@ -49,7 +53,6 @@ CREATE TABLE Seat (
     AuditoriumId INT NOT NULL,
     FOREIGN KEY (AuditoriumId) REFERENCES Auditorium(Id)
 );
-
 
 CREATE TABLE Screening (
     Id INT IDENTITY(1,1) PRIMARY KEY,

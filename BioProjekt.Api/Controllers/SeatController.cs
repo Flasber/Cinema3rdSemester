@@ -24,19 +24,6 @@ namespace BioProjekt.Api.Controllers
             return Ok(seats);
         }
 
-        [HttpPost("select")]
-        public async Task<IActionResult> SelectSeats([FromBody] SeatSelectionDTO dto)
-        {
-            var success = await _seatService.SelectSeats(dto.SessionId, dto.ScreeningSeatIds);
-
-            if (!success)
-                return BadRequest("En eller flere sæder kunne ikke vælges.");
-
-            return Ok();
-        }
-
-
-       
 
         [HttpGet("selection")]
         public async Task<IActionResult> GetSelectedSeats([FromQuery] Guid sessionId)
