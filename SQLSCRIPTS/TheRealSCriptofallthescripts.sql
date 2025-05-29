@@ -23,9 +23,6 @@ VALUES
 SET IDENTITY_INSERT Movie OFF;
 GO
 
-DBCC CHECKIDENT ('Movie', RESEED, 3);
-GO
-
 INSERT INTO Auditorium (Id, Name, Capacity, Has3D, SoundSystem, ScreenSize)
 VALUES
 (1, 'Auditorium 1', 200, 1, 'Dolby Atmos', 'Large'),
