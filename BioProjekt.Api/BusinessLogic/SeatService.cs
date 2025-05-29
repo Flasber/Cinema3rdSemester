@@ -40,10 +40,35 @@ namespace BioProjekt.Api.BusinessLogic
         {
             return _seatSelectionStore.GetSeats(sessionId);
         }
+        public async Task<bool> SelectSeats(Guid sessionId, List<int> screeningSeatIds)
+        {
+            var allSucceeded = true;
+
+            foreach (var id in screeningSeatIds)
+            {
+                var seat = await _seatRepository.GetScreeningSeatByIdAsync(id);
+                if (seat == null || !seat.IsAvailable)
+                {
+                    allSucceeded = false;
+                    continue;
+                }
+
+                try
+                {
+                    _seatSelectionStore.AddSeat(sessionId, seat);
+                }
+                catch (InvalidOperationException)
+                {
+                    allSucceeded = false;
+                }
+            }
+
+            return allSucceeded;
+        }
 
 
 
-      
+
 
     }
 }

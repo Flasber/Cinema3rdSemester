@@ -32,5 +32,23 @@ namespace BioProjekt.Api.Controllers
             var output = selected.Select(ss => ss.Seat).ToList();
             return Ok(output);
         }
+        [HttpPost("select")]
+        public async Task<IActionResult> SelectSeats([FromBody] SeatSelectionDTO dto)
+        {
+            try
+            {
+                var success = await _seatService.SelectSeats(dto.SessionId, dto.ScreeningSeatIds);
+
+                if (!success)
+                    return BadRequest("Et eller flere sæder kunne ikke vælges. De kan være reserveret.");
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Der opstod en uventet fejl. Prøv igen senere. {ex.Message}");
+            }
+        }
+
     }
 }

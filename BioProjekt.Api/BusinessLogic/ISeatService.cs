@@ -10,5 +10,7 @@ namespace BioProjekt.Api.BusinessLogic
     {
         Task<IEnumerable<SeatAvailability>> GetAvailableSeats(int screeningId);
         IEnumerable<ScreeningSeat> GetSelectedSeats(Guid sessionId);
+        Task<bool> SelectSeats(Guid sessionId, List<int> screeningSeatIds);
+
     }
 }
