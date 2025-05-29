@@ -16,7 +16,8 @@ namespace BioProjekt.Api.Controllers
         {
             _auditoriumService = auditoriumService;
         }
-
+        // GET: /api/auditorium
+        // Returnerer alle sale (auditoriums) i databasen
         [HttpGet]
         public async Task<ActionResult<List<Auditorium>>> GetAllAuditoriums()
         {

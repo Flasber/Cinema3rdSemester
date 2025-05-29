@@ -22,7 +22,8 @@ namespace BioProjekt.Api.Controllers
             _screeningRepository = screeningRepository;
             _auditoriumRepository = auditoriumRepository;
         }
-
+        // GET: /api/showtime/{id}
+        // Returnerer alle forestillinger (showtimes) for en given film
         [HttpGet("{id}")]
         public async Task<IActionResult> GetShowtimesByMovieId(int id)
         {

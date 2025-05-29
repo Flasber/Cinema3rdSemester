@@ -19,14 +19,16 @@ namespace BioProjekt.Api.Controllers
             _movieService = movieService;
             _screeningService = screeningService;
         }
-
+        // GET: /api/movie
+        // Returnerer alle film i databasen
         [HttpGet]
         public async Task<IActionResult> GetMovies()
         {
             var movies = await _movieService.GetAllMoviesAsync();
             return Ok(movies);
         }
-
+        // GET: /api/movie/{id}
+        // Returnerer detaljer for en enkelt film ud fra dens ID
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMovie(int id)
         {
@@ -36,7 +38,8 @@ namespace BioProjekt.Api.Controllers
 
             return Ok(movie);
         }
-
+        // POST: /api/movie
+        // Opretter en ny film og tilknyttede forestillinger
         [HttpPost]
         public async Task<IActionResult> CreateMovie([FromBody] MovieCreateDto dto)
         {
@@ -75,6 +78,8 @@ namespace BioProjekt.Api.Controllers
 
             return CreatedAtAction(nameof(GetMovie), new { id = movie.Id }, movie);
         }
+        // POST: /api/movie/upload-poster
+        // Modtager og gemmer en filmplakat som billede i wwwroot/images og returnerer sti
         [HttpPost("upload-poster")]
         public async Task<ActionResult<string>> UploadPoster(IFormFile poster, [FromServices] IWebHostEnvironment env)
         {

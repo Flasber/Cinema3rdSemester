@@ -16,7 +16,8 @@ namespace BioProjekt.Api.Controllers
         {
             _bookingService = bookingService;
         }
-
+        // POST: /api/booking/createWithCustomer
+        // Opretter en booking og tilhørende kunde baseret på input-DTO
         [HttpPost("createWithCustomer")]
         public async Task<ActionResult<Booking>> CreateBookingWithCustomer([FromBody] BookingCustomerCreateDTO dto)
         {

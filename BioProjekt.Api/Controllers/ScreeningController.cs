@@ -19,14 +19,16 @@ namespace BioProjekt.Api.Controllers
             _screeningService = screeningService;
             _movieService = movieService;
         }
-
+        // GET: /api/screening
+        // Returnerer alle forestillinger (screenings)
         [HttpGet]
         public async Task<ActionResult<List<Screening>>> GetAllScreenings()
         {
             var screenings = await _screeningService.GetAllScreeningsAsync();
             return Ok(screenings);
         }
-
+        // POST: /api/screening
+        // Tilføjer en ny forestilling
         [HttpPost]
         public async Task<IActionResult> AddScreening([FromBody] Screening screening)
         {
@@ -34,7 +36,8 @@ namespace BioProjekt.Api.Controllers
             var createdScreening = await _screeningService.GetScreeningByIdAsync(screening.Id);
             return CreatedAtAction(nameof(GetScreening), new { id = screening.Id }, createdScreening);
         }
-
+        // GET: /api/screening/{id}
+        // Returnerer en bestemt forestilling samt dens filmoplysninger
         [HttpGet("{id}")]
         public async Task<ActionResult<ScreeningWebDto>> GetScreening(int id)
         {

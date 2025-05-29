@@ -1,12 +1,21 @@
-﻿@{
+﻿@model BioProjekt.web.Models.BookingConfirmationViewModel
+@{
     ViewData["Title"] = "Tak for din booking";
 }
 
 <div class="completed-container">
     <h1>✔️ Tak for din booking!</h1>
 
-    <p>Din bestilling er nu registreret.</p>
-    <p>Du vil modtage en e-mail med bekræftelse og oplysninger.</p>
+    <p>Din bestilling er nu registreret. Du vil modtage en e-mail med bekræftelse.</p>
+
+    <div class="summary-box">
+        <h2>🎬 @Model.MovieTitle</h2>
+        <p><strong>Sal:</strong> @Model.AuditoriumName</p>
+        <p><strong>Start:</strong> @Model.StartTime.ToString("dd-MM-yyyy HH:mm")</p>
+        <p><strong>Slut:</strong> @Model.EndTime.ToString("HH:mm")</p>
+        <p><strong>Valgte sæder:</strong> @string.Join(", ", Model.SeatLabels)</p>
+        @Model.TotalPrice.ToString("c0", new System.Globalization.CultureInfo("da-DK"))
+    </div>
 
     <a href="/" class="home-button">Til forsiden</a>
 </div>
@@ -24,6 +33,15 @@
     h1 {
         color: #28a745;
         margin-bottom: 20px;
+    }
+
+    .summary-box {
+        background-color: #161b22;
+        padding: 20px;
+        border-radius: 10px;
+        display: inline-block;
+        text-align: left;
+        margin-top: 20px;
     }
 
     .home-button {

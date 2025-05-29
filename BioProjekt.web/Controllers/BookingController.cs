@@ -19,7 +19,8 @@ public class BookingController : Controller
         _httpClient = httpClientFactory.CreateClient();
         _apiBaseUrl = config["ApiBaseUrl"];
     }
-
+    // GET: /Booking/SelectSeats?showtimeId=?
+    // Viser sædeoversigten for en bestemt forestilling (screening) og opretter en ny session (cookie) for midlertidig reservation
     [HttpGet]
     public async Task<IActionResult> SelectSeats(int showtimeId)
     {
@@ -43,6 +44,8 @@ public class BookingController : Controller
         return View(seats);
     }
 
+    // POST: /Booking/SelectSeats
+    // Forsøger at reservere valgte sæder midlertidigt via API’et, og omdirigerer til bekræftelsessiden
     [HttpPost]
     public async Task<IActionResult> SelectSeats([FromForm] List<int> selectedSeatIds, [FromForm] Guid sessionId, [FromForm] int screeningId)
     {
@@ -63,6 +66,8 @@ public class BookingController : Controller
         return RedirectToAction("BookingConfirmation", new { screeningId, sessionId });
     }
 
+    // GET: /Booking/BookingConfirmation
+    // Viser en opsummering af film, tid, valgte sæder og totalpris, inden bookingen bekræftes
     [HttpGet]
     public async Task<IActionResult> BookingConfirmation(int screeningId, Guid? sessionId)
     {
@@ -98,6 +103,9 @@ public class BookingController : Controller
         return View(viewModel);
     }
 
+    // POST: /Booking/BookingConfirmation
+    // Afsender kundeoplysninger og valgte sæder til API’et, opretter en booking i databasen
+    // og viser en kvitteringsside med bookingoplysninger, hvis alt lykkes
     [HttpPost]
     public async Task<IActionResult> BookingConfirmation(UserBookingInfoModel model)
     {
@@ -116,6 +124,8 @@ public class BookingController : Controller
 
         var screening = await _httpClient.GetFromJsonAsync<ScreeningWebDto>(
             $"{_apiBaseUrl}/api/screening/{model.ScreeningId}");
+
+        var movie = await _httpClient.GetFromJsonAsync<Movie>($"{_apiBaseUrl}/api/movie/{screening.MovieId}");
 
         var dto = new BookingCustomerCreateDTO
         {
@@ -146,12 +156,18 @@ public class BookingController : Controller
             return View("Error", new ErrorViewModel { Message = $"Booking fejlede: {error}" });
         }
 
-        return RedirectToAction("Completed");
-    }
+        var viewModel = new BookingConfirmationViewModel
+        {
+            MovieTitle = movie.Title,
+            PosterUrl = movie.PosterUrl ?? "/images/posters/default.jpg",
+            AuditoriumName = $"Sal {screening.AuditoriumId}",
+            StartTime = screening.StartDateTime,
+            EndTime = screening.EndDateTime,
+            SeatLabels = selectedSeats.Select(s => $"{s.Row}{s.SeatNumber}").ToList(),
+            TotalPrice = selectedSeats.Count * 65,
+            ScreeningId = screening.Id
+        };
 
-    [HttpGet]
-    public IActionResult Completed()
-    {
-        return View("BookingCompleted");
+        return View("BookingCompleted", viewModel);
     }
 }

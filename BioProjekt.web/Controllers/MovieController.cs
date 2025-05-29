@@ -17,13 +17,17 @@ namespace BioProjekt.web.Controllers
             _httpClient = httpClientFactory.CreateClient();
             _apiBaseUrl = config["ApiBaseUrl"];
         }
-
+        [HttpGet]
+        // GET: /Movie
+        // Viser en oversigt over alle film (henter fra API: GET /api/movie)
         public async Task<IActionResult> Index()
         {
             var movies = await _httpClient.GetFromJsonAsync<List<Movie>>($"{_apiBaseUrl}/api/Movie");
             return View(movies);
         }
-
+        [HttpGet]
+        // GET: /Movie/ShowTimes/{id}
+        // Viser alle forestillinger for en film (API: GET /api/showtime/{id})
         public async Task<IActionResult> ShowTimes(int id)
         {
             var movie = await _httpClient.GetFromJsonAsync<Movie>($"{_apiBaseUrl}/api/Movie/{id}");
@@ -37,13 +41,18 @@ namespace BioProjekt.web.Controllers
             ViewData["MovieTitle"] = movie.Title;
             return View(showtimes);
         }
-
+        // GET: /Movie/SelectSeats/{showtimeId}
+        // (NB: Denne metode ser ud til at være overflødig – din sædevalg sker i BookingController)
+        [HttpGet]
         public async Task<IActionResult> SelectSeats(int showtimeId)
         {
             var seats = await _httpClient.GetFromJsonAsync<List<Seat>>($"{_apiBaseUrl}/api/seats/{showtimeId}");
             return View(seats);
         }
 
+        // POST: /Movie/ConfirmBooking
+        // (NB: Denne metode ser også ud til at være forældet og bør muligvis slettes)
+        [HttpPost]
         public async Task<IActionResult> ConfirmBooking(int seatId)
         {
             var result = await _httpClient.PostAsJsonAsync($"{_apiBaseUrl}/api/booking/{seatId}", new { SeatId = seatId });
