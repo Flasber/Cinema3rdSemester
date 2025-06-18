@@ -21,9 +21,21 @@ namespace BioProjekt.Api.Controllers
         [HttpPost("createWithCustomer")]
         public async Task<ActionResult<Booking>> CreateBookingWithCustomer([FromBody] BookingCustomerCreateDTO dto)
         {
-            var createdBooking = await _bookingService.CreateBookingWithCustomerAsync(dto);
-            return Created("", createdBooking);
+            try
+            {
+                var createdBooking = await _bookingService.CreateBookingWithCustomerAsync(dto);
+                return Created("", createdBooking);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Der opstod en serverfejl: " + ex.Message });
+            }
         }
+
 
     }
 }

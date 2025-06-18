@@ -119,7 +119,8 @@ public class BookingController : Controller
 
         if (selectedSeats == null || selectedSeats.Count == 0)
         {
-            return View("Error", new ErrorViewModel { Message = "Ingen sæder valgt for denne session." });
+            TempData["BookingError"] = "Din sædereservation er udløbet eller sæderne er allerede blevet taget. Vælg venligst nye sæder.";
+            return RedirectToAction("SelectSeats", new { showtimeId = model.ScreeningId });
         }
 
         var screening = await _httpClient.GetFromJsonAsync<ScreeningWebDto>(
@@ -147,7 +148,8 @@ public class BookingController : Controller
         {
             var error = await response.Content.ReadAsStringAsync();
 
-            if (error.Contains("allerede taget", StringComparison.OrdinalIgnoreCase))
+            if (response.StatusCode == System.Net.HttpStatusCode.Conflict ||
+                error.Contains("allerede taget", StringComparison.OrdinalIgnoreCase))
             {
                 TempData["BookingError"] = "Et eller flere af de valgte sæder er desværre allerede reserveret. Vælg venligst nye sæder.";
                 return RedirectToAction("SelectSeats", new { showtimeId = model.ScreeningId });
@@ -170,4 +172,5 @@ public class BookingController : Controller
 
         return View("BookingCompleted", viewModel);
     }
+
 }

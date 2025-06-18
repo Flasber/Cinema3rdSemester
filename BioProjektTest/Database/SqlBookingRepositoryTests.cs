@@ -52,7 +52,7 @@ namespace BioProjektTest.Database
         }
 
         [Test]
-        public async Task AssignSeatsToBooking_ShouldHandleConcurrencyConflict()
+        public async Task AssignSeatsToBooking_ShouldHandleConcurrencyConflict_WithBarrier()
         {
             var booking1 = new Booking
             {
@@ -83,26 +83,32 @@ namespace BioProjektTest.Database
                 "SELECT Version FROM ScreeningSeat WHERE ScreeningId = @ScreeningId AND SeatId = @SeatId",
                 new { ScreeningId = _testIds.Screening1Id, SeatId = _testIds.Seat1Id });
 
+            var seatId = await connection.QuerySingleAsync<int>(
+                "SELECT Id FROM ScreeningSeat WHERE ScreeningId = @ScreeningId AND SeatId = @SeatId",
+                new { ScreeningId = _testIds.Screening1Id, SeatId = _testIds.Seat1Id });
+
             var screeningSeat = new ScreeningSeat
             {
                 ScreeningId = _testIds.Screening1Id,
                 SeatId = _testIds.Seat1Id,
-                Id = await connection.QuerySingleAsync<int>(
-                    "SELECT Id FROM ScreeningSeat WHERE ScreeningId = @ScreeningId AND SeatId = @SeatId",
-                    new { ScreeningId = _testIds.Screening1Id, SeatId = _testIds.Seat1Id }),
+                Id = seatId,
                 IsAvailable = true,
                 Version = version
             };
 
             var selectedSeats = new List<ScreeningSeat> { screeningSeat };
 
+            var barrier = new Barrier(2); // Venter på at begge tasks er klar
+
             var task1 = Task.Run(async () =>
             {
+                barrier.SignalAndWait(); // Venter på task2
                 await _bookingRepository.AssignSeatsToBooking(Guid.NewGuid(), bookingId1, selectedSeats);
             });
 
             var task2 = Task.Run(async () =>
             {
+                barrier.SignalAndWait(); // Venter på task1
                 await _bookingRepository.AssignSeatsToBooking(Guid.NewGuid(), bookingId2, selectedSeats);
             });
 
@@ -110,7 +116,11 @@ namespace BioProjektTest.Database
             {
                 await Task.WhenAll(task1, task2);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                // Du kan logge her hvis nødvendigt
+                Console.WriteLine($"Fejl under Task.WhenAll: {ex.Message}");
+            }
 
             var failedTasks = new[] { task1, task2 }.Count(t => t.IsFaulted);
             Assert.AreEqual(1, failedTasks, "Præcis én transaktion bør fejle pga. concurrency-konflikt.");
