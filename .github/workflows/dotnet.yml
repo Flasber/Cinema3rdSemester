@@ -1,0 +1,28 @@
+# .github/workflows/dotnet.yml
+name: Build and Test
+
+on: 
+push: 
+  branches: [ main ]
+pull_request:
+branches [ main ]
+jobs: 
+build
+  runs-on: ubuntu-latest
+
+steps: 
+- name: Checkout code
+uses: actions/checkout@v3
+
+-name: Setup .Net
+uses: actions/setup-dotnet@v3
+with:
+  dotnet-version: 8.0.x
+
+-name: Restore dependencies
+run: dotnet restore Cinema3rdSemester.sln
+
+-name: Build Project
+run: dotnet build Cinema3rdSemester.sln --configuration release
+name: Run Tests
+run: dotnet test Cinema3rdSemester.sln --no-build --verbosity normal
